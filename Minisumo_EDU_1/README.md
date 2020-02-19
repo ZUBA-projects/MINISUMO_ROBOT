@@ -1,7 +1,7 @@
 # MINISUMO_ROBOT_EDU1
 
 
-![Minisumo_EDU_1](/3D_project/EDU_1_BETA.png)
+![Minisumo_EDU_1](/Minisumo_EDU_1/3D_project/EDU_1_BETA.png)
 
 
 There is project of Minisumo robot EDU in version 1. 
