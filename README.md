@@ -18,3 +18,8 @@ Minisumo_EDU_1
 Minisumo_EDU_2
     
     in future... 
+
+
+
+
+<meta name="google-site-verification" content="Sr_QUoFm3OVrlCr8qWcFsbq-Z2FOffoltkEONUPMyuU" />
