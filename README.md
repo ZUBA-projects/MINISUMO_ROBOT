@@ -1,3 +1,5 @@
+<meta name="google-site-verification" content="Sr_QUoFm3OVrlCr8qWcFsbq-Z2FOffoltkEONUPMyuU" />
+
 # MINISUMO_ROBOT
 
 Eagle libraries file: https://github.com/ZUBA-projects/ZUBA_EAGLE_LBR 
@@ -22,4 +24,4 @@ Minisumo_EDU_2
 
 
 
-<meta name="google-site-verification" content="Sr_QUoFm3OVrlCr8qWcFsbq-Z2FOffoltkEONUPMyuU" />
+
