@@ -5,7 +5,7 @@ Eagle libraries file: https://github.com/ZUBA-projects/ZUBA_EAGLE_LBR
 
 Minisumo_EDU_1
 
-![Minisumo_EDU_1](/Minisumo_EDU_1/3D_project/MINISUMO_EDU_1png)
+![Minisumo_EDU_1](/Minisumo_EDU_1/3D_project/MINISUMO_EDU_1.png)
 
     Hardware    -Eagle project files of hardware 
     Software    -Arduino Software files  
