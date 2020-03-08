@@ -1,18 +1,13 @@
 # MINISUMO_ROBOT_EDU1
 
 
-![Minisumo_EDU_1](/Minisumo_EDU_1/3D_project/EDU_1_BETA.png)
+![Minisumo_EDU_1](/Minisumo_EDU_1/3D_project/MINISUMO_EDU_1.png)
 
 
-There is project of Minisumo robot EDU in version 1. 
-This is beta version. May contain bugs, errors and gluten. Offical relase soon...
+There is project of Minisumo robot EDU in version 1.  
+Video of building maybe in future. Please base on fusion 360 files.
+May contain bugs, errors and gluten. 
 
 Enjoy!
 
-BOM:
-
-    arduino nano V3 
-    TB6612 H bridges
-    etc..
-    I will finish this file later.. I promise!
 
