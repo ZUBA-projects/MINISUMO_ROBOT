@@ -8,7 +8,7 @@ There is project of Minisumo robot EDU in version 1.
 Video of building maybe in future. Please base on fusion 360 files.
 May contain bugs, errors and gluten. 
  
-The latest video of work log:
+The latest video of work log: https://www.youtube.com/watch?v=DSohYXiYlKI
 
 <object width="425" height="350">
   <param name="movie" value="https://www.youtube.com/watch?v=DSohYXiYlKI" />
