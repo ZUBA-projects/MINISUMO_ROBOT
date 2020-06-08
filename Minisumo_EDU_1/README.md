@@ -1,7 +1,7 @@
 # MINISUMO_ROBOT_EDU1
 
 
-![Minisumo_EDU_1](/Minisumo_EDU_1/3D_project/MINISUMO_EDU_1.png)
+![Minisumo_EDU_1](/Minisumo_EDU_1/3D_projects/3D_EDU1_V1/MINISUMO_EDU_1.png)
 
 There is project of Minisumo robot EDU1. 
 There is two versions of hardware and 3D designs. Old one has some bugs. 
