@@ -16,8 +16,8 @@ Bugs:
 	-bad color sensor connector pinout
 ```
 
-![Minisumo_EDU_1](/PCB_Rev_1.00/Photo_0.png)
-![Minisumo_EDU_1](/PCB_Rev_1.00/Photo_1.png)
+![Minisumo_EDU_1](/Minisumo_EDU_1/PCB_projects/PCB_Rev_1.00/Photo_0.png)
+![Minisumo_EDU_1](/Minisumo_EDU_1/PCB_projects/PCB_Rev_1.00/Photo_1.png)
 
 
 

@@ -25,11 +25,11 @@ Assembly video PCB version 1.00, 3D design V1: https://www.youtube.com/watch?v=i
 </object>
 
 
-![Minisumo_EDU_1](/3D_projects/3D_EDU1_V1/Photo_0.png)
-![Minisumo_EDU_1](/3D_projects/3D_EDU1_V1/Photo_5.png)
-![Minisumo_EDU_1](/3D_projects/3D_EDU1_V1/Photo_6.png)
-![Minisumo_EDU_1](/3D_projects/3D_EDU1_V1/Photo_7.png)
-![Minisumo_EDU_1](/3D_projects/3D_EDU1_V1/Photo_8.png)
-![Minisumo_EDU_1](/3D_projects/3D_EDU1_V1/Photo_9.png)
+![Minisumo_EDU_1](/Minisumo_EDU_1/3D_projects/3D_EDU1_V1/Photo_0.jpg)
+![Minisumo_EDU_1](/Minisumo_EDU_1/3D_projects/3D_EDU1_V1/Photo_5.jpg)
+![Minisumo_EDU_1](/Minisumo_EDU_1/3D_projects/3D_EDU1_V1/Photo_6.jpg)
+![Minisumo_EDU_1](/Minisumo_EDU_1/3D_projects/3D_EDU1_V1/Photo_7.jpg)
+![Minisumo_EDU_1](/Minisumo_EDU_1/3D_projects/3D_EDU1_V1/Photo_8.jpg)
+![Minisumo_EDU_1](/Minisumo_EDU_1/3D_projects/3D_EDU1_V1/Photo_9.jpg)
 
 Enjoy!
