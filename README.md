@@ -1,23 +1,8 @@
 
-# MINISUMO_ROBOT
+# MINISUMO_ROBOT_EDU1
 
-Eagle libraries file: https://github.com/ZUBA-projects/ZUBA_EAGLE_LBR 
+![Minisumo_EDU_1](/Minisumo_EDU_1/3D_projects/3D_EDU1_V1/MINISUMO_EDU_1.png)
 
-Minisumo_EDU_1
-
-![Minisumo_EDU_1](/Minisumo_EDU_1/3D_project/MINISUMO_EDU_1.png)
-
-    Hardware    -Eagle project files of hardware 
-    Software    -Arduino Software files  
-    3D_project  -Fusion360 3D project and STL files to print 
-
-
-
-Minisumo_EDU_2
-    
-    in future... 
-
-
-
+![Minisumo_EDU_1_done](/Minisumo_EDU_1/3D_projects/3D_EDU1_V1/Photo_0.jpg)
 
 

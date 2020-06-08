@@ -1,5 +1,7 @@
 Archive member included to satisfy reference by file (symbol)
 
+/usr/local/Cellar/avr-gcc/9.3.0/lib/avr-gcc/9/gcc/avr/9.3.0/avr5/libgcc.a(_udivmodhi4.o)
+                              ./MiniOS/miniOS.o (__udivmodhi4)
 /usr/local/Cellar/avr-gcc/9.3.0/lib/avr-gcc/9/gcc/avr/9.3.0/avr5/libgcc.a(_udivmodsi4.o)
                               ./MiniOS/vl53l0x/VL53L0X.o (__udivmodsi4)
 /usr/local/Cellar/avr-gcc/9.3.0/lib/avr-gcc/9/gcc/avr/9.3.0/avr5/libgcc.a(_divmodsi4.o)
@@ -13,9 +15,13 @@ Archive member included to satisfy reference by file (symbol)
 /usr/local/Cellar/avr-gcc/9.3.0/lib/avr-gcc/9/gcc/avr/9.3.0/avr5/libgcc.a(_clear_bss.o)
                               ./MiniOS/vl53l0x/VL53L0X.o (__do_clear_bss)
 /usr/local/Cellar/avr-gcc/9.3.0/lib/avr-gcc/9/gcc/avr/9.3.0/avr5/libgcc.a(_umulhisi3.o)
-                              ./MiniOS/miniOS.o (__umulhisi3)
+                              ./MiniOS/vl53l0x/VL53L0X.o (__umulhisi3)
 /usr/local/Cellar/avr-gcc/9.3.0/lib/avr-gcc/9/gcc/avr/9.3.0/avr5/libgcc.a(_muluhisi3.o)
                               ./MiniOS/vl53l0x/VL53L0X.o (__muluhisi3)
+/usr/local/Cellar/avr-gcc/9.3.0/lib/avr-gcc/9/gcc/avr/9.3.0/avr5/libgcc.a(_mulshisi3.o)
+                              ./MiniOS/miniOS.o (__mulshisi3)
+/usr/local/Cellar/avr-gcc/9.3.0/lib/avr-gcc/9/gcc/avr/9.3.0/../../../../../../avr/lib/avr5/libc.a(malloc.o)
+                              ./MiniOS/miniOS.o (malloc)
 /usr/local/Cellar/avr-gcc/9.3.0/lib/avr-gcc/9/gcc/avr/9.3.0/../../../../../../avr/lib/avr5/libc.a(sprintf.o)
                               ./Minisumo_EDU1.o (sprintf)
 /usr/local/Cellar/avr-gcc/9.3.0/lib/avr-gcc/9/gcc/avr/9.3.0/../../../../../../avr/lib/avr5/libc.a(vfprintf_std.o)
@@ -36,10 +42,16 @@ Archive member included to satisfy reference by file (symbol)
 Allocating common symbols
 Common symbol       size              file
 
+_rc5struct          0x2               ./MiniOS/rc5/rc5.o
 vl53l0xsensor       0x2               ./MiniOS/vl53l0x/VL53L0X.o
+__rangesensornum    0x1               ./MiniOS/miniOS.o
 motorcfglcl         0x2               ./MiniOS/motor/motor.o
+__brkval            0x2               /usr/local/Cellar/avr-gcc/9.3.0/lib/avr-gcc/9/gcc/avr/9.3.0/../../../../../../avr/lib/avr5/libc.a(malloc.o)
 _cp437              0x1               ./MiniOS/oled/ssd1306.o
+_maxrangeofsensor   0x2               ./MiniOS/miniOS.o
 wrap                0x1               ./MiniOS/oled/ssd1306.o
+__flp               0x2               /usr/local/Cellar/avr-gcc/9.3.0/lib/avr-gcc/9/gcc/avr/9.3.0/../../../../../../avr/lib/avr5/libc.a(malloc.o)
+sensors             0x6               ./Minisumo_EDU1.o
 
 Memory Configuration
 
@@ -168,7 +180,7 @@ END GROUP
 .rela.plt
  *(.rela.plt)
 
-.text           0x0000000000000000     0x484e
+.text           0x0000000000000000     0x4e96
  *(.vectors)
  .vectors       0x0000000000000000       0x68 /usr/local/Cellar/avr-gcc/9.3.0/lib/avr-gcc/9/gcc/avr/9.3.0/../../../../../../avr/lib/avr5/crtatmega328p.o
                 0x0000000000000000                __vectors
@@ -186,34 +198,36 @@ END GROUP
  *(.progmem.*)
  .progmem.data.my_font
                 0x0000000000000068      0x4fb ./MiniOS/oled/ssd1306.o
-                0x0000000000000564                . = ALIGN (0x2)
- *fill*         0x0000000000000563        0x1 
+ .progmem.data.trigTab
+                0x0000000000000563       0xb6 ./hal.o
+                0x000000000000061a                . = ALIGN (0x2)
+ *fill*         0x0000000000000619        0x1 
  *(.lowtext)
  *(.lowtext*)
-                0x0000000000000564                __ctors_start = .
+                0x000000000000061a                __ctors_start = .
  *(.ctors)
-                0x0000000000000564                __ctors_end = .
-                0x0000000000000564                __dtors_start = .
+                0x000000000000061a                __ctors_end = .
+                0x000000000000061a                __dtors_start = .
  *(.dtors)
-                0x0000000000000564                __dtors_end = .
+                0x000000000000061a                __dtors_end = .
  SORT_BY_NAME(*)(.ctors)
  SORT_BY_NAME(*)(.dtors)
  *(.init0)
- .init0         0x0000000000000564        0x0 /usr/local/Cellar/avr-gcc/9.3.0/lib/avr-gcc/9/gcc/avr/9.3.0/../../../../../../avr/lib/avr5/crtatmega328p.o
-                0x0000000000000564                __init
+ .init0         0x000000000000061a        0x0 /usr/local/Cellar/avr-gcc/9.3.0/lib/avr-gcc/9/gcc/avr/9.3.0/../../../../../../avr/lib/avr5/crtatmega328p.o
+                0x000000000000061a                __init
  *(.init0)
  *(.init1)
  *(.init1)
  *(.init2)
- .init2         0x0000000000000564        0xc /usr/local/Cellar/avr-gcc/9.3.0/lib/avr-gcc/9/gcc/avr/9.3.0/../../../../../../avr/lib/avr5/crtatmega328p.o
+ .init2         0x000000000000061a        0xc /usr/local/Cellar/avr-gcc/9.3.0/lib/avr-gcc/9/gcc/avr/9.3.0/../../../../../../avr/lib/avr5/crtatmega328p.o
  *(.init2)
  *(.init3)
  *(.init3)
  *(.init4)
- .init4         0x0000000000000570       0x16 /usr/local/Cellar/avr-gcc/9.3.0/lib/avr-gcc/9/gcc/avr/9.3.0/avr5/libgcc.a(_copy_data.o)
-                0x0000000000000570                __do_copy_data
- .init4         0x0000000000000586       0x10 /usr/local/Cellar/avr-gcc/9.3.0/lib/avr-gcc/9/gcc/avr/9.3.0/avr5/libgcc.a(_clear_bss.o)
-                0x0000000000000586                __do_clear_bss
+ .init4         0x0000000000000626       0x16 /usr/local/Cellar/avr-gcc/9.3.0/lib/avr-gcc/9/gcc/avr/9.3.0/avr5/libgcc.a(_copy_data.o)
+                0x0000000000000626                __do_copy_data
+ .init4         0x000000000000063c       0x10 /usr/local/Cellar/avr-gcc/9.3.0/lib/avr-gcc/9/gcc/avr/9.3.0/avr5/libgcc.a(_clear_bss.o)
+                0x000000000000063c                __do_clear_bss
  *(.init4)
  *(.init5)
  *(.init5)
@@ -224,587 +238,623 @@ END GROUP
  *(.init8)
  *(.init8)
  *(.init9)
- .init9         0x0000000000000596        0x8 /usr/local/Cellar/avr-gcc/9.3.0/lib/avr-gcc/9/gcc/avr/9.3.0/../../../../../../avr/lib/avr5/crtatmega328p.o
+ .init9         0x000000000000064c        0x8 /usr/local/Cellar/avr-gcc/9.3.0/lib/avr-gcc/9/gcc/avr/9.3.0/../../../../../../avr/lib/avr5/crtatmega328p.o
  *(.init9)
  *(.text)
- .text          0x000000000000059e        0x4 /usr/local/Cellar/avr-gcc/9.3.0/lib/avr-gcc/9/gcc/avr/9.3.0/../../../../../../avr/lib/avr5/crtatmega328p.o
-                0x000000000000059e                __vector_20
-                0x000000000000059e                __vector_1
-                0x000000000000059e                __vector_24
-                0x000000000000059e                __vector_12
-                0x000000000000059e                __bad_interrupt
-                0x000000000000059e                __vector_6
-                0x000000000000059e                __vector_3
-                0x000000000000059e                __vector_23
-                0x000000000000059e                __vector_25
-                0x000000000000059e                __vector_11
-                0x000000000000059e                __vector_13
-                0x000000000000059e                __vector_17
-                0x000000000000059e                __vector_19
-                0x000000000000059e                __vector_7
-                0x000000000000059e                __vector_5
-                0x000000000000059e                __vector_4
-                0x000000000000059e                __vector_9
-                0x000000000000059e                __vector_2
-                0x000000000000059e                __vector_21
-                0x000000000000059e                __vector_15
-                0x000000000000059e                __vector_8
-                0x000000000000059e                __vector_14
-                0x000000000000059e                __vector_10
-                0x000000000000059e                __vector_18
-                0x000000000000059e                __vector_22
- .text          0x00000000000005a2        0x0 ./MiniOS/vl53l0x/VL53L0X.o
- .text          0x00000000000005a2        0x0 ./MiniOS/rc5/rc5.o
- .text          0x00000000000005a2        0x0 ./MiniOS/oled/ssd1306.o
- .text          0x00000000000005a2        0x0 ./MiniOS/motor/motor.o
- .text          0x00000000000005a2        0x0 ./MiniOS/miniOS.o
- .text          0x00000000000005a2        0x0 ./Minisumo_EDU1.o
- .text          0x00000000000005a2        0x0 ./hal.o
- .text          0x00000000000005a2        0x0 /usr/local/Cellar/avr-gcc/9.3.0/lib/avr-gcc/9/gcc/avr/9.3.0/avr5/libgcc.a(_udivmodsi4.o)
- .text          0x00000000000005a2        0x0 /usr/local/Cellar/avr-gcc/9.3.0/lib/avr-gcc/9/gcc/avr/9.3.0/avr5/libgcc.a(_divmodsi4.o)
- .text          0x00000000000005a2        0x0 /usr/local/Cellar/avr-gcc/9.3.0/lib/avr-gcc/9/gcc/avr/9.3.0/avr5/libgcc.a(_negsi2.o)
- .text          0x00000000000005a2        0x0 /usr/local/Cellar/avr-gcc/9.3.0/lib/avr-gcc/9/gcc/avr/9.3.0/avr5/libgcc.a(_exit.o)
- .text          0x00000000000005a2        0x0 /usr/local/Cellar/avr-gcc/9.3.0/lib/avr-gcc/9/gcc/avr/9.3.0/avr5/libgcc.a(_copy_data.o)
- .text          0x00000000000005a2        0x0 /usr/local/Cellar/avr-gcc/9.3.0/lib/avr-gcc/9/gcc/avr/9.3.0/avr5/libgcc.a(_clear_bss.o)
- .text          0x00000000000005a2        0x0 /usr/local/Cellar/avr-gcc/9.3.0/lib/avr-gcc/9/gcc/avr/9.3.0/avr5/libgcc.a(_umulhisi3.o)
- .text          0x00000000000005a2        0x0 /usr/local/Cellar/avr-gcc/9.3.0/lib/avr-gcc/9/gcc/avr/9.3.0/avr5/libgcc.a(_muluhisi3.o)
- .text          0x00000000000005a2        0x0 /usr/local/Cellar/avr-gcc/9.3.0/lib/avr-gcc/9/gcc/avr/9.3.0/../../../../../../avr/lib/avr5/libc.a(sprintf.o)
- .text          0x00000000000005a2        0x0 /usr/local/Cellar/avr-gcc/9.3.0/lib/avr-gcc/9/gcc/avr/9.3.0/../../../../../../avr/lib/avr5/libc.a(vfprintf_std.o)
- .text          0x00000000000005a2        0x0 /usr/local/Cellar/avr-gcc/9.3.0/lib/avr-gcc/9/gcc/avr/9.3.0/../../../../../../avr/lib/avr5/libc.a(strnlen_P.o)
- .text          0x00000000000005a2        0x0 /usr/local/Cellar/avr-gcc/9.3.0/lib/avr-gcc/9/gcc/avr/9.3.0/../../../../../../avr/lib/avr5/libc.a(strnlen.o)
- .text          0x00000000000005a2        0x0 /usr/local/Cellar/avr-gcc/9.3.0/lib/avr-gcc/9/gcc/avr/9.3.0/../../../../../../avr/lib/avr5/libc.a(fputc.o)
- .text          0x00000000000005a2        0x0 /usr/local/Cellar/avr-gcc/9.3.0/lib/avr-gcc/9/gcc/avr/9.3.0/../../../../../../avr/lib/avr5/libc.a(ultoa_invert.o)
- .text          0x00000000000005a2        0x0 /usr/local/Cellar/avr-gcc/9.3.0/lib/avr-gcc/9/gcc/avr/9.3.0/avr5/libgcc.a(_prologue.o)
- .text          0x00000000000005a2        0x0 /usr/local/Cellar/avr-gcc/9.3.0/lib/avr-gcc/9/gcc/avr/9.3.0/avr5/libgcc.a(_epilogue.o)
-                0x00000000000005a2                . = ALIGN (0x2)
+ .text          0x0000000000000654        0x4 /usr/local/Cellar/avr-gcc/9.3.0/lib/avr-gcc/9/gcc/avr/9.3.0/../../../../../../avr/lib/avr5/crtatmega328p.o
+                0x0000000000000654                __vector_20
+                0x0000000000000654                __vector_24
+                0x0000000000000654                __vector_12
+                0x0000000000000654                __bad_interrupt
+                0x0000000000000654                __vector_6
+                0x0000000000000654                __vector_3
+                0x0000000000000654                __vector_23
+                0x0000000000000654                __vector_25
+                0x0000000000000654                __vector_11
+                0x0000000000000654                __vector_13
+                0x0000000000000654                __vector_17
+                0x0000000000000654                __vector_19
+                0x0000000000000654                __vector_7
+                0x0000000000000654                __vector_5
+                0x0000000000000654                __vector_4
+                0x0000000000000654                __vector_9
+                0x0000000000000654                __vector_21
+                0x0000000000000654                __vector_15
+                0x0000000000000654                __vector_8
+                0x0000000000000654                __vector_14
+                0x0000000000000654                __vector_10
+                0x0000000000000654                __vector_18
+                0x0000000000000654                __vector_22
+ .text          0x0000000000000658        0x0 ./MiniOS/vl53l0x/VL53L0X.o
+ .text          0x0000000000000658        0x0 ./MiniOS/rc5/rc5.o
+ .text          0x0000000000000658        0x0 ./MiniOS/oled/ssd1306.o
+ .text          0x0000000000000658        0x0 ./MiniOS/motor/motor.o
+ .text          0x0000000000000658        0x0 ./MiniOS/miniOS.o
+ .text          0x0000000000000658        0x0 ./Minisumo_EDU1.o
+ .text          0x0000000000000658        0x0 ./hal.o
+ .text          0x0000000000000658        0x0 /usr/local/Cellar/avr-gcc/9.3.0/lib/avr-gcc/9/gcc/avr/9.3.0/avr5/libgcc.a(_udivmodhi4.o)
+ .text          0x0000000000000658        0x0 /usr/local/Cellar/avr-gcc/9.3.0/lib/avr-gcc/9/gcc/avr/9.3.0/avr5/libgcc.a(_udivmodsi4.o)
+ .text          0x0000000000000658        0x0 /usr/local/Cellar/avr-gcc/9.3.0/lib/avr-gcc/9/gcc/avr/9.3.0/avr5/libgcc.a(_divmodsi4.o)
+ .text          0x0000000000000658        0x0 /usr/local/Cellar/avr-gcc/9.3.0/lib/avr-gcc/9/gcc/avr/9.3.0/avr5/libgcc.a(_negsi2.o)
+ .text          0x0000000000000658        0x0 /usr/local/Cellar/avr-gcc/9.3.0/lib/avr-gcc/9/gcc/avr/9.3.0/avr5/libgcc.a(_exit.o)
+ .text          0x0000000000000658        0x0 /usr/local/Cellar/avr-gcc/9.3.0/lib/avr-gcc/9/gcc/avr/9.3.0/avr5/libgcc.a(_copy_data.o)
+ .text          0x0000000000000658        0x0 /usr/local/Cellar/avr-gcc/9.3.0/lib/avr-gcc/9/gcc/avr/9.3.0/avr5/libgcc.a(_clear_bss.o)
+ .text          0x0000000000000658        0x0 /usr/local/Cellar/avr-gcc/9.3.0/lib/avr-gcc/9/gcc/avr/9.3.0/avr5/libgcc.a(_umulhisi3.o)
+ .text          0x0000000000000658        0x0 /usr/local/Cellar/avr-gcc/9.3.0/lib/avr-gcc/9/gcc/avr/9.3.0/avr5/libgcc.a(_muluhisi3.o)
+ .text          0x0000000000000658        0x0 /usr/local/Cellar/avr-gcc/9.3.0/lib/avr-gcc/9/gcc/avr/9.3.0/avr5/libgcc.a(_mulshisi3.o)
+ .text          0x0000000000000658        0x0 /usr/local/Cellar/avr-gcc/9.3.0/lib/avr-gcc/9/gcc/avr/9.3.0/../../../../../../avr/lib/avr5/libc.a(malloc.o)
+ .text          0x0000000000000658        0x0 /usr/local/Cellar/avr-gcc/9.3.0/lib/avr-gcc/9/gcc/avr/9.3.0/../../../../../../avr/lib/avr5/libc.a(sprintf.o)
+ .text          0x0000000000000658        0x0 /usr/local/Cellar/avr-gcc/9.3.0/lib/avr-gcc/9/gcc/avr/9.3.0/../../../../../../avr/lib/avr5/libc.a(vfprintf_std.o)
+ .text          0x0000000000000658        0x0 /usr/local/Cellar/avr-gcc/9.3.0/lib/avr-gcc/9/gcc/avr/9.3.0/../../../../../../avr/lib/avr5/libc.a(strnlen_P.o)
+ .text          0x0000000000000658        0x0 /usr/local/Cellar/avr-gcc/9.3.0/lib/avr-gcc/9/gcc/avr/9.3.0/../../../../../../avr/lib/avr5/libc.a(strnlen.o)
+ .text          0x0000000000000658        0x0 /usr/local/Cellar/avr-gcc/9.3.0/lib/avr-gcc/9/gcc/avr/9.3.0/../../../../../../avr/lib/avr5/libc.a(fputc.o)
+ .text          0x0000000000000658        0x0 /usr/local/Cellar/avr-gcc/9.3.0/lib/avr-gcc/9/gcc/avr/9.3.0/../../../../../../avr/lib/avr5/libc.a(ultoa_invert.o)
+ .text          0x0000000000000658        0x0 /usr/local/Cellar/avr-gcc/9.3.0/lib/avr-gcc/9/gcc/avr/9.3.0/avr5/libgcc.a(_prologue.o)
+ .text          0x0000000000000658        0x0 /usr/local/Cellar/avr-gcc/9.3.0/lib/avr-gcc/9/gcc/avr/9.3.0/avr5/libgcc.a(_epilogue.o)
+                0x0000000000000658                . = ALIGN (0x2)
  *(.text.*)
- .text.writeReg
-                0x00000000000005a2       0x2e ./MiniOS/vl53l0x/VL53L0X.o
-                0x00000000000005a2                writeReg
- .text.writeReg16Bit
-                0x00000000000005d0       0x38 ./MiniOS/vl53l0x/VL53L0X.o
-                0x00000000000005d0                writeReg16Bit
- .text.writeReg32Bit
-                0x0000000000000608       0x50 ./MiniOS/vl53l0x/VL53L0X.o
-                0x0000000000000608                writeReg32Bit
- .text.readReg  0x0000000000000658       0x42 ./MiniOS/vl53l0x/VL53L0X.o
-                0x0000000000000658                readReg
- .text.readReg16Bit
-                0x000000000000069a       0x54 ./MiniOS/vl53l0x/VL53L0X.o
-                0x000000000000069a                readReg16Bit
- .text.readReg32Bit
-                0x00000000000006ee       0xa0 ./MiniOS/vl53l0x/VL53L0X.o
-                0x00000000000006ee                readReg32Bit
- .text.writeMulti
-                0x000000000000078e       0x4c ./MiniOS/vl53l0x/VL53L0X.o
-                0x000000000000078e                writeMulti
- .text.readMulti
-                0x00000000000007da       0x6a ./MiniOS/vl53l0x/VL53L0X.o
-                0x00000000000007da                readMulti
- .text.setAddress
-                0x0000000000000844       0x1c ./MiniOS/vl53l0x/VL53L0X.o
-                0x0000000000000844                setAddress
- .text.getAddress
-                0x0000000000000860        0xc ./MiniOS/vl53l0x/VL53L0X.o
-                0x0000000000000860                getAddress
  .text.getSpadInfo
-                0x000000000000086c      0x14e ./MiniOS/vl53l0x/VL53L0X.o
-                0x000000000000086c                getSpadInfo
+                0x0000000000000658      0x16a ./MiniOS/vl53l0x/VL53L0X.o
+                0x0000000000000658                getSpadInfo
  .text.timeoutMclksToMicroseconds
-                0x00000000000009ba       0xba ./MiniOS/vl53l0x/VL53L0X.o
-                0x00000000000009ba                timeoutMclksToMicroseconds
+                0x00000000000007c2       0xba ./MiniOS/vl53l0x/VL53L0X.o
+                0x00000000000007c2                timeoutMclksToMicroseconds
  .text.timeoutMicrosecondsToMclks
-                0x0000000000000a74       0xba ./MiniOS/vl53l0x/VL53L0X.o
-                0x0000000000000a74                timeoutMicrosecondsToMclks
+                0x000000000000087c       0xba ./MiniOS/vl53l0x/VL53L0X.o
+                0x000000000000087c                timeoutMicrosecondsToMclks
  .text.performSingleRefCalibration
-                0x0000000000000b2e       0x9a ./MiniOS/vl53l0x/VL53L0X.o
-                0x0000000000000b2e                performSingleRefCalibration
+                0x0000000000000936       0xb8 ./MiniOS/vl53l0x/VL53L0X.o
+                0x0000000000000936                performSingleRefCalibration
  .text.decodeTimeout
-                0x0000000000000bc8       0x12 ./MiniOS/vl53l0x/VL53L0X.o
-                0x0000000000000bc8                decodeTimeout
+                0x00000000000009ee       0x12 ./MiniOS/vl53l0x/VL53L0X.o
+                0x00000000000009ee                decodeTimeout
  .text.encodeTimeout
-                0x0000000000000bda       0x3c ./MiniOS/vl53l0x/VL53L0X.o
-                0x0000000000000bda                encodeTimeout
+                0x0000000000000a00       0x3c ./MiniOS/vl53l0x/VL53L0X.o
+                0x0000000000000a00                encodeTimeout
  .text.getSequenceStepEnables
-                0x0000000000000c16       0x3a ./MiniOS/vl53l0x/VL53L0X.o
-                0x0000000000000c16                getSequenceStepEnables
+                0x0000000000000a3c       0x3a ./MiniOS/vl53l0x/VL53L0X.o
+                0x0000000000000a3c                getSequenceStepEnables
+ .text.preinitVL53L0X
+                0x0000000000000a76       0x4e ./MiniOS/vl53l0x/VL53L0X.o
+                0x0000000000000a76                preinitVL53L0X
  .text.setSignalRateLimit
-                0x0000000000000c50       0x5c ./MiniOS/vl53l0x/VL53L0X.o
-                0x0000000000000c50                setSignalRateLimit
+                0x0000000000000ac4       0x5c ./MiniOS/vl53l0x/VL53L0X.o
+                0x0000000000000ac4                setSignalRateLimit
  .text.getVcselPulsePeriod
-                0x0000000000000cac       0x1c ./MiniOS/vl53l0x/VL53L0X.o
-                0x0000000000000cac                getVcselPulsePeriod
+                0x0000000000000b20       0x1c ./MiniOS/vl53l0x/VL53L0X.o
+                0x0000000000000b20                getVcselPulsePeriod
  .text.getSequenceStepTimeouts
-                0x0000000000000cc8       0xa2 ./MiniOS/vl53l0x/VL53L0X.o
-                0x0000000000000cc8                getSequenceStepTimeouts
+                0x0000000000000b3c       0xa2 ./MiniOS/vl53l0x/VL53L0X.o
+                0x0000000000000b3c                getSequenceStepTimeouts
  .text.setMeasurementTimingBudget
-                0x0000000000000d6a      0x156 ./MiniOS/vl53l0x/VL53L0X.o
-                0x0000000000000d6a                setMeasurementTimingBudget
+                0x0000000000000bde      0x156 ./MiniOS/vl53l0x/VL53L0X.o
+                0x0000000000000bde                setMeasurementTimingBudget
  .text.getMeasurementTimingBudget
-                0x0000000000000ec0       0xf2 ./MiniOS/vl53l0x/VL53L0X.o
-                0x0000000000000ec0                getMeasurementTimingBudget
+                0x0000000000000d34       0xf2 ./MiniOS/vl53l0x/VL53L0X.o
+                0x0000000000000d34                getMeasurementTimingBudget
  .text.initVL53L0X
-                0x0000000000000fb2      0x494 ./MiniOS/vl53l0x/VL53L0X.o
-                0x0000000000000fb2                initVL53L0X
+                0x0000000000000e26      0x4fe ./MiniOS/vl53l0x/VL53L0X.o
+                0x0000000000000e26                initVL53L0X
  .text.setVcselPulsePeriod
-                0x0000000000001446      0x21e ./MiniOS/vl53l0x/VL53L0X.o
-                0x0000000000001446                setVcselPulsePeriod
+                0x0000000000001324      0x21e ./MiniOS/vl53l0x/VL53L0X.o
+                0x0000000000001324                setVcselPulsePeriod
  .text.startContinuous
-                0x0000000000001664       0x8a ./MiniOS/vl53l0x/VL53L0X.o
-                0x0000000000001664                startContinuous
- .text.stopContinuous
-                0x00000000000016ee       0x30 ./MiniOS/vl53l0x/VL53L0X.o
-                0x00000000000016ee                stopContinuous
- .text.readRangeContinuousMillimeters
-                0x000000000000171e      0x104 ./MiniOS/vl53l0x/VL53L0X.o
-                0x000000000000171e                readRangeContinuousMillimeters
- .text.checkRangeContinousSensor
-                0x0000000000001822       0x84 ./MiniOS/vl53l0x/VL53L0X.o
-                0x0000000000001822                checkRangeContinousSensor
+                0x0000000000001542       0x8a ./MiniOS/vl53l0x/VL53L0X.o
+                0x0000000000001542                startContinuous
  .text.readRangeContinousSensor
-                0x00000000000018a6       0x30 ./MiniOS/vl53l0x/VL53L0X.o
-                0x00000000000018a6                readRangeContinousSensor
- .text.readRangeSingleMillimeters
-                0x00000000000018d6       0xe2 ./MiniOS/vl53l0x/VL53L0X.o
-                0x00000000000018d6                readRangeSingleMillimeters
- .text.timeoutOccurred
-                0x00000000000019b8        0xe ./MiniOS/vl53l0x/VL53L0X.o
-                0x00000000000019b8                timeoutOccurred
- .text.setTimeout
-                0x00000000000019c6        0xe ./MiniOS/vl53l0x/VL53L0X.o
-                0x00000000000019c6                setTimeout
- .text.getTimeout
-                0x00000000000019d4        0xe ./MiniOS/vl53l0x/VL53L0X.o
-                0x00000000000019d4                getTimeout
+                0x00000000000015cc       0x42 ./MiniOS/vl53l0x/VL53L0X.o
+                0x00000000000015cc                readRangeContinousSensor
+ .text.checkRangeContinousSensor
+                0x000000000000160e      0x112 ./MiniOS/vl53l0x/VL53L0X.o
+                0x000000000000160e                checkRangeContinousSensor
  .text.setvl53l0xinstance
-                0x00000000000019e2        0xa ./MiniOS/vl53l0x/VL53L0X.o
-                0x00000000000019e2                setvl53l0xinstance
- .text.ssd1306_width
-                0x00000000000019ec        0xa ./MiniOS/oled/ssd1306.o
-                0x00000000000019ec                ssd1306_width
- .text.ssd1306_height
-                0x00000000000019f6        0xa ./MiniOS/oled/ssd1306.o
-                0x00000000000019f6                ssd1306_height
+                0x0000000000001720       0x14 ./MiniOS/vl53l0x/VL53L0X.o
+                0x0000000000001720                setvl53l0xinstance
+ .text.initVL53L0X_to_continous
+                0x0000000000001734       0xb4 ./MiniOS/vl53l0x/VL53L0X.o
+                0x0000000000001734                initVL53L0X_to_continous
+ .text.RC5_read
+                0x00000000000017e8      0x224 ./MiniOS/rc5/rc5.o
+ .text.rc5_check
+                0x0000000000001a0c       0xb2 ./MiniOS/rc5/rc5.o
+                0x0000000000001a0c                rc5_check
+ .text.rc5_init
+                0x0000000000001abe       0x14 ./MiniOS/rc5/rc5.o
+                0x0000000000001abe                rc5_init
  .text.set_rotation
-                0x0000000000001a00       0x40 ./MiniOS/oled/ssd1306.o
-                0x0000000000001a00                set_rotation
+                0x0000000000001ad2       0x40 ./MiniOS/oled/ssd1306.o
+                0x0000000000001ad2                set_rotation
  .text.ssd1306_init_i2c
-                0x0000000000001a40       0x10 ./MiniOS/oled/ssd1306.o
-                0x0000000000001a40                ssd1306_init_i2c
- .text.ssd1306_command
-                0x0000000000001a50       0x26 ./MiniOS/oled/ssd1306.o
-                0x0000000000001a50                ssd1306_command
+                0x0000000000001b12        0xa ./MiniOS/oled/ssd1306.o
+                0x0000000000001b12                ssd1306_init_i2c
  .text.ssd1306_begin
-                0x0000000000001a76      0x110 ./MiniOS/oled/ssd1306.o
-                0x0000000000001a76                ssd1306_begin
+                0x0000000000001b1c      0x146 ./MiniOS/oled/ssd1306.o
+                0x0000000000001b1c                ssd1306_begin
  .text.ssd1306_draw_pixel
-                0x0000000000001b86      0x154 ./MiniOS/oled/ssd1306.o
-                0x0000000000001b86                ssd1306_draw_pixel
+                0x0000000000001c62      0x154 ./MiniOS/oled/ssd1306.o
+                0x0000000000001c62                ssd1306_draw_pixel
  .text.ssd1306_invert_display
-                0x0000000000001cda        0xe ./MiniOS/oled/ssd1306.o
-                0x0000000000001cda                ssd1306_invert_display
- .text.ssd1306_start_scroll_right
-                0x0000000000001ce8       0x3c ./MiniOS/oled/ssd1306.o
-                0x0000000000001ce8                ssd1306_start_scroll_right
- .text.ssd1306_start_scroll_left
-                0x0000000000001d24       0x3c ./MiniOS/oled/ssd1306.o
-                0x0000000000001d24                ssd1306_start_scroll_left
- .text.ssd1306_start_scroll_diag_right
-                0x0000000000001d60       0x48 ./MiniOS/oled/ssd1306.o
-                0x0000000000001d60                ssd1306_start_scroll_diag_right
- .text.ssd1306_start_scroll_diag_left
-                0x0000000000001da8       0x48 ./MiniOS/oled/ssd1306.o
-                0x0000000000001da8                ssd1306_start_scroll_diag_left
- .text.ssd1306_stop_scroll
-                0x0000000000001df0        0x6 ./MiniOS/oled/ssd1306.o
-                0x0000000000001df0                ssd1306_stop_scroll
- .text.ssd1306_dim
-                0x0000000000001df6       0x22 ./MiniOS/oled/ssd1306.o
-                0x0000000000001df6                ssd1306_dim
- .text.ssd1306_data
-                0x0000000000001e18       0x26 ./MiniOS/oled/ssd1306.o
-                0x0000000000001e18                ssd1306_data
+                0x0000000000001db6       0x22 ./MiniOS/oled/ssd1306.o
+                0x0000000000001db6                ssd1306_invert_display
  .text.ssd1306_display
-                0x0000000000001e3e       0x62 ./MiniOS/oled/ssd1306.o
-                0x0000000000001e3e                ssd1306_display
+                0x0000000000001dd8       0x4e ./MiniOS/oled/ssd1306.o
+                0x0000000000001dd8                ssd1306_display
  .text.ssd1306_clear_display
-                0x0000000000001ea0       0x16 ./MiniOS/oled/ssd1306.o
-                0x0000000000001ea0                ssd1306_clear_display
+                0x0000000000001e26       0x16 ./MiniOS/oled/ssd1306.o
+                0x0000000000001e26                ssd1306_clear_display
  .text.ssd1306_draw_fast_hline_internal
-                0x0000000000001eb6       0xd6 ./MiniOS/oled/ssd1306.o
-                0x0000000000001eb6                ssd1306_draw_fast_hline_internal
+                0x0000000000001e3c       0xd6 ./MiniOS/oled/ssd1306.o
+                0x0000000000001e3c                ssd1306_draw_fast_hline_internal
  .text.ssd1306_draw_fast_vline_internal
-                0x0000000000001f8c      0x18c ./MiniOS/oled/ssd1306.o
-                0x0000000000001f8c                ssd1306_draw_fast_vline_internal
+                0x0000000000001f12      0x18c ./MiniOS/oled/ssd1306.o
+                0x0000000000001f12                ssd1306_draw_fast_vline_internal
  .text.ssd1306_draw_fast_hline
-                0x0000000000002118       0x6c ./MiniOS/oled/ssd1306.o
-                0x0000000000002118                ssd1306_draw_fast_hline
+                0x000000000000209e       0x6c ./MiniOS/oled/ssd1306.o
+                0x000000000000209e                ssd1306_draw_fast_hline
  .text.ssd1306_draw_fast_vline
-                0x0000000000002184       0x6a ./MiniOS/oled/ssd1306.o
-                0x0000000000002184                ssd1306_draw_fast_vline
+                0x000000000000210a       0x6a ./MiniOS/oled/ssd1306.o
+                0x000000000000210a                ssd1306_draw_fast_vline
  .text.ssd1306_draw_circle
-                0x00000000000021ee      0x1ae ./MiniOS/oled/ssd1306.o
-                0x00000000000021ee                ssd1306_draw_circle
+                0x0000000000002174      0x1ae ./MiniOS/oled/ssd1306.o
+                0x0000000000002174                ssd1306_draw_circle
  .text.ssd1306_draw_circle_helper
-                0x000000000000239c      0x14c ./MiniOS/oled/ssd1306.o
-                0x000000000000239c                ssd1306_draw_circle_helper
+                0x0000000000002322      0x14c ./MiniOS/oled/ssd1306.o
+                0x0000000000002322                ssd1306_draw_circle_helper
  .text.ssd1306_fill_circle_helper
-                0x00000000000024e8      0x154 ./MiniOS/oled/ssd1306.o
-                0x00000000000024e8                ssd1306_fill_circle_helper
+                0x000000000000246e      0x154 ./MiniOS/oled/ssd1306.o
+                0x000000000000246e                ssd1306_fill_circle_helper
  .text.ssd1306_fill_circle
-                0x000000000000263c       0x54 ./MiniOS/oled/ssd1306.o
-                0x000000000000263c                ssd1306_fill_circle
+                0x00000000000025c2       0x54 ./MiniOS/oled/ssd1306.o
+                0x00000000000025c2                ssd1306_fill_circle
  .text.ssd1306_draw_line
-                0x0000000000002690      0x146 ./MiniOS/oled/ssd1306.o
-                0x0000000000002690                ssd1306_draw_line
+                0x0000000000002616      0x146 ./MiniOS/oled/ssd1306.o
+                0x0000000000002616                ssd1306_draw_line
  .text.ssd1306_draw_rect
-                0x00000000000027d6       0x68 ./MiniOS/oled/ssd1306.o
-                0x00000000000027d6                ssd1306_draw_rect
+                0x000000000000275c       0x68 ./MiniOS/oled/ssd1306.o
+                0x000000000000275c                ssd1306_draw_rect
  .text.ssd1306_fill_rect
-                0x000000000000283e       0x54 ./MiniOS/oled/ssd1306.o
-                0x000000000000283e                ssd1306_fill_rect
+                0x00000000000027c4       0x54 ./MiniOS/oled/ssd1306.o
+                0x00000000000027c4                ssd1306_fill_rect
  .text.ssd1306_fill_screen
-                0x0000000000002892       0x28 ./MiniOS/oled/ssd1306.o
-                0x0000000000002892                ssd1306_fill_screen
+                0x0000000000002818       0x28 ./MiniOS/oled/ssd1306.o
+                0x0000000000002818                ssd1306_fill_screen
  .text.ssd1306_draw_round_rect
-                0x00000000000028ba      0x124 ./MiniOS/oled/ssd1306.o
-                0x00000000000028ba                ssd1306_draw_round_rect
+                0x0000000000002840      0x124 ./MiniOS/oled/ssd1306.o
+                0x0000000000002840                ssd1306_draw_round_rect
  .text.ssd1306_fill_round_rect
-                0x00000000000029de       0x9e ./MiniOS/oled/ssd1306.o
-                0x00000000000029de                ssd1306_fill_round_rect
+                0x0000000000002964       0x9e ./MiniOS/oled/ssd1306.o
+                0x0000000000002964                ssd1306_fill_round_rect
  .text.ssd1306_draw_triangle
-                0x0000000000002a7c       0x70 ./MiniOS/oled/ssd1306.o
-                0x0000000000002a7c                ssd1306_draw_triangle
+                0x0000000000002a02       0x70 ./MiniOS/oled/ssd1306.o
+                0x0000000000002a02                ssd1306_draw_triangle
  .text.ssd1306_fill_triangle
-                0x0000000000002aec      0x408 ./MiniOS/oled/ssd1306.o
-                0x0000000000002aec                ssd1306_fill_triangle
- .text.ssd1306_draw_bitmap
-                0x0000000000002ef4      0x10c ./MiniOS/oled/ssd1306.o
-                0x0000000000002ef4                ssd1306_draw_bitmap
- .text.ssd1306_draw_bitmap_bg
-                0x0000000000003000      0x114 ./MiniOS/oled/ssd1306.o
-                0x0000000000003000                ssd1306_draw_bitmap_bg
- .text.ssd1306_draw_xbitmap
-                0x0000000000003114      0x102 ./MiniOS/oled/ssd1306.o
-                0x0000000000003114                ssd1306_draw_xbitmap
+                0x0000000000002a72      0x408 ./MiniOS/oled/ssd1306.o
+                0x0000000000002a72                ssd1306_fill_triangle
  .text.ssd1306_draw_char
-                0x0000000000003216      0x17a ./MiniOS/oled/ssd1306.o
-                0x0000000000003216                ssd1306_draw_char
+                0x0000000000002e7a      0x17a ./MiniOS/oled/ssd1306.o
+                0x0000000000002e7a                ssd1306_draw_char
  .text.ssd1306_write
-                0x0000000000003390       0xdc ./MiniOS/oled/ssd1306.o
-                0x0000000000003390                ssd1306_write
+                0x0000000000002ff4       0xdc ./MiniOS/oled/ssd1306.o
+                0x0000000000002ff4                ssd1306_write
  .text.ssd1306_set_cursor
-                0x000000000000346c       0x12 ./MiniOS/oled/ssd1306.o
-                0x000000000000346c                ssd1306_set_cursor
+                0x00000000000030d0       0x12 ./MiniOS/oled/ssd1306.o
+                0x00000000000030d0                ssd1306_set_cursor
  .text.ssd1306_get_cursor_x
-                0x000000000000347e        0xa ./MiniOS/oled/ssd1306.o
-                0x000000000000347e                ssd1306_get_cursor_x
+                0x00000000000030e2        0xa ./MiniOS/oled/ssd1306.o
+                0x00000000000030e2                ssd1306_get_cursor_x
  .text.ssd1306_get_cursor_y
-                0x0000000000003488        0xa ./MiniOS/oled/ssd1306.o
-                0x0000000000003488                ssd1306_get_cursor_y
+                0x00000000000030ec        0xa ./MiniOS/oled/ssd1306.o
+                0x00000000000030ec                ssd1306_get_cursor_y
  .text.ssd1306_set_textsize
-                0x0000000000003492        0xc ./MiniOS/oled/ssd1306.o
-                0x0000000000003492                ssd1306_set_textsize
+                0x00000000000030f6        0xc ./MiniOS/oled/ssd1306.o
+                0x00000000000030f6                ssd1306_set_textsize
  .text.ssd1306_set_textcolor
-                0x000000000000349e       0x12 ./MiniOS/oled/ssd1306.o
-                0x000000000000349e                ssd1306_set_textcolor
+                0x0000000000003102       0x12 ./MiniOS/oled/ssd1306.o
+                0x0000000000003102                ssd1306_set_textcolor
  .text.ssd1306_set_textcolor_bg
-                0x00000000000034b0       0x12 ./MiniOS/oled/ssd1306.o
-                0x00000000000034b0                ssd1306_set_textcolor_bg
+                0x0000000000003114       0x12 ./MiniOS/oled/ssd1306.o
+                0x0000000000003114                ssd1306_set_textcolor_bg
  .text.ssd1306_set_textwrap
-                0x00000000000034c2        0x6 ./MiniOS/oled/ssd1306.o
-                0x00000000000034c2                ssd1306_set_textwrap
+                0x0000000000003126        0x6 ./MiniOS/oled/ssd1306.o
+                0x0000000000003126                ssd1306_set_textwrap
  .text.ssd1306_get_rotation
-                0x00000000000034c8        0x6 ./MiniOS/oled/ssd1306.o
-                0x00000000000034c8                ssd1306_get_rotation
+                0x000000000000312c        0x6 ./MiniOS/oled/ssd1306.o
+                0x000000000000312c                ssd1306_get_rotation
  .text.ssd1306_set_rotation
-                0x00000000000034ce        0x4 ./MiniOS/oled/ssd1306.o
-                0x00000000000034ce                ssd1306_set_rotation
+                0x0000000000003132        0x4 ./MiniOS/oled/ssd1306.o
+                0x0000000000003132                ssd1306_set_rotation
  .text.ssd1306_cp437
-                0x00000000000034d2        0x6 ./MiniOS/oled/ssd1306.o
-                0x00000000000034d2                ssd1306_cp437
+                0x0000000000003136        0x6 ./MiniOS/oled/ssd1306.o
+                0x0000000000003136                ssd1306_cp437
  .text.ssd1306_putstring
-                0x00000000000034d8       0x18 ./MiniOS/oled/ssd1306.o
-                0x00000000000034d8                ssd1306_putstring
+                0x000000000000313c       0x18 ./MiniOS/oled/ssd1306.o
+                0x000000000000313c                ssd1306_putstring
  .text.ssd1306_puts
-                0x00000000000034f0        0xa ./MiniOS/oled/ssd1306.o
-                0x00000000000034f0                ssd1306_puts
- .text.Motor    0x00000000000034fa      0x124 ./MiniOS/motor/motor.o
-                0x00000000000034fa                Motor
+                0x0000000000003154        0xa ./MiniOS/oled/ssd1306.o
+                0x0000000000003154                ssd1306_puts
+ .text.Motor    0x000000000000315e      0x124 ./MiniOS/motor/motor.o
+                0x000000000000315e                Motor
  .text.Motor_Init
-                0x000000000000361e       0x6c ./MiniOS/motor/motor.o
-                0x000000000000361e                Motor_Init
+                0x0000000000003282       0x6c ./MiniOS/motor/motor.o
+                0x0000000000003282                Motor_Init
  .text.oled_init
-                0x000000000000368a       0x54 ./MiniOS/miniOS.o
-                0x000000000000368a                oled_init
+                0x00000000000032ee       0x54 ./MiniOS/miniOS.o
+                0x00000000000032ee                oled_init
+ .text.oled_print_ring
+                0x0000000000003342      0x11e ./MiniOS/miniOS.o
+                0x0000000000003342                oled_print_ring
  .text.oled_print
-                0x00000000000036de       0x78 ./MiniOS/miniOS.o
-                0x00000000000036de                oled_print
+                0x0000000000003460       0x7e ./MiniOS/miniOS.o
+                0x0000000000003460                oled_print
  .text.oled_clear
-                0x0000000000003756        0x4 ./MiniOS/miniOS.o
-                0x0000000000003756                oled_clear
+                0x00000000000034de        0x4 ./MiniOS/miniOS.o
+                0x00000000000034de                oled_clear
  .text.oled_fill
-                0x000000000000375a        0x8 ./MiniOS/miniOS.o
-                0x000000000000375a                oled_fill
- .text.preinit_range_sensor
-                0x0000000000003762       0x22 ./MiniOS/miniOS.o
-                0x0000000000003762                preinit_range_sensor
- .text.init_range_sensor
-                0x0000000000003784       0xc0 ./MiniOS/miniOS.o
-                0x0000000000003784                init_range_sensor
- .text.get_distance
-                0x0000000000003844       0x26 ./MiniOS/miniOS.o
-                0x0000000000003844                get_distance
+                0x00000000000034e2        0x8 ./MiniOS/miniOS.o
+                0x00000000000034e2                oled_fill
+ .text.init_range_sensor_stack
+                0x00000000000034ea       0x24 ./MiniOS/miniOS.o
+                0x00000000000034ea                init_range_sensor_stack
+ .text.add_range_sensor
+                0x000000000000350e       0x5e ./MiniOS/miniOS.o
+                0x000000000000350e                add_range_sensor
+ .text.set_max_sensor_range
+                0x000000000000356c        0xa ./MiniOS/miniOS.o
+                0x000000000000356c                set_max_sensor_range
+ .text.get_max_sensor_range
+                0x0000000000003576        0xa ./MiniOS/miniOS.o
+                0x0000000000003576                get_max_sensor_range
+ .text.get_range_sensor_instance
+                0x0000000000003580       0x2c ./MiniOS/miniOS.o
+                0x0000000000003580                get_range_sensor_instance
+ .text.init_range_sensors_instances
+                0x00000000000035ac       0x42 ./MiniOS/miniOS.o
+                0x00000000000035ac                init_range_sensors_instances
+ .text.check_distance
+                0x00000000000035ee      0x1b6 ./MiniOS/miniOS.o
+                0x00000000000035ee                check_distance
+ .text.set_analog_sensor_treshold
+                0x00000000000037a4        0xa ./MiniOS/miniOS.o
+                0x00000000000037a4                set_analog_sensor_treshold
+ .text.get_analog_sensor_treshold
+                0x00000000000037ae        0xa ./MiniOS/miniOS.o
+                0x00000000000037ae                get_analog_sensor_treshold
  .text.init_analog_sensor
-                0x000000000000386a        0x6 ./MiniOS/miniOS.o
-                0x000000000000386a                init_analog_sensor
+                0x00000000000037b8        0x6 ./MiniOS/miniOS.o
+                0x00000000000037b8                init_analog_sensor
  .text.get_analog_value
-                0x0000000000003870        0x4 ./MiniOS/miniOS.o
-                0x0000000000003870                get_analog_value
- .text.led      0x0000000000003874        0xa ./MiniOS/miniOS.o
-                0x0000000000003874                led
+                0x00000000000037be        0x4 ./MiniOS/miniOS.o
+                0x00000000000037be                get_analog_value
+ .text.get_analog_sensor
+                0x00000000000037c2       0x1a ./MiniOS/miniOS.o
+                0x00000000000037c2                get_analog_sensor
+ .text.get_battery_lvl_mv
+                0x00000000000037dc       0x4e ./MiniOS/miniOS.o
+                0x00000000000037dc                get_battery_lvl_mv
+ .text.led      0x000000000000382a        0xa ./MiniOS/miniOS.o
+                0x000000000000382a                led
  .text.init_led
-                0x000000000000387e        0x6 ./MiniOS/miniOS.o
-                0x000000000000387e                init_led
+                0x0000000000003834        0x6 ./MiniOS/miniOS.o
+                0x0000000000003834                init_led
  .text.miniOS_init
-                0x0000000000003884        0x8 ./MiniOS/miniOS.o
-                0x0000000000003884                miniOS_init
+                0x000000000000383a        0x8 ./MiniOS/miniOS.o
+                0x000000000000383a                miniOS_init
  .text.init_range_sensors
-                0x000000000000388c       0xf6 ./Minisumo_EDU1.o
-                0x000000000000388c                init_range_sensors
- .text.check_range_sensors
-                0x0000000000003982       0x20 ./Minisumo_EDU1.o
-                0x0000000000003982                check_range_sensors
+                0x0000000000003842       0xda ./Minisumo_EDU1.o
+                0x0000000000003842                init_range_sensors
  .text.init_analog_sensors
-                0x00000000000039a2        0x6 ./Minisumo_EDU1.o
-                0x00000000000039a2                init_analog_sensors
- .text.check_analog_sensors
-                0x00000000000039a8       0x32 ./Minisumo_EDU1.o
-                0x00000000000039a8                check_analog_sensors
+                0x000000000000391c       0x1a ./Minisumo_EDU1.o
+                0x000000000000391c                init_analog_sensors
  .text.motorcfg_init
-                0x00000000000039da       0x2c ./Minisumo_EDU1.o
-                0x00000000000039da                motorcfg_init
- .text.my_init  0x0000000000003a06       0x66 ./Minisumo_EDU1.o
-                0x0000000000003a06                my_init
- .text.my_loop  0x0000000000003a6c      0x124 ./Minisumo_EDU1.o
-                0x0000000000003a6c                my_loop
+                0x0000000000003936       0x2c ./Minisumo_EDU1.o
+                0x0000000000003936                motorcfg_init
+ .text.my_init  0x0000000000003962       0x66 ./Minisumo_EDU1.o
+                0x0000000000003962                my_init
+ .text.update_display_main
+                0x00000000000039c8      0x1ae ./Minisumo_EDU1.o
+                0x00000000000039c8                update_display_main
+ .text.my_loop  0x0000000000003b76       0x16 ./Minisumo_EDU1.o
+                0x0000000000003b76                my_loop
  .text.startup.main
-                0x0000000000003b90        0xa ./Minisumo_EDU1.o
-                0x0000000000003b90                main
- .text.yield    0x0000000000003b9a        0x2 ./hal.o
-                0x0000000000003b9a                yield
+                0x0000000000003b8c        0xa ./Minisumo_EDU1.o
+                0x0000000000003b8c                main
+ .text.i2c_Start.part.0
+                0x0000000000003b96       0x1c ./hal.o
+ .text.i2c_Start.constprop.0
+                0x0000000000003bb2       0x2e ./hal.o
+ .text.yield    0x0000000000003be0        0x2 ./hal.o
+                0x0000000000003be0                yield
+ .text.read_sine_tab
+                0x0000000000003be2       0x18 ./hal.o
+                0x0000000000003be2                read_sine_tab
+ .text.hal_sin_deg_int16
+                0x0000000000003bfa       0x5e ./hal.o
+                0x0000000000003bfa                hal_sin_deg_int16
+ .text.hal_cos_deg_int16
+                0x0000000000003c58        0x8 ./hal.o
+                0x0000000000003c58                hal_cos_deg_int16
  .text.gpio_to_timer
-                0x0000000000003b9c       0x16 ./hal.o
-                0x0000000000003b9c                gpio_to_timer
+                0x0000000000003c60       0x16 ./hal.o
+                0x0000000000003c60                gpio_to_timer
  .text.gpio_to_info
-                0x0000000000003bb2       0x1c ./hal.o
-                0x0000000000003bb2                gpio_to_info
+                0x0000000000003c76       0x1c ./hal.o
+                0x0000000000003c76                gpio_to_info
  .text.gpio_to_num
-                0x0000000000003bce       0x12 ./hal.o
-                0x0000000000003bce                gpio_to_num
- .text.gpioSet  0x0000000000003be0       0xdc ./hal.o
-                0x0000000000003be0                gpioSet
- .text.gpioGet  0x0000000000003cbc       0x54 ./hal.o
-                0x0000000000003cbc                gpioGet
- .text.pwmSet   0x0000000000003d10       0xa8 ./hal.o
-                0x0000000000003d10                pwmSet
+                0x0000000000003c92       0x1c ./hal.o
+                0x0000000000003c92                gpio_to_num
+ .text.gpioSet  0x0000000000003cae       0xaa ./hal.o
+                0x0000000000003cae                gpioSet
+ .text.gpioGet  0x0000000000003d58       0x46 ./hal.o
+                0x0000000000003d58                gpioGet
+ .text.pwmSet   0x0000000000003d9e       0xa8 ./hal.o
+                0x0000000000003d9e                pwmSet
  .text.analogReference
-                0x0000000000003db8        0x6 ./hal.o
-                0x0000000000003db8                analogReference
- .text.adcGet   0x0000000000003dbe       0x36 ./hal.o
-                0x0000000000003dbe                adcGet
+                0x0000000000003e46        0x6 ./hal.o
+                0x0000000000003e46                analogReference
+ .text.adcGet   0x0000000000003e4c       0x36 ./hal.o
+                0x0000000000003e4c                adcGet
  .text.gpioInit
-                0x0000000000003df4      0x160 ./hal.o
-                0x0000000000003df4                gpioInit
+                0x0000000000003e82       0xe6 ./hal.o
+                0x0000000000003e82                gpioInit
+ .text.__vector_1
+                0x0000000000003f68       0x66 ./hal.o
+                0x0000000000003f68                __vector_1
+ .text.__vector_2
+                0x0000000000003fce       0x66 ./hal.o
+                0x0000000000003fce                __vector_2
+ .text.gpioSetInt
+                0x0000000000004034       0x50 ./hal.o
+                0x0000000000004034                gpioSetInt
+ .text.gpioRemoveInt
+                0x0000000000004084       0x22 ./hal.o
+                0x0000000000004084                gpioRemoveInt
  .text.__vector_16
-                0x0000000000003f54       0x90 ./hal.o
-                0x0000000000003f54                __vector_16
+                0x00000000000040a6       0x90 ./hal.o
+                0x00000000000040a6                __vector_16
  .text.hal_millis
-                0x0000000000003fe4       0x40 ./hal.o
-                0x0000000000003fe4                hal_millis
- .text.micros   0x0000000000004024       0x66 ./hal.o
-                0x0000000000004024                micros
+                0x0000000000004136       0x40 ./hal.o
+                0x0000000000004136                hal_millis
+ .text.hal_micros
+                0x0000000000004176       0x66 ./hal.o
+                0x0000000000004176                hal_micros
  .text.hal_delay
-                0x000000000000408a       0x82 ./hal.o
-                0x000000000000408a                hal_delay
- .text.TWIGetStatus
-                0x000000000000410c        0x8 ./hal.o
-                0x000000000000410c                TWIGetStatus
+                0x00000000000041dc       0x82 ./hal.o
+                0x00000000000041dc                hal_delay
  .text.i2c_Write
-                0x0000000000004114       0x14 ./hal.o
-                0x0000000000004114                i2c_Write
+                0x000000000000425e       0x22 ./hal.o
+                0x000000000000425e                i2c_Write
  .text.i2c_Read
-                0x0000000000004128       0x1e ./hal.o
-                0x0000000000004128                i2c_Read
+                0x0000000000004280       0x1c ./hal.o
+                0x0000000000004280                i2c_Read
  .text.i2c_Start
-                0x0000000000004146       0x14 ./hal.o
-                0x0000000000004146                i2c_Start
+                0x000000000000429c       0x2e ./hal.o
+                0x000000000000429c                i2c_Start
  .text.i2c_Stop
-                0x000000000000415a        0x8 ./hal.o
-                0x000000000000415a                i2c_Stop
+                0x00000000000042ca        0x8 ./hal.o
+                0x00000000000042ca                i2c_Stop
+ .text.i2c_set_reg_instance
+                0x00000000000042d2        0xe ./hal.o
+                0x00000000000042d2                i2c_set_reg_instance
+ .text.i2c_writeReg
+                0x00000000000042e0       0x28 ./hal.o
+                0x00000000000042e0                i2c_writeReg
+ .text.i2c_writeReg16Bit
+                0x0000000000004308       0x32 ./hal.o
+                0x0000000000004308                i2c_writeReg16Bit
+ .text.i2c_writeReg32Bit
+                0x000000000000433a       0x4a ./hal.o
+                0x000000000000433a                i2c_writeReg32Bit
+ .text.i2c_readReg
+                0x0000000000004384       0x2c ./hal.o
+                0x0000000000004384                i2c_readReg
+ .text.i2c_readReg16Bit
+                0x00000000000043b0       0x44 ./hal.o
+                0x00000000000043b0                i2c_readReg16Bit
+ .text.i2c_readReg32Bit
+                0x00000000000043f4       0x82 ./hal.o
+                0x00000000000043f4                i2c_readReg32Bit
+ .text.i2c_writeMulti
+                0x0000000000004476       0x54 ./hal.o
+                0x0000000000004476                i2c_writeMulti
+ .text.i2c_readMulti
+                0x00000000000044ca       0x62 ./hal.o
+                0x00000000000044ca                i2c_readMulti
  .text.init_hal
-                0x0000000000004162       0x86 ./hal.o
-                0x0000000000004162                init_hal
+                0x000000000000452c       0x7c ./hal.o
+                0x000000000000452c                init_hal
  .text.libgcc.mul
-                0x00000000000041e8        0x0 /usr/local/Cellar/avr-gcc/9.3.0/lib/avr-gcc/9/gcc/avr/9.3.0/avr5/libgcc.a(_udivmodsi4.o)
+                0x00000000000045a8        0x0 /usr/local/Cellar/avr-gcc/9.3.0/lib/avr-gcc/9/gcc/avr/9.3.0/avr5/libgcc.a(_udivmodhi4.o)
  .text.libgcc.div
-                0x00000000000041e8       0x44 /usr/local/Cellar/avr-gcc/9.3.0/lib/avr-gcc/9/gcc/avr/9.3.0/avr5/libgcc.a(_udivmodsi4.o)
-                0x00000000000041e8                __udivmodsi4
- .text.libgcc   0x000000000000422c        0x0 /usr/local/Cellar/avr-gcc/9.3.0/lib/avr-gcc/9/gcc/avr/9.3.0/avr5/libgcc.a(_udivmodsi4.o)
+                0x00000000000045a8       0x28 /usr/local/Cellar/avr-gcc/9.3.0/lib/avr-gcc/9/gcc/avr/9.3.0/avr5/libgcc.a(_udivmodhi4.o)
+                0x00000000000045a8                __udivmodhi4
+ .text.libgcc   0x00000000000045d0        0x0 /usr/local/Cellar/avr-gcc/9.3.0/lib/avr-gcc/9/gcc/avr/9.3.0/avr5/libgcc.a(_udivmodhi4.o)
  .text.libgcc.prologue
-                0x000000000000422c        0x0 /usr/local/Cellar/avr-gcc/9.3.0/lib/avr-gcc/9/gcc/avr/9.3.0/avr5/libgcc.a(_udivmodsi4.o)
+                0x00000000000045d0        0x0 /usr/local/Cellar/avr-gcc/9.3.0/lib/avr-gcc/9/gcc/avr/9.3.0/avr5/libgcc.a(_udivmodhi4.o)
  .text.libgcc.builtins
-                0x000000000000422c        0x0 /usr/local/Cellar/avr-gcc/9.3.0/lib/avr-gcc/9/gcc/avr/9.3.0/avr5/libgcc.a(_udivmodsi4.o)
+                0x00000000000045d0        0x0 /usr/local/Cellar/avr-gcc/9.3.0/lib/avr-gcc/9/gcc/avr/9.3.0/avr5/libgcc.a(_udivmodhi4.o)
  .text.libgcc.fmul
-                0x000000000000422c        0x0 /usr/local/Cellar/avr-gcc/9.3.0/lib/avr-gcc/9/gcc/avr/9.3.0/avr5/libgcc.a(_udivmodsi4.o)
+                0x00000000000045d0        0x0 /usr/local/Cellar/avr-gcc/9.3.0/lib/avr-gcc/9/gcc/avr/9.3.0/avr5/libgcc.a(_udivmodhi4.o)
  .text.libgcc.fixed
-                0x000000000000422c        0x0 /usr/local/Cellar/avr-gcc/9.3.0/lib/avr-gcc/9/gcc/avr/9.3.0/avr5/libgcc.a(_udivmodsi4.o)
+                0x00000000000045d0        0x0 /usr/local/Cellar/avr-gcc/9.3.0/lib/avr-gcc/9/gcc/avr/9.3.0/avr5/libgcc.a(_udivmodhi4.o)
  .text.libgcc.mul
-                0x000000000000422c        0x0 /usr/local/Cellar/avr-gcc/9.3.0/lib/avr-gcc/9/gcc/avr/9.3.0/avr5/libgcc.a(_divmodsi4.o)
+                0x00000000000045d0        0x0 /usr/local/Cellar/avr-gcc/9.3.0/lib/avr-gcc/9/gcc/avr/9.3.0/avr5/libgcc.a(_udivmodsi4.o)
  .text.libgcc.div
-                0x000000000000422c       0x2e /usr/local/Cellar/avr-gcc/9.3.0/lib/avr-gcc/9/gcc/avr/9.3.0/avr5/libgcc.a(_divmodsi4.o)
-                0x000000000000422c                __divmodsi4
- .text.libgcc   0x000000000000425a        0x0 /usr/local/Cellar/avr-gcc/9.3.0/lib/avr-gcc/9/gcc/avr/9.3.0/avr5/libgcc.a(_divmodsi4.o)
+                0x00000000000045d0       0x44 /usr/local/Cellar/avr-gcc/9.3.0/lib/avr-gcc/9/gcc/avr/9.3.0/avr5/libgcc.a(_udivmodsi4.o)
+                0x00000000000045d0                __udivmodsi4
+ .text.libgcc   0x0000000000004614        0x0 /usr/local/Cellar/avr-gcc/9.3.0/lib/avr-gcc/9/gcc/avr/9.3.0/avr5/libgcc.a(_udivmodsi4.o)
  .text.libgcc.prologue
-                0x000000000000425a        0x0 /usr/local/Cellar/avr-gcc/9.3.0/lib/avr-gcc/9/gcc/avr/9.3.0/avr5/libgcc.a(_divmodsi4.o)
+                0x0000000000004614        0x0 /usr/local/Cellar/avr-gcc/9.3.0/lib/avr-gcc/9/gcc/avr/9.3.0/avr5/libgcc.a(_udivmodsi4.o)
  .text.libgcc.builtins
-                0x000000000000425a        0x0 /usr/local/Cellar/avr-gcc/9.3.0/lib/avr-gcc/9/gcc/avr/9.3.0/avr5/libgcc.a(_divmodsi4.o)
+                0x0000000000004614        0x0 /usr/local/Cellar/avr-gcc/9.3.0/lib/avr-gcc/9/gcc/avr/9.3.0/avr5/libgcc.a(_udivmodsi4.o)
  .text.libgcc.fmul
-                0x000000000000425a        0x0 /usr/local/Cellar/avr-gcc/9.3.0/lib/avr-gcc/9/gcc/avr/9.3.0/avr5/libgcc.a(_divmodsi4.o)
+                0x0000000000004614        0x0 /usr/local/Cellar/avr-gcc/9.3.0/lib/avr-gcc/9/gcc/avr/9.3.0/avr5/libgcc.a(_udivmodsi4.o)
  .text.libgcc.fixed
-                0x000000000000425a        0x0 /usr/local/Cellar/avr-gcc/9.3.0/lib/avr-gcc/9/gcc/avr/9.3.0/avr5/libgcc.a(_divmodsi4.o)
+                0x0000000000004614        0x0 /usr/local/Cellar/avr-gcc/9.3.0/lib/avr-gcc/9/gcc/avr/9.3.0/avr5/libgcc.a(_udivmodsi4.o)
  .text.libgcc.mul
-                0x000000000000425a        0x0 /usr/local/Cellar/avr-gcc/9.3.0/lib/avr-gcc/9/gcc/avr/9.3.0/avr5/libgcc.a(_negsi2.o)
+                0x0000000000004614        0x0 /usr/local/Cellar/avr-gcc/9.3.0/lib/avr-gcc/9/gcc/avr/9.3.0/avr5/libgcc.a(_divmodsi4.o)
  .text.libgcc.div
-                0x000000000000425a       0x10 /usr/local/Cellar/avr-gcc/9.3.0/lib/avr-gcc/9/gcc/avr/9.3.0/avr5/libgcc.a(_negsi2.o)
-                0x000000000000425a                __negsi2
- .text.libgcc   0x000000000000426a        0x0 /usr/local/Cellar/avr-gcc/9.3.0/lib/avr-gcc/9/gcc/avr/9.3.0/avr5/libgcc.a(_negsi2.o)
+                0x0000000000004614       0x2e /usr/local/Cellar/avr-gcc/9.3.0/lib/avr-gcc/9/gcc/avr/9.3.0/avr5/libgcc.a(_divmodsi4.o)
+                0x0000000000004614                __divmodsi4
+ .text.libgcc   0x0000000000004642        0x0 /usr/local/Cellar/avr-gcc/9.3.0/lib/avr-gcc/9/gcc/avr/9.3.0/avr5/libgcc.a(_divmodsi4.o)
  .text.libgcc.prologue
-                0x000000000000426a        0x0 /usr/local/Cellar/avr-gcc/9.3.0/lib/avr-gcc/9/gcc/avr/9.3.0/avr5/libgcc.a(_negsi2.o)
+                0x0000000000004642        0x0 /usr/local/Cellar/avr-gcc/9.3.0/lib/avr-gcc/9/gcc/avr/9.3.0/avr5/libgcc.a(_divmodsi4.o)
  .text.libgcc.builtins
-                0x000000000000426a        0x0 /usr/local/Cellar/avr-gcc/9.3.0/lib/avr-gcc/9/gcc/avr/9.3.0/avr5/libgcc.a(_negsi2.o)
+                0x0000000000004642        0x0 /usr/local/Cellar/avr-gcc/9.3.0/lib/avr-gcc/9/gcc/avr/9.3.0/avr5/libgcc.a(_divmodsi4.o)
  .text.libgcc.fmul
-                0x000000000000426a        0x0 /usr/local/Cellar/avr-gcc/9.3.0/lib/avr-gcc/9/gcc/avr/9.3.0/avr5/libgcc.a(_negsi2.o)
+                0x0000000000004642        0x0 /usr/local/Cellar/avr-gcc/9.3.0/lib/avr-gcc/9/gcc/avr/9.3.0/avr5/libgcc.a(_divmodsi4.o)
  .text.libgcc.fixed
-                0x000000000000426a        0x0 /usr/local/Cellar/avr-gcc/9.3.0/lib/avr-gcc/9/gcc/avr/9.3.0/avr5/libgcc.a(_negsi2.o)
+                0x0000000000004642        0x0 /usr/local/Cellar/avr-gcc/9.3.0/lib/avr-gcc/9/gcc/avr/9.3.0/avr5/libgcc.a(_divmodsi4.o)
  .text.libgcc.mul
-                0x000000000000426a        0x0 /usr/local/Cellar/avr-gcc/9.3.0/lib/avr-gcc/9/gcc/avr/9.3.0/avr5/libgcc.a(_exit.o)
+                0x0000000000004642        0x0 /usr/local/Cellar/avr-gcc/9.3.0/lib/avr-gcc/9/gcc/avr/9.3.0/avr5/libgcc.a(_negsi2.o)
  .text.libgcc.div
-                0x000000000000426a        0x0 /usr/local/Cellar/avr-gcc/9.3.0/lib/avr-gcc/9/gcc/avr/9.3.0/avr5/libgcc.a(_exit.o)
- .text.libgcc   0x000000000000426a        0x0 /usr/local/Cellar/avr-gcc/9.3.0/lib/avr-gcc/9/gcc/avr/9.3.0/avr5/libgcc.a(_exit.o)
+                0x0000000000004642       0x10 /usr/local/Cellar/avr-gcc/9.3.0/lib/avr-gcc/9/gcc/avr/9.3.0/avr5/libgcc.a(_negsi2.o)
+                0x0000000000004642                __negsi2
+ .text.libgcc   0x0000000000004652        0x0 /usr/local/Cellar/avr-gcc/9.3.0/lib/avr-gcc/9/gcc/avr/9.3.0/avr5/libgcc.a(_negsi2.o)
  .text.libgcc.prologue
-                0x000000000000426a        0x0 /usr/local/Cellar/avr-gcc/9.3.0/lib/avr-gcc/9/gcc/avr/9.3.0/avr5/libgcc.a(_exit.o)
+                0x0000000000004652        0x0 /usr/local/Cellar/avr-gcc/9.3.0/lib/avr-gcc/9/gcc/avr/9.3.0/avr5/libgcc.a(_negsi2.o)
  .text.libgcc.builtins
-                0x000000000000426a        0x0 /usr/local/Cellar/avr-gcc/9.3.0/lib/avr-gcc/9/gcc/avr/9.3.0/avr5/libgcc.a(_exit.o)
+                0x0000000000004652        0x0 /usr/local/Cellar/avr-gcc/9.3.0/lib/avr-gcc/9/gcc/avr/9.3.0/avr5/libgcc.a(_negsi2.o)
  .text.libgcc.fmul
-                0x000000000000426a        0x0 /usr/local/Cellar/avr-gcc/9.3.0/lib/avr-gcc/9/gcc/avr/9.3.0/avr5/libgcc.a(_exit.o)
+                0x0000000000004652        0x0 /usr/local/Cellar/avr-gcc/9.3.0/lib/avr-gcc/9/gcc/avr/9.3.0/avr5/libgcc.a(_negsi2.o)
  .text.libgcc.fixed
-                0x000000000000426a        0x0 /usr/local/Cellar/avr-gcc/9.3.0/lib/avr-gcc/9/gcc/avr/9.3.0/avr5/libgcc.a(_exit.o)
+                0x0000000000004652        0x0 /usr/local/Cellar/avr-gcc/9.3.0/lib/avr-gcc/9/gcc/avr/9.3.0/avr5/libgcc.a(_negsi2.o)
  .text.libgcc.mul
-                0x000000000000426a        0x0 /usr/local/Cellar/avr-gcc/9.3.0/lib/avr-gcc/9/gcc/avr/9.3.0/avr5/libgcc.a(_copy_data.o)
+                0x0000000000004652        0x0 /usr/local/Cellar/avr-gcc/9.3.0/lib/avr-gcc/9/gcc/avr/9.3.0/avr5/libgcc.a(_exit.o)
  .text.libgcc.div
-                0x000000000000426a        0x0 /usr/local/Cellar/avr-gcc/9.3.0/lib/avr-gcc/9/gcc/avr/9.3.0/avr5/libgcc.a(_copy_data.o)
- .text.libgcc   0x000000000000426a        0x0 /usr/local/Cellar/avr-gcc/9.3.0/lib/avr-gcc/9/gcc/avr/9.3.0/avr5/libgcc.a(_copy_data.o)
+                0x0000000000004652        0x0 /usr/local/Cellar/avr-gcc/9.3.0/lib/avr-gcc/9/gcc/avr/9.3.0/avr5/libgcc.a(_exit.o)
+ .text.libgcc   0x0000000000004652        0x0 /usr/local/Cellar/avr-gcc/9.3.0/lib/avr-gcc/9/gcc/avr/9.3.0/avr5/libgcc.a(_exit.o)
  .text.libgcc.prologue
-                0x000000000000426a        0x0 /usr/local/Cellar/avr-gcc/9.3.0/lib/avr-gcc/9/gcc/avr/9.3.0/avr5/libgcc.a(_copy_data.o)
+                0x0000000000004652        0x0 /usr/local/Cellar/avr-gcc/9.3.0/lib/avr-gcc/9/gcc/avr/9.3.0/avr5/libgcc.a(_exit.o)
  .text.libgcc.builtins
-                0x000000000000426a        0x0 /usr/local/Cellar/avr-gcc/9.3.0/lib/avr-gcc/9/gcc/avr/9.3.0/avr5/libgcc.a(_copy_data.o)
+                0x0000000000004652        0x0 /usr/local/Cellar/avr-gcc/9.3.0/lib/avr-gcc/9/gcc/avr/9.3.0/avr5/libgcc.a(_exit.o)
  .text.libgcc.fmul
-                0x000000000000426a        0x0 /usr/local/Cellar/avr-gcc/9.3.0/lib/avr-gcc/9/gcc/avr/9.3.0/avr5/libgcc.a(_copy_data.o)
+                0x0000000000004652        0x0 /usr/local/Cellar/avr-gcc/9.3.0/lib/avr-gcc/9/gcc/avr/9.3.0/avr5/libgcc.a(_exit.o)
  .text.libgcc.fixed
-                0x000000000000426a        0x0 /usr/local/Cellar/avr-gcc/9.3.0/lib/avr-gcc/9/gcc/avr/9.3.0/avr5/libgcc.a(_copy_data.o)
+                0x0000000000004652        0x0 /usr/local/Cellar/avr-gcc/9.3.0/lib/avr-gcc/9/gcc/avr/9.3.0/avr5/libgcc.a(_exit.o)
  .text.libgcc.mul
-                0x000000000000426a        0x0 /usr/local/Cellar/avr-gcc/9.3.0/lib/avr-gcc/9/gcc/avr/9.3.0/avr5/libgcc.a(_clear_bss.o)
+                0x0000000000004652        0x0 /usr/local/Cellar/avr-gcc/9.3.0/lib/avr-gcc/9/gcc/avr/9.3.0/avr5/libgcc.a(_copy_data.o)
  .text.libgcc.div
-                0x000000000000426a        0x0 /usr/local/Cellar/avr-gcc/9.3.0/lib/avr-gcc/9/gcc/avr/9.3.0/avr5/libgcc.a(_clear_bss.o)
- .text.libgcc   0x000000000000426a        0x0 /usr/local/Cellar/avr-gcc/9.3.0/lib/avr-gcc/9/gcc/avr/9.3.0/avr5/libgcc.a(_clear_bss.o)
+                0x0000000000004652        0x0 /usr/local/Cellar/avr-gcc/9.3.0/lib/avr-gcc/9/gcc/avr/9.3.0/avr5/libgcc.a(_copy_data.o)
+ .text.libgcc   0x0000000000004652        0x0 /usr/local/Cellar/avr-gcc/9.3.0/lib/avr-gcc/9/gcc/avr/9.3.0/avr5/libgcc.a(_copy_data.o)
  .text.libgcc.prologue
-                0x000000000000426a        0x0 /usr/local/Cellar/avr-gcc/9.3.0/lib/avr-gcc/9/gcc/avr/9.3.0/avr5/libgcc.a(_clear_bss.o)
+                0x0000000000004652        0x0 /usr/local/Cellar/avr-gcc/9.3.0/lib/avr-gcc/9/gcc/avr/9.3.0/avr5/libgcc.a(_copy_data.o)
  .text.libgcc.builtins
-                0x000000000000426a        0x0 /usr/local/Cellar/avr-gcc/9.3.0/lib/avr-gcc/9/gcc/avr/9.3.0/avr5/libgcc.a(_clear_bss.o)
+                0x0000000000004652        0x0 /usr/local/Cellar/avr-gcc/9.3.0/lib/avr-gcc/9/gcc/avr/9.3.0/avr5/libgcc.a(_copy_data.o)
  .text.libgcc.fmul
-                0x000000000000426a        0x0 /usr/local/Cellar/avr-gcc/9.3.0/lib/avr-gcc/9/gcc/avr/9.3.0/avr5/libgcc.a(_clear_bss.o)
+                0x0000000000004652        0x0 /usr/local/Cellar/avr-gcc/9.3.0/lib/avr-gcc/9/gcc/avr/9.3.0/avr5/libgcc.a(_copy_data.o)
  .text.libgcc.fixed
-                0x000000000000426a        0x0 /usr/local/Cellar/avr-gcc/9.3.0/lib/avr-gcc/9/gcc/avr/9.3.0/avr5/libgcc.a(_clear_bss.o)
+                0x0000000000004652        0x0 /usr/local/Cellar/avr-gcc/9.3.0/lib/avr-gcc/9/gcc/avr/9.3.0/avr5/libgcc.a(_copy_data.o)
  .text.libgcc.mul
-                0x000000000000426a       0x1e /usr/local/Cellar/avr-gcc/9.3.0/lib/avr-gcc/9/gcc/avr/9.3.0/avr5/libgcc.a(_umulhisi3.o)
-                0x000000000000426a                __umulhisi3
+                0x0000000000004652        0x0 /usr/local/Cellar/avr-gcc/9.3.0/lib/avr-gcc/9/gcc/avr/9.3.0/avr5/libgcc.a(_clear_bss.o)
  .text.libgcc.div
-                0x0000000000004288        0x0 /usr/local/Cellar/avr-gcc/9.3.0/lib/avr-gcc/9/gcc/avr/9.3.0/avr5/libgcc.a(_umulhisi3.o)
- .text.libgcc   0x0000000000004288        0x0 /usr/local/Cellar/avr-gcc/9.3.0/lib/avr-gcc/9/gcc/avr/9.3.0/avr5/libgcc.a(_umulhisi3.o)
+                0x0000000000004652        0x0 /usr/local/Cellar/avr-gcc/9.3.0/lib/avr-gcc/9/gcc/avr/9.3.0/avr5/libgcc.a(_clear_bss.o)
+ .text.libgcc   0x0000000000004652        0x0 /usr/local/Cellar/avr-gcc/9.3.0/lib/avr-gcc/9/gcc/avr/9.3.0/avr5/libgcc.a(_clear_bss.o)
  .text.libgcc.prologue
-                0x0000000000004288        0x0 /usr/local/Cellar/avr-gcc/9.3.0/lib/avr-gcc/9/gcc/avr/9.3.0/avr5/libgcc.a(_umulhisi3.o)
+                0x0000000000004652        0x0 /usr/local/Cellar/avr-gcc/9.3.0/lib/avr-gcc/9/gcc/avr/9.3.0/avr5/libgcc.a(_clear_bss.o)
  .text.libgcc.builtins
-                0x0000000000004288        0x0 /usr/local/Cellar/avr-gcc/9.3.0/lib/avr-gcc/9/gcc/avr/9.3.0/avr5/libgcc.a(_umulhisi3.o)
+                0x0000000000004652        0x0 /usr/local/Cellar/avr-gcc/9.3.0/lib/avr-gcc/9/gcc/avr/9.3.0/avr5/libgcc.a(_clear_bss.o)
  .text.libgcc.fmul
-                0x0000000000004288        0x0 /usr/local/Cellar/avr-gcc/9.3.0/lib/avr-gcc/9/gcc/avr/9.3.0/avr5/libgcc.a(_umulhisi3.o)
+                0x0000000000004652        0x0 /usr/local/Cellar/avr-gcc/9.3.0/lib/avr-gcc/9/gcc/avr/9.3.0/avr5/libgcc.a(_clear_bss.o)
  .text.libgcc.fixed
-                0x0000000000004288        0x0 /usr/local/Cellar/avr-gcc/9.3.0/lib/avr-gcc/9/gcc/avr/9.3.0/avr5/libgcc.a(_umulhisi3.o)
+                0x0000000000004652        0x0 /usr/local/Cellar/avr-gcc/9.3.0/lib/avr-gcc/9/gcc/avr/9.3.0/avr5/libgcc.a(_clear_bss.o)
  .text.libgcc.mul
-                0x0000000000004288       0x16 /usr/local/Cellar/avr-gcc/9.3.0/lib/avr-gcc/9/gcc/avr/9.3.0/avr5/libgcc.a(_muluhisi3.o)
-                0x0000000000004288                __muluhisi3
+                0x0000000000004652       0x1e /usr/local/Cellar/avr-gcc/9.3.0/lib/avr-gcc/9/gcc/avr/9.3.0/avr5/libgcc.a(_umulhisi3.o)
+                0x0000000000004652                __umulhisi3
  .text.libgcc.div
-                0x000000000000429e        0x0 /usr/local/Cellar/avr-gcc/9.3.0/lib/avr-gcc/9/gcc/avr/9.3.0/avr5/libgcc.a(_muluhisi3.o)
- .text.libgcc   0x000000000000429e        0x0 /usr/local/Cellar/avr-gcc/9.3.0/lib/avr-gcc/9/gcc/avr/9.3.0/avr5/libgcc.a(_muluhisi3.o)
+                0x0000000000004670        0x0 /usr/local/Cellar/avr-gcc/9.3.0/lib/avr-gcc/9/gcc/avr/9.3.0/avr5/libgcc.a(_umulhisi3.o)
+ .text.libgcc   0x0000000000004670        0x0 /usr/local/Cellar/avr-gcc/9.3.0/lib/avr-gcc/9/gcc/avr/9.3.0/avr5/libgcc.a(_umulhisi3.o)
  .text.libgcc.prologue
-                0x000000000000429e        0x0 /usr/local/Cellar/avr-gcc/9.3.0/lib/avr-gcc/9/gcc/avr/9.3.0/avr5/libgcc.a(_muluhisi3.o)
+                0x0000000000004670        0x0 /usr/local/Cellar/avr-gcc/9.3.0/lib/avr-gcc/9/gcc/avr/9.3.0/avr5/libgcc.a(_umulhisi3.o)
  .text.libgcc.builtins
-                0x000000000000429e        0x0 /usr/local/Cellar/avr-gcc/9.3.0/lib/avr-gcc/9/gcc/avr/9.3.0/avr5/libgcc.a(_muluhisi3.o)
+                0x0000000000004670        0x0 /usr/local/Cellar/avr-gcc/9.3.0/lib/avr-gcc/9/gcc/avr/9.3.0/avr5/libgcc.a(_umulhisi3.o)
  .text.libgcc.fmul
-                0x000000000000429e        0x0 /usr/local/Cellar/avr-gcc/9.3.0/lib/avr-gcc/9/gcc/avr/9.3.0/avr5/libgcc.a(_muluhisi3.o)
+                0x0000000000004670        0x0 /usr/local/Cellar/avr-gcc/9.3.0/lib/avr-gcc/9/gcc/avr/9.3.0/avr5/libgcc.a(_umulhisi3.o)
  .text.libgcc.fixed
-                0x000000000000429e        0x0 /usr/local/Cellar/avr-gcc/9.3.0/lib/avr-gcc/9/gcc/avr/9.3.0/avr5/libgcc.a(_muluhisi3.o)
+                0x0000000000004670        0x0 /usr/local/Cellar/avr-gcc/9.3.0/lib/avr-gcc/9/gcc/avr/9.3.0/avr5/libgcc.a(_umulhisi3.o)
+ .text.libgcc.mul
+                0x0000000000004670       0x16 /usr/local/Cellar/avr-gcc/9.3.0/lib/avr-gcc/9/gcc/avr/9.3.0/avr5/libgcc.a(_muluhisi3.o)
+                0x0000000000004670                __muluhisi3
+ .text.libgcc.div
+                0x0000000000004686        0x0 /usr/local/Cellar/avr-gcc/9.3.0/lib/avr-gcc/9/gcc/avr/9.3.0/avr5/libgcc.a(_muluhisi3.o)
+ .text.libgcc   0x0000000000004686        0x0 /usr/local/Cellar/avr-gcc/9.3.0/lib/avr-gcc/9/gcc/avr/9.3.0/avr5/libgcc.a(_muluhisi3.o)
+ .text.libgcc.prologue
+                0x0000000000004686        0x0 /usr/local/Cellar/avr-gcc/9.3.0/lib/avr-gcc/9/gcc/avr/9.3.0/avr5/libgcc.a(_muluhisi3.o)
+ .text.libgcc.builtins
+                0x0000000000004686        0x0 /usr/local/Cellar/avr-gcc/9.3.0/lib/avr-gcc/9/gcc/avr/9.3.0/avr5/libgcc.a(_muluhisi3.o)
+ .text.libgcc.fmul
+                0x0000000000004686        0x0 /usr/local/Cellar/avr-gcc/9.3.0/lib/avr-gcc/9/gcc/avr/9.3.0/avr5/libgcc.a(_muluhisi3.o)
+ .text.libgcc.fixed
+                0x0000000000004686        0x0 /usr/local/Cellar/avr-gcc/9.3.0/lib/avr-gcc/9/gcc/avr/9.3.0/avr5/libgcc.a(_muluhisi3.o)
+ .text.libgcc.mul
+                0x0000000000004686       0x10 /usr/local/Cellar/avr-gcc/9.3.0/lib/avr-gcc/9/gcc/avr/9.3.0/avr5/libgcc.a(_mulshisi3.o)
+                0x0000000000004686                __mulshisi3
+                0x000000000000468c                __mulohisi3
+ .text.libgcc.div
+                0x0000000000004696        0x0 /usr/local/Cellar/avr-gcc/9.3.0/lib/avr-gcc/9/gcc/avr/9.3.0/avr5/libgcc.a(_mulshisi3.o)
+ .text.libgcc   0x0000000000004696        0x0 /usr/local/Cellar/avr-gcc/9.3.0/lib/avr-gcc/9/gcc/avr/9.3.0/avr5/libgcc.a(_mulshisi3.o)
+ .text.libgcc.prologue
+                0x0000000000004696        0x0 /usr/local/Cellar/avr-gcc/9.3.0/lib/avr-gcc/9/gcc/avr/9.3.0/avr5/libgcc.a(_mulshisi3.o)
+ .text.libgcc.builtins
+                0x0000000000004696        0x0 /usr/local/Cellar/avr-gcc/9.3.0/lib/avr-gcc/9/gcc/avr/9.3.0/avr5/libgcc.a(_mulshisi3.o)
+ .text.libgcc.fmul
+                0x0000000000004696        0x0 /usr/local/Cellar/avr-gcc/9.3.0/lib/avr-gcc/9/gcc/avr/9.3.0/avr5/libgcc.a(_mulshisi3.o)
+ .text.libgcc.fixed
+                0x0000000000004696        0x0 /usr/local/Cellar/avr-gcc/9.3.0/lib/avr-gcc/9/gcc/avr/9.3.0/avr5/libgcc.a(_mulshisi3.o)
  .text.avr-libc
-                0x000000000000429e       0x46 /usr/local/Cellar/avr-gcc/9.3.0/lib/avr-gcc/9/gcc/avr/9.3.0/../../../../../../avr/lib/avr5/libc.a(sprintf.o)
-                0x000000000000429e                sprintf
+                0x0000000000004696      0x250 /usr/local/Cellar/avr-gcc/9.3.0/lib/avr-gcc/9/gcc/avr/9.3.0/../../../../../../avr/lib/avr5/libc.a(malloc.o)
+                0x0000000000004696                malloc
+                0x00000000000047c2                free
  .text.avr-libc
-                0x00000000000042e4      0x3b0 /usr/local/Cellar/avr-gcc/9.3.0/lib/avr-gcc/9/gcc/avr/9.3.0/../../../../../../avr/lib/avr5/libc.a(vfprintf_std.o)
-                0x00000000000042e4                vfprintf
+                0x00000000000048e6       0x46 /usr/local/Cellar/avr-gcc/9.3.0/lib/avr-gcc/9/gcc/avr/9.3.0/../../../../../../avr/lib/avr5/libc.a(sprintf.o)
+                0x00000000000048e6                sprintf
  .text.avr-libc
-                0x0000000000004694       0x16 /usr/local/Cellar/avr-gcc/9.3.0/lib/avr-gcc/9/gcc/avr/9.3.0/../../../../../../avr/lib/avr5/libc.a(strnlen_P.o)
-                0x0000000000004694                strnlen_P
+                0x000000000000492c      0x3b0 /usr/local/Cellar/avr-gcc/9.3.0/lib/avr-gcc/9/gcc/avr/9.3.0/../../../../../../avr/lib/avr5/libc.a(vfprintf_std.o)
+                0x000000000000492c                vfprintf
  .text.avr-libc
-                0x00000000000046aa       0x16 /usr/local/Cellar/avr-gcc/9.3.0/lib/avr-gcc/9/gcc/avr/9.3.0/../../../../../../avr/lib/avr5/libc.a(strnlen.o)
-                0x00000000000046aa                strnlen
+                0x0000000000004cdc       0x16 /usr/local/Cellar/avr-gcc/9.3.0/lib/avr-gcc/9/gcc/avr/9.3.0/../../../../../../avr/lib/avr5/libc.a(strnlen_P.o)
+                0x0000000000004cdc                strnlen_P
  .text.avr-libc
-                0x00000000000046c0       0x60 /usr/local/Cellar/avr-gcc/9.3.0/lib/avr-gcc/9/gcc/avr/9.3.0/../../../../../../avr/lib/avr5/libc.a(fputc.o)
-                0x00000000000046c0                fputc
+                0x0000000000004cf2       0x16 /usr/local/Cellar/avr-gcc/9.3.0/lib/avr-gcc/9/gcc/avr/9.3.0/../../../../../../avr/lib/avr5/libc.a(strnlen.o)
+                0x0000000000004cf2                strnlen
  .text.avr-libc
-                0x0000000000004720       0xbc /usr/local/Cellar/avr-gcc/9.3.0/lib/avr-gcc/9/gcc/avr/9.3.0/../../../../../../avr/lib/avr5/libc.a(ultoa_invert.o)
-                0x0000000000004720                __ultoa_invert
+                0x0000000000004d08       0x60 /usr/local/Cellar/avr-gcc/9.3.0/lib/avr-gcc/9/gcc/avr/9.3.0/../../../../../../avr/lib/avr5/libc.a(fputc.o)
+                0x0000000000004d08                fputc
+ .text.avr-libc
+                0x0000000000004d68       0xbc /usr/local/Cellar/avr-gcc/9.3.0/lib/avr-gcc/9/gcc/avr/9.3.0/../../../../../../avr/lib/avr5/libc.a(ultoa_invert.o)
+                0x0000000000004d68                __ultoa_invert
  .text.libgcc.mul
-                0x00000000000047dc        0x0 /usr/local/Cellar/avr-gcc/9.3.0/lib/avr-gcc/9/gcc/avr/9.3.0/avr5/libgcc.a(_prologue.o)
+                0x0000000000004e24        0x0 /usr/local/Cellar/avr-gcc/9.3.0/lib/avr-gcc/9/gcc/avr/9.3.0/avr5/libgcc.a(_prologue.o)
  .text.libgcc.div
-                0x00000000000047dc        0x0 /usr/local/Cellar/avr-gcc/9.3.0/lib/avr-gcc/9/gcc/avr/9.3.0/avr5/libgcc.a(_prologue.o)
- .text.libgcc   0x00000000000047dc        0x0 /usr/local/Cellar/avr-gcc/9.3.0/lib/avr-gcc/9/gcc/avr/9.3.0/avr5/libgcc.a(_prologue.o)
+                0x0000000000004e24        0x0 /usr/local/Cellar/avr-gcc/9.3.0/lib/avr-gcc/9/gcc/avr/9.3.0/avr5/libgcc.a(_prologue.o)
+ .text.libgcc   0x0000000000004e24        0x0 /usr/local/Cellar/avr-gcc/9.3.0/lib/avr-gcc/9/gcc/avr/9.3.0/avr5/libgcc.a(_prologue.o)
  .text.libgcc.prologue
-                0x00000000000047dc       0x38 /usr/local/Cellar/avr-gcc/9.3.0/lib/avr-gcc/9/gcc/avr/9.3.0/avr5/libgcc.a(_prologue.o)
-                0x00000000000047dc                __prologue_saves__
+                0x0000000000004e24       0x38 /usr/local/Cellar/avr-gcc/9.3.0/lib/avr-gcc/9/gcc/avr/9.3.0/avr5/libgcc.a(_prologue.o)
+                0x0000000000004e24                __prologue_saves__
  .text.libgcc.builtins
-                0x0000000000004814        0x0 /usr/local/Cellar/avr-gcc/9.3.0/lib/avr-gcc/9/gcc/avr/9.3.0/avr5/libgcc.a(_prologue.o)
+                0x0000000000004e5c        0x0 /usr/local/Cellar/avr-gcc/9.3.0/lib/avr-gcc/9/gcc/avr/9.3.0/avr5/libgcc.a(_prologue.o)
  .text.libgcc.fmul
-                0x0000000000004814        0x0 /usr/local/Cellar/avr-gcc/9.3.0/lib/avr-gcc/9/gcc/avr/9.3.0/avr5/libgcc.a(_prologue.o)
+                0x0000000000004e5c        0x0 /usr/local/Cellar/avr-gcc/9.3.0/lib/avr-gcc/9/gcc/avr/9.3.0/avr5/libgcc.a(_prologue.o)
  .text.libgcc.fixed
-                0x0000000000004814        0x0 /usr/local/Cellar/avr-gcc/9.3.0/lib/avr-gcc/9/gcc/avr/9.3.0/avr5/libgcc.a(_prologue.o)
+                0x0000000000004e5c        0x0 /usr/local/Cellar/avr-gcc/9.3.0/lib/avr-gcc/9/gcc/avr/9.3.0/avr5/libgcc.a(_prologue.o)
  .text.libgcc.mul
-                0x0000000000004814        0x0 /usr/local/Cellar/avr-gcc/9.3.0/lib/avr-gcc/9/gcc/avr/9.3.0/avr5/libgcc.a(_epilogue.o)
+                0x0000000000004e5c        0x0 /usr/local/Cellar/avr-gcc/9.3.0/lib/avr-gcc/9/gcc/avr/9.3.0/avr5/libgcc.a(_epilogue.o)
  .text.libgcc.div
-                0x0000000000004814        0x0 /usr/local/Cellar/avr-gcc/9.3.0/lib/avr-gcc/9/gcc/avr/9.3.0/avr5/libgcc.a(_epilogue.o)
- .text.libgcc   0x0000000000004814        0x0 /usr/local/Cellar/avr-gcc/9.3.0/lib/avr-gcc/9/gcc/avr/9.3.0/avr5/libgcc.a(_epilogue.o)
+                0x0000000000004e5c        0x0 /usr/local/Cellar/avr-gcc/9.3.0/lib/avr-gcc/9/gcc/avr/9.3.0/avr5/libgcc.a(_epilogue.o)
+ .text.libgcc   0x0000000000004e5c        0x0 /usr/local/Cellar/avr-gcc/9.3.0/lib/avr-gcc/9/gcc/avr/9.3.0/avr5/libgcc.a(_epilogue.o)
  .text.libgcc.prologue
-                0x0000000000004814       0x36 /usr/local/Cellar/avr-gcc/9.3.0/lib/avr-gcc/9/gcc/avr/9.3.0/avr5/libgcc.a(_epilogue.o)
-                0x0000000000004814                __epilogue_restores__
+                0x0000000000004e5c       0x36 /usr/local/Cellar/avr-gcc/9.3.0/lib/avr-gcc/9/gcc/avr/9.3.0/avr5/libgcc.a(_epilogue.o)
+                0x0000000000004e5c                __epilogue_restores__
  .text.libgcc.builtins
-                0x000000000000484a        0x0 /usr/local/Cellar/avr-gcc/9.3.0/lib/avr-gcc/9/gcc/avr/9.3.0/avr5/libgcc.a(_epilogue.o)
+                0x0000000000004e92        0x0 /usr/local/Cellar/avr-gcc/9.3.0/lib/avr-gcc/9/gcc/avr/9.3.0/avr5/libgcc.a(_epilogue.o)
  .text.libgcc.fmul
-                0x000000000000484a        0x0 /usr/local/Cellar/avr-gcc/9.3.0/lib/avr-gcc/9/gcc/avr/9.3.0/avr5/libgcc.a(_epilogue.o)
+                0x0000000000004e92        0x0 /usr/local/Cellar/avr-gcc/9.3.0/lib/avr-gcc/9/gcc/avr/9.3.0/avr5/libgcc.a(_epilogue.o)
  .text.libgcc.fixed
-                0x000000000000484a        0x0 /usr/local/Cellar/avr-gcc/9.3.0/lib/avr-gcc/9/gcc/avr/9.3.0/avr5/libgcc.a(_epilogue.o)
-                0x000000000000484a                . = ALIGN (0x2)
+                0x0000000000004e92        0x0 /usr/local/Cellar/avr-gcc/9.3.0/lib/avr-gcc/9/gcc/avr/9.3.0/avr5/libgcc.a(_epilogue.o)
+                0x0000000000004e92                . = ALIGN (0x2)
  *(.fini9)
- .fini9         0x000000000000484a        0x0 /usr/local/Cellar/avr-gcc/9.3.0/lib/avr-gcc/9/gcc/avr/9.3.0/avr5/libgcc.a(_exit.o)
-                0x000000000000484a                exit
-                0x000000000000484a                _exit
+ .fini9         0x0000000000004e92        0x0 /usr/local/Cellar/avr-gcc/9.3.0/lib/avr-gcc/9/gcc/avr/9.3.0/avr5/libgcc.a(_exit.o)
+                0x0000000000004e92                exit
+                0x0000000000004e92                _exit
  *(.fini9)
  *(.fini8)
  *(.fini8)
@@ -823,17 +873,17 @@ END GROUP
  *(.fini1)
  *(.fini1)
  *(.fini0)
- .fini0         0x000000000000484a        0x4 /usr/local/Cellar/avr-gcc/9.3.0/lib/avr-gcc/9/gcc/avr/9.3.0/avr5/libgcc.a(_exit.o)
+ .fini0         0x0000000000004e92        0x4 /usr/local/Cellar/avr-gcc/9.3.0/lib/avr-gcc/9/gcc/avr/9.3.0/avr5/libgcc.a(_exit.o)
  *(.fini0)
  *(.hightext)
  *(.hightext*)
  *(.progmemx.*)
-                0x000000000000484e                . = ALIGN (0x2)
+                0x0000000000004e96                . = ALIGN (0x2)
  *(.jumptables)
  *(.jumptables*)
-                0x000000000000484e                _etext = .
+                0x0000000000004e96                _etext = .
 
-.data           0x0000000000800100      0x23c load address 0x000000000000484e
+.data           0x0000000000800100       0x34 load address 0x0000000000004e96
                 0x0000000000800100                PROVIDE (__data_start = .)
  *(.data)
  .data          0x0000000000800100        0x0 /usr/local/Cellar/avr-gcc/9.3.0/lib/avr-gcc/9/gcc/avr/9.3.0/../../../../../../avr/lib/avr5/crtatmega328p.o
@@ -844,6 +894,7 @@ END GROUP
  .data          0x0000000000800100        0x0 ./MiniOS/miniOS.o
  .data          0x0000000000800100        0x0 ./Minisumo_EDU1.o
  .data          0x0000000000800100        0x0 ./hal.o
+ .data          0x0000000000800100        0x0 /usr/local/Cellar/avr-gcc/9.3.0/lib/avr-gcc/9/gcc/avr/9.3.0/avr5/libgcc.a(_udivmodhi4.o)
  .data          0x0000000000800100        0x0 /usr/local/Cellar/avr-gcc/9.3.0/lib/avr-gcc/9/gcc/avr/9.3.0/avr5/libgcc.a(_udivmodsi4.o)
  .data          0x0000000000800100        0x0 /usr/local/Cellar/avr-gcc/9.3.0/lib/avr-gcc/9/gcc/avr/9.3.0/avr5/libgcc.a(_divmodsi4.o)
  .data          0x0000000000800100        0x0 /usr/local/Cellar/avr-gcc/9.3.0/lib/avr-gcc/9/gcc/avr/9.3.0/avr5/libgcc.a(_negsi2.o)
@@ -852,124 +903,148 @@ END GROUP
  .data          0x0000000000800100        0x0 /usr/local/Cellar/avr-gcc/9.3.0/lib/avr-gcc/9/gcc/avr/9.3.0/avr5/libgcc.a(_clear_bss.o)
  .data          0x0000000000800100        0x0 /usr/local/Cellar/avr-gcc/9.3.0/lib/avr-gcc/9/gcc/avr/9.3.0/avr5/libgcc.a(_umulhisi3.o)
  .data          0x0000000000800100        0x0 /usr/local/Cellar/avr-gcc/9.3.0/lib/avr-gcc/9/gcc/avr/9.3.0/avr5/libgcc.a(_muluhisi3.o)
- .data          0x0000000000800100        0x0 /usr/local/Cellar/avr-gcc/9.3.0/lib/avr-gcc/9/gcc/avr/9.3.0/../../../../../../avr/lib/avr5/libc.a(sprintf.o)
- .data          0x0000000000800100        0x0 /usr/local/Cellar/avr-gcc/9.3.0/lib/avr-gcc/9/gcc/avr/9.3.0/../../../../../../avr/lib/avr5/libc.a(vfprintf_std.o)
- .data          0x0000000000800100        0x0 /usr/local/Cellar/avr-gcc/9.3.0/lib/avr-gcc/9/gcc/avr/9.3.0/../../../../../../avr/lib/avr5/libc.a(strnlen_P.o)
- .data          0x0000000000800100        0x0 /usr/local/Cellar/avr-gcc/9.3.0/lib/avr-gcc/9/gcc/avr/9.3.0/../../../../../../avr/lib/avr5/libc.a(strnlen.o)
- .data          0x0000000000800100        0x0 /usr/local/Cellar/avr-gcc/9.3.0/lib/avr-gcc/9/gcc/avr/9.3.0/../../../../../../avr/lib/avr5/libc.a(fputc.o)
- .data          0x0000000000800100        0x0 /usr/local/Cellar/avr-gcc/9.3.0/lib/avr-gcc/9/gcc/avr/9.3.0/../../../../../../avr/lib/avr5/libc.a(ultoa_invert.o)
- .data          0x0000000000800100        0x0 /usr/local/Cellar/avr-gcc/9.3.0/lib/avr-gcc/9/gcc/avr/9.3.0/avr5/libgcc.a(_prologue.o)
- .data          0x0000000000800100        0x0 /usr/local/Cellar/avr-gcc/9.3.0/lib/avr-gcc/9/gcc/avr/9.3.0/avr5/libgcc.a(_epilogue.o)
+ .data          0x0000000000800100        0x0 /usr/local/Cellar/avr-gcc/9.3.0/lib/avr-gcc/9/gcc/avr/9.3.0/avr5/libgcc.a(_mulshisi3.o)
+ .data          0x0000000000800100        0x6 /usr/local/Cellar/avr-gcc/9.3.0/lib/avr-gcc/9/gcc/avr/9.3.0/../../../../../../avr/lib/avr5/libc.a(malloc.o)
+                0x0000000000800100                __malloc_heap_end
+                0x0000000000800102                __malloc_heap_start
+                0x0000000000800104                __malloc_margin
+ .data          0x0000000000800106        0x0 /usr/local/Cellar/avr-gcc/9.3.0/lib/avr-gcc/9/gcc/avr/9.3.0/../../../../../../avr/lib/avr5/libc.a(sprintf.o)
+ .data          0x0000000000800106        0x0 /usr/local/Cellar/avr-gcc/9.3.0/lib/avr-gcc/9/gcc/avr/9.3.0/../../../../../../avr/lib/avr5/libc.a(vfprintf_std.o)
+ .data          0x0000000000800106        0x0 /usr/local/Cellar/avr-gcc/9.3.0/lib/avr-gcc/9/gcc/avr/9.3.0/../../../../../../avr/lib/avr5/libc.a(strnlen_P.o)
+ .data          0x0000000000800106        0x0 /usr/local/Cellar/avr-gcc/9.3.0/lib/avr-gcc/9/gcc/avr/9.3.0/../../../../../../avr/lib/avr5/libc.a(strnlen.o)
+ .data          0x0000000000800106        0x0 /usr/local/Cellar/avr-gcc/9.3.0/lib/avr-gcc/9/gcc/avr/9.3.0/../../../../../../avr/lib/avr5/libc.a(fputc.o)
+ .data          0x0000000000800106        0x0 /usr/local/Cellar/avr-gcc/9.3.0/lib/avr-gcc/9/gcc/avr/9.3.0/../../../../../../avr/lib/avr5/libc.a(ultoa_invert.o)
+ .data          0x0000000000800106        0x0 /usr/local/Cellar/avr-gcc/9.3.0/lib/avr-gcc/9/gcc/avr/9.3.0/avr5/libgcc.a(_prologue.o)
+ .data          0x0000000000800106        0x0 /usr/local/Cellar/avr-gcc/9.3.0/lib/avr-gcc/9/gcc/avr/9.3.0/avr5/libgcc.a(_epilogue.o)
  *(.data*)
- .data.buffer   0x0000000000800100      0x200 ./MiniOS/oled/ssd1306.o
  .data._oledsclpin
-                0x0000000000800300        0x1 ./MiniOS/oled/ssd1306.o
-                0x0000000000800300                _oledsclpin
+                0x0000000000800106        0x1 ./MiniOS/oled/ssd1306.o
+                0x0000000000800106                _oledsclpin
  .data._oledsdapin
-                0x0000000000800301        0x1 ./MiniOS/oled/ssd1306.o
-                0x0000000000800301                _oledsdapin
+                0x0000000000800107        0x1 ./MiniOS/oled/ssd1306.o
+                0x0000000000800107                _oledsdapin
+ .data._analogtresholdvalue
+                0x0000000000800108        0x2 ./MiniOS/miniOS.o
+                0x0000000000800108                _analogtresholdvalue
  .data.analog_reference
-                0x0000000000800302        0x1 ./hal.o
-                0x0000000000800302                analog_reference
+                0x000000000080010a        0x1 ./hal.o
+                0x000000000080010a                analog_reference
  *(.gnu.linkonce.d*)
  *(.rodata)
  *(.rodata*)
- .rodata.postmask.2709
-                0x0000000000800303        0x8 ./MiniOS/oled/ssd1306.o
- .rodata.premask.2698
-                0x000000000080030b        0x8 ./MiniOS/oled/ssd1306.o
+ .rodata.postmask.2691
+                0x000000000080010b        0x8 ./MiniOS/oled/ssd1306.o
+ .rodata.premask.2680
+                0x0000000000800113        0x8 ./MiniOS/oled/ssd1306.o
  .rodata.my_init.str1.1
-                0x0000000000800313        0x9 ./Minisumo_EDU1.o
- .rodata.my_loop.str1.1
-                0x000000000080031c       0x16 ./Minisumo_EDU1.o
- .rodata.CSWTCH.6
-                0x0000000000800332        0x9 ./hal.o
+                0x000000000080011b        0x9 ./Minisumo_EDU1.o
+ .rodata.update_display_main.str1.1
+                0x0000000000800124        0x7 ./Minisumo_EDU1.o
+                                          0x8 (size before relaxing)
+ .rodata.CSWTCH.35
+                0x000000000080012b        0x9 ./hal.o
  *(.gnu.linkonce.r*)
-                0x000000000080033c                . = ALIGN (0x2)
- *fill*         0x000000000080033b        0x1 
-                0x000000000080033c                _edata = .
-                0x000000000080033c                PROVIDE (__data_end = .)
+                0x0000000000800134                . = ALIGN (0x2)
+                0x0000000000800134                _edata = .
+                0x0000000000800134                PROVIDE (__data_end = .)
 
-.bss            0x000000000080033c       0x7d
-                0x000000000080033c                PROVIDE (__bss_start = .)
+.bss            0x0000000000800134      0x241
+                0x0000000000800134                PROVIDE (__bss_start = .)
  *(.bss)
- .bss           0x000000000080033c        0x0 /usr/local/Cellar/avr-gcc/9.3.0/lib/avr-gcc/9/gcc/avr/9.3.0/../../../../../../avr/lib/avr5/crtatmega328p.o
- .bss           0x000000000080033c        0x0 ./MiniOS/vl53l0x/VL53L0X.o
- .bss           0x000000000080033c        0x0 ./MiniOS/rc5/rc5.o
- .bss           0x000000000080033c        0x0 ./MiniOS/oled/ssd1306.o
- .bss           0x000000000080033c        0x0 ./MiniOS/motor/motor.o
- .bss           0x000000000080033c        0x0 ./MiniOS/miniOS.o
- .bss           0x000000000080033c        0x0 ./Minisumo_EDU1.o
- .bss           0x000000000080033c        0x0 ./hal.o
- .bss           0x000000000080033c        0x0 /usr/local/Cellar/avr-gcc/9.3.0/lib/avr-gcc/9/gcc/avr/9.3.0/avr5/libgcc.a(_udivmodsi4.o)
- .bss           0x000000000080033c        0x0 /usr/local/Cellar/avr-gcc/9.3.0/lib/avr-gcc/9/gcc/avr/9.3.0/avr5/libgcc.a(_divmodsi4.o)
- .bss           0x000000000080033c        0x0 /usr/local/Cellar/avr-gcc/9.3.0/lib/avr-gcc/9/gcc/avr/9.3.0/avr5/libgcc.a(_negsi2.o)
- .bss           0x000000000080033c        0x0 /usr/local/Cellar/avr-gcc/9.3.0/lib/avr-gcc/9/gcc/avr/9.3.0/avr5/libgcc.a(_exit.o)
- .bss           0x000000000080033c        0x0 /usr/local/Cellar/avr-gcc/9.3.0/lib/avr-gcc/9/gcc/avr/9.3.0/avr5/libgcc.a(_copy_data.o)
- .bss           0x000000000080033c        0x0 /usr/local/Cellar/avr-gcc/9.3.0/lib/avr-gcc/9/gcc/avr/9.3.0/avr5/libgcc.a(_clear_bss.o)
- .bss           0x000000000080033c        0x0 /usr/local/Cellar/avr-gcc/9.3.0/lib/avr-gcc/9/gcc/avr/9.3.0/avr5/libgcc.a(_umulhisi3.o)
- .bss           0x000000000080033c        0x0 /usr/local/Cellar/avr-gcc/9.3.0/lib/avr-gcc/9/gcc/avr/9.3.0/avr5/libgcc.a(_muluhisi3.o)
- .bss           0x000000000080033c        0x0 /usr/local/Cellar/avr-gcc/9.3.0/lib/avr-gcc/9/gcc/avr/9.3.0/../../../../../../avr/lib/avr5/libc.a(sprintf.o)
- .bss           0x000000000080033c        0x0 /usr/local/Cellar/avr-gcc/9.3.0/lib/avr-gcc/9/gcc/avr/9.3.0/../../../../../../avr/lib/avr5/libc.a(vfprintf_std.o)
- .bss           0x000000000080033c        0x0 /usr/local/Cellar/avr-gcc/9.3.0/lib/avr-gcc/9/gcc/avr/9.3.0/../../../../../../avr/lib/avr5/libc.a(strnlen_P.o)
- .bss           0x000000000080033c        0x0 /usr/local/Cellar/avr-gcc/9.3.0/lib/avr-gcc/9/gcc/avr/9.3.0/../../../../../../avr/lib/avr5/libc.a(strnlen.o)
- .bss           0x000000000080033c        0x0 /usr/local/Cellar/avr-gcc/9.3.0/lib/avr-gcc/9/gcc/avr/9.3.0/../../../../../../avr/lib/avr5/libc.a(fputc.o)
- .bss           0x000000000080033c        0x0 /usr/local/Cellar/avr-gcc/9.3.0/lib/avr-gcc/9/gcc/avr/9.3.0/../../../../../../avr/lib/avr5/libc.a(ultoa_invert.o)
- .bss           0x000000000080033c        0x0 /usr/local/Cellar/avr-gcc/9.3.0/lib/avr-gcc/9/gcc/avr/9.3.0/avr5/libgcc.a(_prologue.o)
- .bss           0x000000000080033c        0x0 /usr/local/Cellar/avr-gcc/9.3.0/lib/avr-gcc/9/gcc/avr/9.3.0/avr5/libgcc.a(_epilogue.o)
+ .bss           0x0000000000800134        0x0 /usr/local/Cellar/avr-gcc/9.3.0/lib/avr-gcc/9/gcc/avr/9.3.0/../../../../../../avr/lib/avr5/crtatmega328p.o
+ .bss           0x0000000000800134        0x0 ./MiniOS/vl53l0x/VL53L0X.o
+ .bss           0x0000000000800134        0x0 ./MiniOS/rc5/rc5.o
+ .bss           0x0000000000800134        0x0 ./MiniOS/oled/ssd1306.o
+ .bss           0x0000000000800134        0x0 ./MiniOS/motor/motor.o
+ .bss           0x0000000000800134        0x0 ./MiniOS/miniOS.o
+ .bss           0x0000000000800134        0x0 ./Minisumo_EDU1.o
+ .bss           0x0000000000800134        0x0 ./hal.o
+ .bss           0x0000000000800134        0x0 /usr/local/Cellar/avr-gcc/9.3.0/lib/avr-gcc/9/gcc/avr/9.3.0/avr5/libgcc.a(_udivmodhi4.o)
+ .bss           0x0000000000800134        0x0 /usr/local/Cellar/avr-gcc/9.3.0/lib/avr-gcc/9/gcc/avr/9.3.0/avr5/libgcc.a(_udivmodsi4.o)
+ .bss           0x0000000000800134        0x0 /usr/local/Cellar/avr-gcc/9.3.0/lib/avr-gcc/9/gcc/avr/9.3.0/avr5/libgcc.a(_divmodsi4.o)
+ .bss           0x0000000000800134        0x0 /usr/local/Cellar/avr-gcc/9.3.0/lib/avr-gcc/9/gcc/avr/9.3.0/avr5/libgcc.a(_negsi2.o)
+ .bss           0x0000000000800134        0x0 /usr/local/Cellar/avr-gcc/9.3.0/lib/avr-gcc/9/gcc/avr/9.3.0/avr5/libgcc.a(_exit.o)
+ .bss           0x0000000000800134        0x0 /usr/local/Cellar/avr-gcc/9.3.0/lib/avr-gcc/9/gcc/avr/9.3.0/avr5/libgcc.a(_copy_data.o)
+ .bss           0x0000000000800134        0x0 /usr/local/Cellar/avr-gcc/9.3.0/lib/avr-gcc/9/gcc/avr/9.3.0/avr5/libgcc.a(_clear_bss.o)
+ .bss           0x0000000000800134        0x0 /usr/local/Cellar/avr-gcc/9.3.0/lib/avr-gcc/9/gcc/avr/9.3.0/avr5/libgcc.a(_umulhisi3.o)
+ .bss           0x0000000000800134        0x0 /usr/local/Cellar/avr-gcc/9.3.0/lib/avr-gcc/9/gcc/avr/9.3.0/avr5/libgcc.a(_muluhisi3.o)
+ .bss           0x0000000000800134        0x0 /usr/local/Cellar/avr-gcc/9.3.0/lib/avr-gcc/9/gcc/avr/9.3.0/avr5/libgcc.a(_mulshisi3.o)
+ .bss           0x0000000000800134        0x0 /usr/local/Cellar/avr-gcc/9.3.0/lib/avr-gcc/9/gcc/avr/9.3.0/../../../../../../avr/lib/avr5/libc.a(malloc.o)
+ .bss           0x0000000000800134        0x0 /usr/local/Cellar/avr-gcc/9.3.0/lib/avr-gcc/9/gcc/avr/9.3.0/../../../../../../avr/lib/avr5/libc.a(sprintf.o)
+ .bss           0x0000000000800134        0x0 /usr/local/Cellar/avr-gcc/9.3.0/lib/avr-gcc/9/gcc/avr/9.3.0/../../../../../../avr/lib/avr5/libc.a(vfprintf_std.o)
+ .bss           0x0000000000800134        0x0 /usr/local/Cellar/avr-gcc/9.3.0/lib/avr-gcc/9/gcc/avr/9.3.0/../../../../../../avr/lib/avr5/libc.a(strnlen_P.o)
+ .bss           0x0000000000800134        0x0 /usr/local/Cellar/avr-gcc/9.3.0/lib/avr-gcc/9/gcc/avr/9.3.0/../../../../../../avr/lib/avr5/libc.a(strnlen.o)
+ .bss           0x0000000000800134        0x0 /usr/local/Cellar/avr-gcc/9.3.0/lib/avr-gcc/9/gcc/avr/9.3.0/../../../../../../avr/lib/avr5/libc.a(fputc.o)
+ .bss           0x0000000000800134        0x0 /usr/local/Cellar/avr-gcc/9.3.0/lib/avr-gcc/9/gcc/avr/9.3.0/../../../../../../avr/lib/avr5/libc.a(ultoa_invert.o)
+ .bss           0x0000000000800134        0x0 /usr/local/Cellar/avr-gcc/9.3.0/lib/avr-gcc/9/gcc/avr/9.3.0/avr5/libgcc.a(_prologue.o)
+ .bss           0x0000000000800134        0x0 /usr/local/Cellar/avr-gcc/9.3.0/lib/avr-gcc/9/gcc/avr/9.3.0/avr5/libgcc.a(_epilogue.o)
  *(.bss*)
+ .bss.buffer    0x0000000000800134      0x200 ./MiniOS/oled/ssd1306.o
  .bss.textbgcolor
-                0x000000000080033c        0x2 ./MiniOS/oled/ssd1306.o
+                0x0000000000800334        0x2 ./MiniOS/oled/ssd1306.o
  .bss.textcolor
-                0x000000000080033e        0x2 ./MiniOS/oled/ssd1306.o
- .bss.rotation  0x0000000000800340        0x1 ./MiniOS/oled/ssd1306.o
- .bss.textsize  0x0000000000800341        0x1 ./MiniOS/oled/ssd1306.o
- .bss.cursor_y  0x0000000000800342        0x2 ./MiniOS/oled/ssd1306.o
- .bss.cursor_x  0x0000000000800344        0x2 ./MiniOS/oled/ssd1306.o
- .bss.HEIGHT    0x0000000000800346        0x2 ./MiniOS/oled/ssd1306.o
- .bss.WIDTH     0x0000000000800348        0x2 ./MiniOS/oled/ssd1306.o
- .bss._height   0x000000000080034a        0x2 ./MiniOS/oled/ssd1306.o
- .bss._width    0x000000000080034c        0x2 ./MiniOS/oled/ssd1306.o
- .bss._vccstate
-                0x000000000080034e        0x1 ./MiniOS/oled/ssd1306.o
- .bss._oledi2caddr
-                0x000000000080034f        0x1 ./MiniOS/oled/ssd1306.o
- .bss._timeafterdisplay.2802
-                0x0000000000800350        0x4 ./Minisumo_EDU1.o
- .bss._lasttime.2800
-                0x0000000000800354        0x4 ./Minisumo_EDU1.o
- .bss._config.2797
-                0x0000000000800358        0x2 ./Minisumo_EDU1.o
- .bss._oldval.2790
-                0x000000000080035a        0x2 ./Minisumo_EDU1.o
- .bss.motorcfg  0x000000000080035c        0x6 ./Minisumo_EDU1.o
- .bss._sensors  0x0000000000800362       0x48 ./Minisumo_EDU1.o
+                0x0000000000800336        0x2 ./MiniOS/oled/ssd1306.o
+ .bss.rotation  0x0000000000800338        0x1 ./MiniOS/oled/ssd1306.o
+ .bss.textsize  0x0000000000800339        0x1 ./MiniOS/oled/ssd1306.o
+ .bss.cursor_y  0x000000000080033a        0x2 ./MiniOS/oled/ssd1306.o
+ .bss.cursor_x  0x000000000080033c        0x2 ./MiniOS/oled/ssd1306.o
+ .bss.HEIGHT    0x000000000080033e        0x2 ./MiniOS/oled/ssd1306.o
+ .bss.WIDTH     0x0000000000800340        0x2 ./MiniOS/oled/ssd1306.o
+ .bss._height   0x0000000000800342        0x2 ./MiniOS/oled/ssd1306.o
+ .bss._width    0x0000000000800344        0x2 ./MiniOS/oled/ssd1306.o
+ .bss._rangesensorinstances
+                0x0000000000800346        0x2 ./MiniOS/miniOS.o
+ .bss._config.2849
+                0x0000000000800348        0x2 ./Minisumo_EDU1.o
+ .bss.motorcfg  0x000000000080034a        0x6 ./Minisumo_EDU1.o
+ .bss.__addr    0x0000000000800350        0x1 ./hal.o
+                0x0000000000800350                __addr
+ .bss.__sda     0x0000000000800351        0x1 ./hal.o
+                0x0000000000800351                __sda
+ .bss.__scl     0x0000000000800352        0x1 ./hal.o
+                0x0000000000800352                __scl
  .bss.timer0_fract
-                0x00000000008003aa        0x1 ./hal.o
+                0x0000000000800353        0x1 ./hal.o
  .bss.timer0_millis
-                0x00000000008003ab        0x4 ./hal.o
-                0x00000000008003ab                timer0_millis
+                0x0000000000800354        0x4 ./hal.o
+                0x0000000000800354                timer0_millis
  .bss.timer0_overflow_count
-                0x00000000008003af        0x4 ./hal.o
-                0x00000000008003af                timer0_overflow_count
+                0x0000000000800358        0x4 ./hal.o
+                0x0000000000800358                timer0_overflow_count
+ .bss.INT1_ev_callback
+                0x000000000080035c        0x2 ./hal.o
+                0x000000000080035c                INT1_ev_callback
+ .bss.INT0_ev_callback
+                0x000000000080035e        0x2 ./hal.o
+                0x000000000080035e                INT0_ev_callback
  *(COMMON)
- COMMON         0x00000000008003b3        0x2 ./MiniOS/vl53l0x/VL53L0X.o
-                0x00000000008003b3                vl53l0xsensor
- COMMON         0x00000000008003b5        0x2 ./MiniOS/oled/ssd1306.o
-                0x00000000008003b5                _cp437
-                0x00000000008003b6                wrap
- COMMON         0x00000000008003b7        0x2 ./MiniOS/motor/motor.o
-                0x00000000008003b7                motorcfglcl
-                0x00000000008003b9                PROVIDE (__bss_end = .)
-                0x000000000000484e                __data_load_start = LOADADDR (.data)
-                0x0000000000004a8a                __data_load_end = (__data_load_start + SIZEOF (.data))
+ COMMON         0x0000000000800360        0x2 ./MiniOS/vl53l0x/VL53L0X.o
+                0x0000000000800360                vl53l0xsensor
+ COMMON         0x0000000000800362        0x2 ./MiniOS/rc5/rc5.o
+                0x0000000000800362                _rc5struct
+ COMMON         0x0000000000800364        0x2 ./MiniOS/oled/ssd1306.o
+                0x0000000000800364                _cp437
+                0x0000000000800365                wrap
+ COMMON         0x0000000000800366        0x2 ./MiniOS/motor/motor.o
+                0x0000000000800366                motorcfglcl
+ COMMON         0x0000000000800368        0x3 ./MiniOS/miniOS.o
+                0x0000000000800368                __rangesensornum
+                0x0000000000800369                _maxrangeofsensor
+ COMMON         0x000000000080036b        0x6 ./Minisumo_EDU1.o
+                0x000000000080036b                sensors
+ COMMON         0x0000000000800371        0x4 /usr/local/Cellar/avr-gcc/9.3.0/lib/avr-gcc/9/gcc/avr/9.3.0/../../../../../../avr/lib/avr5/libc.a(malloc.o)
+                0x0000000000800371                __brkval
+                0x0000000000800373                __flp
+                0x0000000000800375                PROVIDE (__bss_end = .)
+                0x0000000000004e96                __data_load_start = LOADADDR (.data)
+                0x0000000000004eca                __data_load_end = (__data_load_start + SIZEOF (.data))
 
-.noinit         0x00000000008003b9        0x0
+.noinit         0x0000000000800375        0x0
                 [!provide]                        PROVIDE (__noinit_start = .)
  *(.noinit*)
                 [!provide]                        PROVIDE (__noinit_end = .)
-                0x00000000008003b9                _end = .
-                [!provide]                        PROVIDE (__heap_start = .)
+                0x0000000000800375                _end = .
+                0x0000000000800375                PROVIDE (__heap_start = .)
 
 .eeprom         0x0000000000810000        0x0
  *(.eeprom*)
@@ -1015,6 +1090,7 @@ END GROUP
  .comment       0x0000000000000024       0x25 ./MiniOS/miniOS.o
  .comment       0x0000000000000024       0x25 ./Minisumo_EDU1.o
  .comment       0x0000000000000024       0x25 ./hal.o
+ .comment       0x0000000000000024       0x25 /usr/local/Cellar/avr-gcc/9.3.0/lib/avr-gcc/9/gcc/avr/9.3.0/../../../../../../avr/lib/avr5/libc.a(malloc.o)
  .comment       0x0000000000000024       0x25 /usr/local/Cellar/avr-gcc/9.3.0/lib/avr-gcc/9/gcc/avr/9.3.0/../../../../../../avr/lib/avr5/libc.a(sprintf.o)
  .comment       0x0000000000000024       0x25 /usr/local/Cellar/avr-gcc/9.3.0/lib/avr-gcc/9/gcc/avr/9.3.0/../../../../../../avr/lib/avr5/libc.a(vfprintf_std.o)
  .comment       0x0000000000000024       0x25 /usr/local/Cellar/avr-gcc/9.3.0/lib/avr-gcc/9/gcc/avr/9.3.0/../../../../../../avr/lib/avr5/libc.a(fputc.o)
@@ -1039,73 +1115,83 @@ END GROUP
 .debug_sfnames
  *(.debug_sfnames)
 
-.debug_aranges  0x0000000000000000      0x140
+.debug_aranges  0x0000000000000000      0x180
  *(.debug_aranges)
  .debug_aranges
-                0x0000000000000000       0x20 /usr/local/Cellar/avr-gcc/9.3.0/lib/avr-gcc/9/gcc/avr/9.3.0/avr5/libgcc.a(_udivmodsi4.o)
+                0x0000000000000000       0x20 /usr/local/Cellar/avr-gcc/9.3.0/lib/avr-gcc/9/gcc/avr/9.3.0/avr5/libgcc.a(_udivmodhi4.o)
  .debug_aranges
-                0x0000000000000020       0x20 /usr/local/Cellar/avr-gcc/9.3.0/lib/avr-gcc/9/gcc/avr/9.3.0/avr5/libgcc.a(_divmodsi4.o)
+                0x0000000000000020       0x20 /usr/local/Cellar/avr-gcc/9.3.0/lib/avr-gcc/9/gcc/avr/9.3.0/avr5/libgcc.a(_udivmodsi4.o)
  .debug_aranges
-                0x0000000000000040       0x20 /usr/local/Cellar/avr-gcc/9.3.0/lib/avr-gcc/9/gcc/avr/9.3.0/avr5/libgcc.a(_negsi2.o)
+                0x0000000000000040       0x20 /usr/local/Cellar/avr-gcc/9.3.0/lib/avr-gcc/9/gcc/avr/9.3.0/avr5/libgcc.a(_divmodsi4.o)
  .debug_aranges
-                0x0000000000000060       0x20 /usr/local/Cellar/avr-gcc/9.3.0/lib/avr-gcc/9/gcc/avr/9.3.0/avr5/libgcc.a(_exit.o)
+                0x0000000000000060       0x20 /usr/local/Cellar/avr-gcc/9.3.0/lib/avr-gcc/9/gcc/avr/9.3.0/avr5/libgcc.a(_negsi2.o)
  .debug_aranges
-                0x0000000000000080       0x20 /usr/local/Cellar/avr-gcc/9.3.0/lib/avr-gcc/9/gcc/avr/9.3.0/avr5/libgcc.a(_copy_data.o)
+                0x0000000000000080       0x20 /usr/local/Cellar/avr-gcc/9.3.0/lib/avr-gcc/9/gcc/avr/9.3.0/avr5/libgcc.a(_exit.o)
  .debug_aranges
-                0x00000000000000a0       0x20 /usr/local/Cellar/avr-gcc/9.3.0/lib/avr-gcc/9/gcc/avr/9.3.0/avr5/libgcc.a(_clear_bss.o)
+                0x00000000000000a0       0x20 /usr/local/Cellar/avr-gcc/9.3.0/lib/avr-gcc/9/gcc/avr/9.3.0/avr5/libgcc.a(_copy_data.o)
  .debug_aranges
-                0x00000000000000c0       0x20 /usr/local/Cellar/avr-gcc/9.3.0/lib/avr-gcc/9/gcc/avr/9.3.0/avr5/libgcc.a(_umulhisi3.o)
+                0x00000000000000c0       0x20 /usr/local/Cellar/avr-gcc/9.3.0/lib/avr-gcc/9/gcc/avr/9.3.0/avr5/libgcc.a(_clear_bss.o)
  .debug_aranges
-                0x00000000000000e0       0x20 /usr/local/Cellar/avr-gcc/9.3.0/lib/avr-gcc/9/gcc/avr/9.3.0/avr5/libgcc.a(_muluhisi3.o)
+                0x00000000000000e0       0x20 /usr/local/Cellar/avr-gcc/9.3.0/lib/avr-gcc/9/gcc/avr/9.3.0/avr5/libgcc.a(_umulhisi3.o)
  .debug_aranges
-                0x0000000000000100       0x20 /usr/local/Cellar/avr-gcc/9.3.0/lib/avr-gcc/9/gcc/avr/9.3.0/avr5/libgcc.a(_prologue.o)
+                0x0000000000000100       0x20 /usr/local/Cellar/avr-gcc/9.3.0/lib/avr-gcc/9/gcc/avr/9.3.0/avr5/libgcc.a(_muluhisi3.o)
  .debug_aranges
-                0x0000000000000120       0x20 /usr/local/Cellar/avr-gcc/9.3.0/lib/avr-gcc/9/gcc/avr/9.3.0/avr5/libgcc.a(_epilogue.o)
+                0x0000000000000120       0x20 /usr/local/Cellar/avr-gcc/9.3.0/lib/avr-gcc/9/gcc/avr/9.3.0/avr5/libgcc.a(_mulshisi3.o)
+ .debug_aranges
+                0x0000000000000140       0x20 /usr/local/Cellar/avr-gcc/9.3.0/lib/avr-gcc/9/gcc/avr/9.3.0/avr5/libgcc.a(_prologue.o)
+ .debug_aranges
+                0x0000000000000160       0x20 /usr/local/Cellar/avr-gcc/9.3.0/lib/avr-gcc/9/gcc/avr/9.3.0/avr5/libgcc.a(_epilogue.o)
 
 .debug_pubnames
  *(.debug_pubnames)
 
-.debug_info     0x0000000000000000      0x770
+.debug_info     0x0000000000000000      0x7bc
  *(.debug_info .gnu.linkonce.wi.*)
  .debug_info    0x0000000000000000      0x5f4 /usr/local/Cellar/avr-gcc/9.3.0/lib/avr-gcc/9/gcc/avr/9.3.0/../../../../../../avr/lib/avr5/crtatmega328p.o
- .debug_info    0x00000000000005f4       0x26 /usr/local/Cellar/avr-gcc/9.3.0/lib/avr-gcc/9/gcc/avr/9.3.0/avr5/libgcc.a(_udivmodsi4.o)
- .debug_info    0x000000000000061a       0x26 /usr/local/Cellar/avr-gcc/9.3.0/lib/avr-gcc/9/gcc/avr/9.3.0/avr5/libgcc.a(_divmodsi4.o)
- .debug_info    0x0000000000000640       0x26 /usr/local/Cellar/avr-gcc/9.3.0/lib/avr-gcc/9/gcc/avr/9.3.0/avr5/libgcc.a(_negsi2.o)
- .debug_info    0x0000000000000666       0x26 /usr/local/Cellar/avr-gcc/9.3.0/lib/avr-gcc/9/gcc/avr/9.3.0/avr5/libgcc.a(_exit.o)
- .debug_info    0x000000000000068c       0x26 /usr/local/Cellar/avr-gcc/9.3.0/lib/avr-gcc/9/gcc/avr/9.3.0/avr5/libgcc.a(_copy_data.o)
- .debug_info    0x00000000000006b2       0x26 /usr/local/Cellar/avr-gcc/9.3.0/lib/avr-gcc/9/gcc/avr/9.3.0/avr5/libgcc.a(_clear_bss.o)
- .debug_info    0x00000000000006d8       0x26 /usr/local/Cellar/avr-gcc/9.3.0/lib/avr-gcc/9/gcc/avr/9.3.0/avr5/libgcc.a(_umulhisi3.o)
- .debug_info    0x00000000000006fe       0x26 /usr/local/Cellar/avr-gcc/9.3.0/lib/avr-gcc/9/gcc/avr/9.3.0/avr5/libgcc.a(_muluhisi3.o)
- .debug_info    0x0000000000000724       0x26 /usr/local/Cellar/avr-gcc/9.3.0/lib/avr-gcc/9/gcc/avr/9.3.0/avr5/libgcc.a(_prologue.o)
- .debug_info    0x000000000000074a       0x26 /usr/local/Cellar/avr-gcc/9.3.0/lib/avr-gcc/9/gcc/avr/9.3.0/avr5/libgcc.a(_epilogue.o)
+ .debug_info    0x00000000000005f4       0x26 /usr/local/Cellar/avr-gcc/9.3.0/lib/avr-gcc/9/gcc/avr/9.3.0/avr5/libgcc.a(_udivmodhi4.o)
+ .debug_info    0x000000000000061a       0x26 /usr/local/Cellar/avr-gcc/9.3.0/lib/avr-gcc/9/gcc/avr/9.3.0/avr5/libgcc.a(_udivmodsi4.o)
+ .debug_info    0x0000000000000640       0x26 /usr/local/Cellar/avr-gcc/9.3.0/lib/avr-gcc/9/gcc/avr/9.3.0/avr5/libgcc.a(_divmodsi4.o)
+ .debug_info    0x0000000000000666       0x26 /usr/local/Cellar/avr-gcc/9.3.0/lib/avr-gcc/9/gcc/avr/9.3.0/avr5/libgcc.a(_negsi2.o)
+ .debug_info    0x000000000000068c       0x26 /usr/local/Cellar/avr-gcc/9.3.0/lib/avr-gcc/9/gcc/avr/9.3.0/avr5/libgcc.a(_exit.o)
+ .debug_info    0x00000000000006b2       0x26 /usr/local/Cellar/avr-gcc/9.3.0/lib/avr-gcc/9/gcc/avr/9.3.0/avr5/libgcc.a(_copy_data.o)
+ .debug_info    0x00000000000006d8       0x26 /usr/local/Cellar/avr-gcc/9.3.0/lib/avr-gcc/9/gcc/avr/9.3.0/avr5/libgcc.a(_clear_bss.o)
+ .debug_info    0x00000000000006fe       0x26 /usr/local/Cellar/avr-gcc/9.3.0/lib/avr-gcc/9/gcc/avr/9.3.0/avr5/libgcc.a(_umulhisi3.o)
+ .debug_info    0x0000000000000724       0x26 /usr/local/Cellar/avr-gcc/9.3.0/lib/avr-gcc/9/gcc/avr/9.3.0/avr5/libgcc.a(_muluhisi3.o)
+ .debug_info    0x000000000000074a       0x26 /usr/local/Cellar/avr-gcc/9.3.0/lib/avr-gcc/9/gcc/avr/9.3.0/avr5/libgcc.a(_mulshisi3.o)
+ .debug_info    0x0000000000000770       0x26 /usr/local/Cellar/avr-gcc/9.3.0/lib/avr-gcc/9/gcc/avr/9.3.0/avr5/libgcc.a(_prologue.o)
+ .debug_info    0x0000000000000796       0x26 /usr/local/Cellar/avr-gcc/9.3.0/lib/avr-gcc/9/gcc/avr/9.3.0/avr5/libgcc.a(_epilogue.o)
 
-.debug_abbrev   0x0000000000000000      0x66a
+.debug_abbrev   0x0000000000000000      0x692
  *(.debug_abbrev)
  .debug_abbrev  0x0000000000000000      0x5a2 /usr/local/Cellar/avr-gcc/9.3.0/lib/avr-gcc/9/gcc/avr/9.3.0/../../../../../../avr/lib/avr5/crtatmega328p.o
- .debug_abbrev  0x00000000000005a2       0x14 /usr/local/Cellar/avr-gcc/9.3.0/lib/avr-gcc/9/gcc/avr/9.3.0/avr5/libgcc.a(_udivmodsi4.o)
- .debug_abbrev  0x00000000000005b6       0x14 /usr/local/Cellar/avr-gcc/9.3.0/lib/avr-gcc/9/gcc/avr/9.3.0/avr5/libgcc.a(_divmodsi4.o)
- .debug_abbrev  0x00000000000005ca       0x14 /usr/local/Cellar/avr-gcc/9.3.0/lib/avr-gcc/9/gcc/avr/9.3.0/avr5/libgcc.a(_negsi2.o)
- .debug_abbrev  0x00000000000005de       0x14 /usr/local/Cellar/avr-gcc/9.3.0/lib/avr-gcc/9/gcc/avr/9.3.0/avr5/libgcc.a(_exit.o)
- .debug_abbrev  0x00000000000005f2       0x14 /usr/local/Cellar/avr-gcc/9.3.0/lib/avr-gcc/9/gcc/avr/9.3.0/avr5/libgcc.a(_copy_data.o)
- .debug_abbrev  0x0000000000000606       0x14 /usr/local/Cellar/avr-gcc/9.3.0/lib/avr-gcc/9/gcc/avr/9.3.0/avr5/libgcc.a(_clear_bss.o)
- .debug_abbrev  0x000000000000061a       0x14 /usr/local/Cellar/avr-gcc/9.3.0/lib/avr-gcc/9/gcc/avr/9.3.0/avr5/libgcc.a(_umulhisi3.o)
- .debug_abbrev  0x000000000000062e       0x14 /usr/local/Cellar/avr-gcc/9.3.0/lib/avr-gcc/9/gcc/avr/9.3.0/avr5/libgcc.a(_muluhisi3.o)
- .debug_abbrev  0x0000000000000642       0x14 /usr/local/Cellar/avr-gcc/9.3.0/lib/avr-gcc/9/gcc/avr/9.3.0/avr5/libgcc.a(_prologue.o)
- .debug_abbrev  0x0000000000000656       0x14 /usr/local/Cellar/avr-gcc/9.3.0/lib/avr-gcc/9/gcc/avr/9.3.0/avr5/libgcc.a(_epilogue.o)
+ .debug_abbrev  0x00000000000005a2       0x14 /usr/local/Cellar/avr-gcc/9.3.0/lib/avr-gcc/9/gcc/avr/9.3.0/avr5/libgcc.a(_udivmodhi4.o)
+ .debug_abbrev  0x00000000000005b6       0x14 /usr/local/Cellar/avr-gcc/9.3.0/lib/avr-gcc/9/gcc/avr/9.3.0/avr5/libgcc.a(_udivmodsi4.o)
+ .debug_abbrev  0x00000000000005ca       0x14 /usr/local/Cellar/avr-gcc/9.3.0/lib/avr-gcc/9/gcc/avr/9.3.0/avr5/libgcc.a(_divmodsi4.o)
+ .debug_abbrev  0x00000000000005de       0x14 /usr/local/Cellar/avr-gcc/9.3.0/lib/avr-gcc/9/gcc/avr/9.3.0/avr5/libgcc.a(_negsi2.o)
+ .debug_abbrev  0x00000000000005f2       0x14 /usr/local/Cellar/avr-gcc/9.3.0/lib/avr-gcc/9/gcc/avr/9.3.0/avr5/libgcc.a(_exit.o)
+ .debug_abbrev  0x0000000000000606       0x14 /usr/local/Cellar/avr-gcc/9.3.0/lib/avr-gcc/9/gcc/avr/9.3.0/avr5/libgcc.a(_copy_data.o)
+ .debug_abbrev  0x000000000000061a       0x14 /usr/local/Cellar/avr-gcc/9.3.0/lib/avr-gcc/9/gcc/avr/9.3.0/avr5/libgcc.a(_clear_bss.o)
+ .debug_abbrev  0x000000000000062e       0x14 /usr/local/Cellar/avr-gcc/9.3.0/lib/avr-gcc/9/gcc/avr/9.3.0/avr5/libgcc.a(_umulhisi3.o)
+ .debug_abbrev  0x0000000000000642       0x14 /usr/local/Cellar/avr-gcc/9.3.0/lib/avr-gcc/9/gcc/avr/9.3.0/avr5/libgcc.a(_muluhisi3.o)
+ .debug_abbrev  0x0000000000000656       0x14 /usr/local/Cellar/avr-gcc/9.3.0/lib/avr-gcc/9/gcc/avr/9.3.0/avr5/libgcc.a(_mulshisi3.o)
+ .debug_abbrev  0x000000000000066a       0x14 /usr/local/Cellar/avr-gcc/9.3.0/lib/avr-gcc/9/gcc/avr/9.3.0/avr5/libgcc.a(_prologue.o)
+ .debug_abbrev  0x000000000000067e       0x14 /usr/local/Cellar/avr-gcc/9.3.0/lib/avr-gcc/9/gcc/avr/9.3.0/avr5/libgcc.a(_epilogue.o)
 
-.debug_line     0x0000000000000000      0x71d
+.debug_line     0x0000000000000000      0x863
  *(.debug_line .debug_line.* .debug_line_end)
  .debug_line    0x0000000000000000       0x1d /usr/local/Cellar/avr-gcc/9.3.0/lib/avr-gcc/9/gcc/avr/9.3.0/../../../../../../avr/lib/avr5/crtatmega328p.o
- .debug_line    0x000000000000001d      0x121 /usr/local/Cellar/avr-gcc/9.3.0/lib/avr-gcc/9/gcc/avr/9.3.0/avr5/libgcc.a(_udivmodsi4.o)
- .debug_line    0x000000000000013e       0xcd /usr/local/Cellar/avr-gcc/9.3.0/lib/avr-gcc/9/gcc/avr/9.3.0/avr5/libgcc.a(_divmodsi4.o)
- .debug_line    0x000000000000020b       0x61 /usr/local/Cellar/avr-gcc/9.3.0/lib/avr-gcc/9/gcc/avr/9.3.0/avr5/libgcc.a(_negsi2.o)
- .debug_line    0x000000000000026c       0x61 /usr/local/Cellar/avr-gcc/9.3.0/lib/avr-gcc/9/gcc/avr/9.3.0/avr5/libgcc.a(_exit.o)
- .debug_line    0x00000000000002cd       0x97 /usr/local/Cellar/avr-gcc/9.3.0/lib/avr-gcc/9/gcc/avr/9.3.0/avr5/libgcc.a(_copy_data.o)
- .debug_line    0x0000000000000364       0x85 /usr/local/Cellar/avr-gcc/9.3.0/lib/avr-gcc/9/gcc/avr/9.3.0/avr5/libgcc.a(_clear_bss.o)
- .debug_line    0x00000000000003e9       0xaf /usr/local/Cellar/avr-gcc/9.3.0/lib/avr-gcc/9/gcc/avr/9.3.0/avr5/libgcc.a(_umulhisi3.o)
- .debug_line    0x0000000000000498       0x91 /usr/local/Cellar/avr-gcc/9.3.0/lib/avr-gcc/9/gcc/avr/9.3.0/avr5/libgcc.a(_muluhisi3.o)
- .debug_line    0x0000000000000529       0xfd /usr/local/Cellar/avr-gcc/9.3.0/lib/avr-gcc/9/gcc/avr/9.3.0/avr5/libgcc.a(_prologue.o)
- .debug_line    0x0000000000000626       0xf7 /usr/local/Cellar/avr-gcc/9.3.0/lib/avr-gcc/9/gcc/avr/9.3.0/avr5/libgcc.a(_epilogue.o)
+ .debug_line    0x000000000000001d       0xcd /usr/local/Cellar/avr-gcc/9.3.0/lib/avr-gcc/9/gcc/avr/9.3.0/avr5/libgcc.a(_udivmodhi4.o)
+ .debug_line    0x00000000000000ea      0x121 /usr/local/Cellar/avr-gcc/9.3.0/lib/avr-gcc/9/gcc/avr/9.3.0/avr5/libgcc.a(_udivmodsi4.o)
+ .debug_line    0x000000000000020b       0xcd /usr/local/Cellar/avr-gcc/9.3.0/lib/avr-gcc/9/gcc/avr/9.3.0/avr5/libgcc.a(_divmodsi4.o)
+ .debug_line    0x00000000000002d8       0x61 /usr/local/Cellar/avr-gcc/9.3.0/lib/avr-gcc/9/gcc/avr/9.3.0/avr5/libgcc.a(_negsi2.o)
+ .debug_line    0x0000000000000339       0x61 /usr/local/Cellar/avr-gcc/9.3.0/lib/avr-gcc/9/gcc/avr/9.3.0/avr5/libgcc.a(_exit.o)
+ .debug_line    0x000000000000039a       0x97 /usr/local/Cellar/avr-gcc/9.3.0/lib/avr-gcc/9/gcc/avr/9.3.0/avr5/libgcc.a(_copy_data.o)
+ .debug_line    0x0000000000000431       0x85 /usr/local/Cellar/avr-gcc/9.3.0/lib/avr-gcc/9/gcc/avr/9.3.0/avr5/libgcc.a(_clear_bss.o)
+ .debug_line    0x00000000000004b6       0xaf /usr/local/Cellar/avr-gcc/9.3.0/lib/avr-gcc/9/gcc/avr/9.3.0/avr5/libgcc.a(_umulhisi3.o)
+ .debug_line    0x0000000000000565       0x91 /usr/local/Cellar/avr-gcc/9.3.0/lib/avr-gcc/9/gcc/avr/9.3.0/avr5/libgcc.a(_muluhisi3.o)
+ .debug_line    0x00000000000005f6       0x79 /usr/local/Cellar/avr-gcc/9.3.0/lib/avr-gcc/9/gcc/avr/9.3.0/avr5/libgcc.a(_mulshisi3.o)
+ .debug_line    0x000000000000066f       0xfd /usr/local/Cellar/avr-gcc/9.3.0/lib/avr-gcc/9/gcc/avr/9.3.0/avr5/libgcc.a(_prologue.o)
+ .debug_line    0x000000000000076c       0xf7 /usr/local/Cellar/avr-gcc/9.3.0/lib/avr-gcc/9/gcc/avr/9.3.0/avr5/libgcc.a(_epilogue.o)
 
 .debug_frame
  *(.debug_frame)
@@ -1113,7 +1199,8 @@ END GROUP
 .debug_str      0x0000000000000000      0x28a
  *(.debug_str)
  .debug_str     0x0000000000000000      0x208 /usr/local/Cellar/avr-gcc/9.3.0/lib/avr-gcc/9/gcc/avr/9.3.0/../../../../../../avr/lib/avr5/crtatmega328p.o
- .debug_str     0x0000000000000208       0x82 /usr/local/Cellar/avr-gcc/9.3.0/lib/avr-gcc/9/gcc/avr/9.3.0/avr5/libgcc.a(_udivmodsi4.o)
+ .debug_str     0x0000000000000208       0x82 /usr/local/Cellar/avr-gcc/9.3.0/lib/avr-gcc/9/gcc/avr/9.3.0/avr5/libgcc.a(_udivmodhi4.o)
+ .debug_str     0x000000000000028a       0x82 /usr/local/Cellar/avr-gcc/9.3.0/lib/avr-gcc/9/gcc/avr/9.3.0/avr5/libgcc.a(_udivmodsi4.o)
  .debug_str     0x000000000000028a       0x82 /usr/local/Cellar/avr-gcc/9.3.0/lib/avr-gcc/9/gcc/avr/9.3.0/avr5/libgcc.a(_divmodsi4.o)
  .debug_str     0x000000000000028a       0x82 /usr/local/Cellar/avr-gcc/9.3.0/lib/avr-gcc/9/gcc/avr/9.3.0/avr5/libgcc.a(_negsi2.o)
  .debug_str     0x000000000000028a       0x82 /usr/local/Cellar/avr-gcc/9.3.0/lib/avr-gcc/9/gcc/avr/9.3.0/avr5/libgcc.a(_exit.o)
@@ -1121,6 +1208,7 @@ END GROUP
  .debug_str     0x000000000000028a       0x82 /usr/local/Cellar/avr-gcc/9.3.0/lib/avr-gcc/9/gcc/avr/9.3.0/avr5/libgcc.a(_clear_bss.o)
  .debug_str     0x000000000000028a       0x82 /usr/local/Cellar/avr-gcc/9.3.0/lib/avr-gcc/9/gcc/avr/9.3.0/avr5/libgcc.a(_umulhisi3.o)
  .debug_str     0x000000000000028a       0x82 /usr/local/Cellar/avr-gcc/9.3.0/lib/avr-gcc/9/gcc/avr/9.3.0/avr5/libgcc.a(_muluhisi3.o)
+ .debug_str     0x000000000000028a       0x82 /usr/local/Cellar/avr-gcc/9.3.0/lib/avr-gcc/9/gcc/avr/9.3.0/avr5/libgcc.a(_mulshisi3.o)
  .debug_str     0x000000000000028a       0x82 /usr/local/Cellar/avr-gcc/9.3.0/lib/avr-gcc/9/gcc/avr/9.3.0/avr5/libgcc.a(_prologue.o)
  .debug_str     0x000000000000028a       0x82 /usr/local/Cellar/avr-gcc/9.3.0/lib/avr-gcc/9/gcc/avr/9.3.0/avr5/libgcc.a(_epilogue.o)
 

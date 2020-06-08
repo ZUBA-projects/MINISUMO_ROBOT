@@ -9,45 +9,83 @@
 
 //HAl LIBIARY FOR ATMEGA328P
 
-void yield(){}
-
-#define PI 3.1415926535897932384626433832795
-#define HALF_PI 1.5707963267948966192313216916398
-#define TWO_PI 6.283185307179586476925286766559
-#define DEG_TO_RAD 0.017453292519943295769236907684886
-#define RAD_TO_DEG 57.295779513082320876798154814105
-#define EULER 2.718281828459045235360287471352
+void yield(){} //not used
 
 
-#define cbi(sfr, b) (sfr &= ~(1<<b))
-#define sbi(sfr, b) (sfr |= (1<<b))
+/***********************************---TRIGONOMETRY---*********************************/
+
+//NO float mode
+
+static const unsigned char trigTab[] MY_PROGMEM ={
+	    0x00,0x00,0x02,0x3b,0x04,0x77,0x06,0xb2,0x08,0xed,0x0b,0x27,0x0d,0x61,0x0f,0x99,0x11,0xd0,0x14,0x05,
+	    0x16,0x39,0x18,0x6c,0x1a,0x9c,0x1c,0xca,0x1e,0xf7,0x21,0x20,0x23,0x47,0x25,0x6c,0x27,0x8d,0x29,0xab,
+	    0x2b,0xc6,0x2d,0xde,0x2f,0xf2,0x32,0x03,0x34,0x0f,0x36,0x17,0x38,0x1c,0x3a,0x1b,0x3c,0x17,0x3e,0x0d,
+	    0x3f,0xff,0x41,0xec,0x43,0xd3,0x45,0xb6,0x47,0x93,0x49,0x6a,0x4b,0x3b,0x4d,0x07,0x4e,0xcd,0x50,0x8c,
+	    0x52,0x46,0x53,0xf9,0x55,0xa5,0x57,0x4b,0x58,0xe9,0x5a,0x81,0x5c,0x12,0x5d,0x9c,0x5f,0x1e,0x60,0x99,
+	    0x62,0x0c,0x63,0x78,0x64,0xdc,0x66,0x38,0x67,0x8d,0x68,0xd9,0x6a,0x1d,0x6b,0x58,0x6c,0x8b,0x6d,0xb6,
+	    0x6e,0xd9,0x6f,0xf2,0x71,0x03,0x72,0x0b,0x73,0x0a,0x74,0x00,0x74,0xee,0x75,0xd2,0x76,0xad,0x77,0x7e,
+	    0x78,0x46,0x79,0x05,0x79,0xbb,0x7a,0x67,0x7b,0x09,0x7b,0xa2,0x7c,0x31,0x7c,0xb7,0x7d,0x32,0x7d,0xa4,
+	    0x7e,0x0d,0x7e,0x6b,0x7e,0xc0,0x7f,0x0a,0x7f,0x4b,0x7f,0x82,0x7f,0xaf,0x7f,0xd2,0x7f,0xeb,0x7f,0xfa,
+	    0x7f,0xff,
+	};
+
+uint16_t read_sine_tab(uint16_t _deg){
+
+	_deg=_deg*2;
+
+	uint16_t _ret=(my_pgm_read_byte(trigTab + _deg) << 8) | my_pgm_read_byte(trigTab + _deg + 1);
+	return _ret;
+}
 
 
-#define min(a,b) ((a)<(b)?(a):(b))
-#define max(a,b) ((a)>(b)?(a):(b))
-//#define abs(x) ((x)>0?(x):-(x))
-#define constrain(amt,low,high) ((amt)<(low)?(low):((amt)>(high)?(high):(amt)))
-#define round(x)     ((x)>=0?(long)((x)+0.5):(long)((x)-0.5))
-#define radians(deg) ((deg)*DEG_TO_RAD)
-#define degrees(rad) ((rad)*RAD_TO_DEG)
-#define sq(x) ((x)*(x))
+int16_t hal_sin_deg_int16(int16_t _deg){
 
-#define interrupts() sei()
-#define noInterrupts() cli()
+    //normalize deg to range from 0 to 360*
 
-#define clockCyclesPerMicrosecond() ( F_CPU / 1000000L )
-#define clockCyclesToMicroseconds(a) ( (a) / clockCyclesPerMicrosecond() )
-#define microsecondsToClockCycles(a) ( (a) * clockCyclesPerMicrosecond() )
+    while(_deg<0) {_deg+=360;}
+    while(_deg>360) {_deg-=360;}
 
-#define lowByte(w) ((uint8_t) ((w) & 0xff))
-#define highByte(w) ((uint8_t) ((w) >> 8))
+    //normalize to tab size and find quarter of sine
 
-#define bitRead(value, bit) (((value) >> (bit)) & 0x01)
-#define bitSet(value, bit) ((value) |= (1UL << (bit)))
-#define bitClear(value, bit) ((value) &= ~(1UL << (bit)))
-#define bitWrite(value, bit, bitvalue) (bitvalue ? bitSet(value, bit) : bitClear(value, bit))
+    uint8_t n=0;
+
+    while(_deg>90){
+        _deg=_deg-90;
+        n++;
+    }
+
+    //conv deg to radians
+    //_deg=_deg/57.29577951 -we dont need to convert deg to radians because tabele is allready organized as degrees values
+
+    //lookup to tabele in correct mode
+
+    switch(n){
+        case 0:
+        	return read_sine_tab(_deg);
+
+        case 1:
+        	return read_sine_tab(90 - _deg);
+
+        case 2:
+            return 0 - read_sine_tab(_deg);
+
+        case 3:
+        	return 0 - read_sine_tab(90 - _deg);
+    }
+
+return 0;
+}
 
 
+int16_t hal_cos_deg_int16(int16_t _deg){
+    return hal_sin_deg_int16(_deg+90);
+}
+
+
+
+/***********************************---GPIO---*********************************/
+
+//62,3/31.3
 typedef enum{
 	TIMER0A,
 	TIMER0B,
@@ -79,6 +117,7 @@ typedef enum{
 	PORTFX,
 	NOT_ON_PORT,
 }ports_t;
+
 
 timers_t gpio_to_timer(uint8_t _gpio){
 
@@ -114,6 +153,7 @@ timers_t gpio_to_timer(uint8_t _gpio){
 }
 
 ports_t gpio_to_info(uint8_t _gpio){
+
 	if(_gpio<D8) return PORTAX;
 	if(_gpio<D_LAST) return PORTBX;
 	if(_gpio<A_LAST) return PORTCX;
@@ -122,40 +162,40 @@ ports_t gpio_to_info(uint8_t _gpio){
 
 
 uint8_t gpio_to_num(uint8_t _gpio){
-	//output state
+
+    if(_gpio>D13) _gpio+=2;
+
+	if(_gpio)
 	while(_gpio>7){
 		_gpio-=8;
 	}
 	return (_gpio);
 }
 
-
-
-
 void gpioSet(uint8_t _gpio, uint8_t _state){
 
 	if(_gpio!=NO_GPIO){
 
 		switch(gpio_to_info(_gpio)){
-			case 0:
+			case PORTAX:
 				if(_state){
-					PORTD|=(1UL<<gpio_to_num(_gpio));
+					setbit(PORTD,gpio_to_num(_gpio));//PORTD|=(1UL<<gpio_to_num(_gpio));
 				}else{
-					PORTD&=~(1UL<<gpio_to_num(_gpio));
+					clearbit(PORTD,gpio_to_num(_gpio));//PORTD&=~(1UL<<gpio_to_num(_gpio));
 				}
 				break;
-			case 1:
+			case PORTBX:
 				if(_state){
-					PORTB|=(1UL<<gpio_to_num(_gpio));
+					setbit(PORTB,gpio_to_num(_gpio));//PORTB|=(1UL<<gpio_to_num(_gpio));
 				}else{
-					PORTB&=~(1UL<<gpio_to_num(_gpio));
+					clearbit(PORTB,gpio_to_num(_gpio));//PORTB&=~(1UL<<gpio_to_num(_gpio));
 				}
 				break;
-			case 2:
+			case PORTCX:
 				if(_state){
-					PORTC|=(1UL<<gpio_to_num(_gpio));
+					setbit(PORTC,gpio_to_num(_gpio));//PORTC|=(1UL<<gpio_to_num(_gpio));
 				}else{
-					PORTC&=~(1UL<<gpio_to_num(_gpio));
+					clearbit(PORTC,gpio_to_num(_gpio));//PORTC&=~(1UL<<gpio_to_num(_gpio));
 				}
 				break;
 			default:
@@ -167,14 +207,14 @@ void gpioSet(uint8_t _gpio, uint8_t _state){
 uint8_t gpioGet(uint8_t _gpio){
 	if(_gpio!=NO_GPIO){
 		switch(gpio_to_info(_gpio)){
-			case 0:
-				return PIND & (1UL<<gpio_to_num(_gpio));
+			case PORTAX:
+				return bitRead(PIND, gpio_to_num(_gpio));//PIND & (1UL<<gpio_to_num(_gpio));
 				break;
-			case 1:
-				return PINB & (1UL<<gpio_to_num(_gpio));
+			case PORTBX:
+				return bitRead(PINB, gpio_to_num(_gpio));//PINB & (1UL<<gpio_to_num(_gpio));
 				break;
-			case 2:
-				return PINC & (1UL<<gpio_to_num(_gpio));
+			case PORTCX:
+				return bitRead(PINC, gpio_to_num(_gpio));//PINC & (1UL<<gpio_to_num(_gpio));
 				break;
 			default:
 				break;
@@ -473,16 +513,27 @@ void gpioInit(uint8_t _gpio, gpioportmode_t _mode){
 		switch(_mode){
 			case GPIO_ADC:
 			case GPIO_INPUT:
-				if(gpio_to_info(_gpio)==0) DDRD&=~(1UL<<gpio_to_num(_gpio));
-				if(gpio_to_info(_gpio)==1) DDRB&=~(1UL<<gpio_to_num(_gpio));
-				if(gpio_to_info(_gpio)==2) DDRC&=~(1UL<<gpio_to_num(_gpio));
+				/*
+				if(gpio_to_info(_gpio)==PORTAX) DDRD&=~(1UL<<gpio_to_num(_gpio));
+				if(gpio_to_info(_gpio)==PORTBX) DDRB&=~(1UL<<gpio_to_num(_gpio));
+				if(gpio_to_info(_gpio)==PORTCX) DDRC&=~(1UL<<gpio_to_num(_gpio));
+				*/
+
+				if(gpio_to_info(_gpio)==PORTAX) clearbit(DDRD,gpio_to_num(_gpio));
+				if(gpio_to_info(_gpio)==PORTBX) clearbit(DDRB,gpio_to_num(_gpio));
+				if(gpio_to_info(_gpio)==PORTCX) clearbit(DDRC,gpio_to_num(_gpio));
 				break;
 
 			case GPIO_PWM:
 			case GPIO_OUTPUT:
-				if(gpio_to_info(_gpio)==0) DDRD|=(1UL<<gpio_to_num(_gpio));
-				if(gpio_to_info(_gpio)==1) DDRB|=(1UL<<gpio_to_num(_gpio));
-				if(gpio_to_info(_gpio)==2) DDRC|=(1UL<<gpio_to_num(_gpio));
+				/*
+				if(gpio_to_info(_gpio)==PORTAX) DDRD|=(1UL<<gpio_to_num(_gpio));
+				if(gpio_to_info(_gpio)==PORTBX) DDRB|=(1UL<<gpio_to_num(_gpio));
+				if(gpio_to_info(_gpio)==PORTCX) DDRC|=(1UL<<gpio_to_num(_gpio));
+				*/
+				if(gpio_to_info(_gpio)==PORTAX) setbit(DDRD,gpio_to_num(_gpio));
+				if(gpio_to_info(_gpio)==PORTBX) setbit(DDRB,gpio_to_num(_gpio));
+				if(gpio_to_info(_gpio)==PORTCX) setbit(DDRC,gpio_to_num(_gpio));
 				break;
 
 			default:
@@ -493,23 +544,77 @@ void gpioInit(uint8_t _gpio, gpioportmode_t _mode){
 }
 
 
+call_backINT INT0_ev_callback=NULL;
+call_backINT INT1_ev_callback=NULL;
 
-//TIME
+ISR (INT0_vect)
+{
+	if(INT0_ev_callback!=NULL){
+		INT0_ev_callback(D2, gpioGet(D2));
+	}
+}
+
+ISR (INT1_vect)
+{
+	if(INT1_ev_callback!=NULL){
+		INT1_ev_callback(D3, gpioGet(D3));
+	}
+}
+
+void gpioSetInt(uint8_t _gpio, void * callback_ev){
 
 
-// the prescaler is set so that timer0 ticks every 64 clock cycles, and the
-// the overflow handler is called every 256 ticks.
+	gpioInit( _gpio, GPIO_INPUT);
+
+	switch(_gpio){
+
+		case D2:
+			INT0_ev_callback=callback_ev;
+			sbi(EICRA,ISC00);//any chnage ISR
+			sbi(EIMSK,INT0);
+			sei();
+			break;
+
+		case D3:
+			INT1_ev_callback=callback_ev;
+			sbi(EICRA,ISC00);//any chnage ISR
+			sbi(EIMSK,INT1);
+			sei();
+			break;
+
+		default:
+			break;
+	}
+}
+
+void gpioRemoveInt(uint8_t _gpio){
+
+	switch(_gpio){
+
+		case D2:
+			cbi(EIMSK,INT0);
+			INT0_ev_callback=NULL;
+			break;
+
+		case D3:
+			cbi(EIMSK,INT1);
+			INT1_ev_callback=NULL;
+			break;
+
+		default:
+			break;
+	}
+}
+
+
+
+/***********************************---TIME---*********************************/
+
+
 #define MICROSECONDS_PER_TIMER0_OVERFLOW (clockCyclesToMicroseconds(64 * 256))
-
-// the whole number of milliseconds per timer0 overflow
 #define MILLIS_INC (MICROSECONDS_PER_TIMER0_OVERFLOW / 1000)
-
-// the fractional number of milliseconds per timer0 overflow. we shift right
-// by three to fit these numbers into a byte. (for the clock speeds we care
-// about - 8 and 16 MHz - this doesn't lose precision.)
 #define FRACT_INC ((MICROSECONDS_PER_TIMER0_OVERFLOW % 1000) >> 3)
 #define FRACT_MAX (1000 >> 3)
-
 
 volatile uint32_t timer0_overflow_count = 0;
 volatile uint32_t timer0_millis = 0;
@@ -522,8 +627,6 @@ ISR(TIM0_OVF_vect)
 ISR(TIMER0_OVF_vect)
 #endif
 {
-	// copy these to local variables so they can be stored in registers
-	// (volatile variables must be read from memory on every access)
 	uint32_t m = timer0_millis;
 	uint8_t f = timer0_fract;
 
@@ -544,20 +647,16 @@ ISR(TIMER0_OVF_vect)
 uint32_t hal_millis(){
 	uint32_t m;
 	uint8_t oldSREG = SREG;
-
-	// disable interrupts while we read timer0_millis or we might get an
-	// inconsistent value (e.g. in the middle of a write to timer0_millis)
 	cli();
 	m = timer0_millis;
 	SREG = oldSREG;
-
 	return m;
 }
 
 
 
-unsigned long micros() {
-	unsigned long m;
+uint32_t hal_micros() {
+	uint32_t m;
 	uint8_t oldSREG = SREG, t;
 
 	cli();
@@ -584,62 +683,460 @@ unsigned long micros() {
 }
 
 void hal_delay(uint32_t _time){
-	uint32_t start = micros();
+	uint32_t start = hal_micros();
 
 	while (_time > 0) {
 		yield();
-		while ( _time > 0 && (micros() - start) >= 1000) {
+		while ( _time > 0 && (hal_micros() - start) >= 1000) {
 			_time--;
 			start += 1000;
 		}
 	}
 }
 
-//I2C
+/***********************************---I2C---*********************************/
 
+#define Prescaler 1
+#define F_SCL	400000
+#define TWBR_val ((((F_CPU / F_SCL) / Prescaler) - 16 ) / 2)
+
+uint8_t __scl=0;
+uint8_t __sda=0;
+uint8_t __addr=0;
+
+//static volatile uint8_t twi_state;
+/*
 uint8_t TWIGetStatus(void)
 {
-    uint8_t statuss;
-    //mask status
-    statuss = TWSR & 0xF8;
-    return statuss;
+    //uint8_t statuss;
+    //statuss = TWSR & 0xF8;
+    //return statuss;
+	return TW_STATUS;
+}*/
+/*
+void twi_reply(uint8_t ack)
+{
+  // transmit master read ready signal, with or without ack
+  if(ack){
+    TWCR = _BV(TWEN) | _BV(TWIE) | _BV(TWINT) | _BV(TWEA);
+  }else{
+	  TWCR = _BV(TWEN) | _BV(TWIE) | _BV(TWINT);
+  }
+}
+*/
+/*
+void twi_releaseBus(void)
+{
+  // release bus
+  TWCR = _BV(TWEN) | _BV(TWIE) | _BV(TWEA) | _BV(TWINT);
+
+  // update twi state
+  //twi_state = TWI_READY;
+}
+*/
+/*
+ void twi_setAddress(uint8_t address)
+{
+  // set twi slave address (skip over TWGCE bit)
+  TWAR = address << 1;
 }
 
+void twi_setFrequency(uint32_t frequency)
+{
+  TWBR = ((F_CPU / frequency) - 16) / 2;
+}
 
-void i2c_Write(uint8_t _data){
-  //Wire.write(_data);              // sends one byte  
+ */
+
+
+
+uint8_t i2c_Write(uint8_t _data){
+	/*
     TWDR = _data;
     TWCR = (1<<TWINT)|(1<<TWEN);
-    while ((TWCR & (1<<TWINT)) == 0);
+    while ((TWCR & (1<<TWINT)) == 0){
+    	//if(TW_STATUS!=TW_MT_DATA_ACK) error();
+    }*/
+	// load data into data register
+	TWDR = _data;
+	// start transmission of data
+	TWCR = (1<<TWINT) | (1<<TWEN);
+	// wait for end of transmission
+	while( !(TWCR & (1<<TWINT)) );
+
+	if( (TWSR & 0xF8) != TW_MT_DATA_ACK ){ return 1; }
+
+	return 0;
 }
 
 uint8_t i2c_Read(i2cack_t _ack){
-  //ack
-  if(_ack==I2C_ACK_HAL)
-      TWCR = (1<<TWINT)|(1<<TWEN)|(1<<TWEA);
+  if(_ack==I2C_ACK_HAL){
+	  //ack
+	  TWCR = (1<<TWINT)|(1<<TWEN)|(1<<TWEA);
+  }else{
+	  //nack
+	  TWCR = (1<<TWINT)|(1<<TWEN);
+  }
+
+ // uint32_t _tout=hal_millis();
+
+  // wait for end of transmission
+  	while( !(TWCR & (1<<TWINT)) ){
+/*
+    	if((_tout+HAL_I2C_TIMEOUT)<hal_millis()){
+    		return 0;
+    	}*/
+
+    	//if((TW_STATUS==TW_MR_DATA_ACK)||(TW_STATUS==TW_MR_DATA_NACK)) return TWDR;
+    	//if(TW_STATUS==TW_MR_ARB_LOST) return 0;
 
 
-    //nack
-     TWCR = (1<<TWINT)|(1<<TWEN);
+    }
 
-     
-    while ((TWCR & (1<<TWINT)) == 0);
     return TWDR;
 }
 
-void i2c_Start(uint8_t _scl, uint8_t _sda, uint8_t _addr){
-  //Wire.begin(_addr);
-  TWCR = (1<<TWINT)|(1<<TWSTA)|(1<<TWEN);
-  while ((TWCR & (1<<TWINT)) == 0);
-  i2c_Write(_addr);
 
+uint8_t i2c_Start(uint8_t _scl, uint8_t _sda, uint8_t _addr){
+	/*
+  TWCR = (1<<TWINT)|(1<<TWSTA)|(1<<TWEN);
+  while ((TWCR & (1<<TWINT)) == 0){
+	  //if(TW_STATUS!=TW_STAR) error();
+  }
+  i2c_Write(_addr);*/
+
+	// reset TWI control register
+	TWCR = 0;
+	// transmit START condition
+	TWCR = (1<<TWINT) | (1<<TWSTA) | (1<<TWEN);
+	// wait for end of transmission
+	while( !(TWCR & (1<<TWINT)) );
+
+	// check if the start condition was successfully transmitted
+	if((TWSR & 0xF8) != TW_START){ return 1; }
+
+	// load slave address into data register
+	TWDR = _addr;
+	// start transmission of address
+	TWCR = (1<<TWINT) | (1<<TWEN);
+	// wait for end of transmission
+	while( !(TWCR & (1<<TWINT)) );
+
+	// check if the device has acknowledged the READ / WRITE mode
+	uint8_t twst = TW_STATUS & 0xF8;
+	if ( (twst != TW_MT_SLA_ACK) && (twst != TW_MR_SLA_ACK) ) return 1;
+
+	return 0;
 }
 
 void i2c_Stop(){
-  // Wire.endTransmission();    // stop transmitting
   TWCR = (1<<TWINT)|(1<<TWSTO)|(1<<TWEN);
+	/*
+	  // send stop condition
+	  TWCR = _BV(TWEN) | _BV(TWIE) | _BV(TWEA) | _BV(TWINT) | _BV(TWSTO);
+
+	  // wait for stop condition to be exectued on bus
+	  // TWINT is not set after a stop condition!
+	  while(TWCR & _BV(TWSTO)){
+	    continue;
+	  }
+
+	  // update twi state
+	  //twi_state = TWI_READY;*/
 }
 
+
+/*
+ISR(TWI_vect)
+{
+  switch(TW_STATUS){
+    // All Master
+    case TW_START:     // sent start condition
+    case TW_REP_START: // sent repeated start condition
+      // copy device address and r/w bit to output register and ack
+      TWDR = twi_slarw;
+      twi_reply(1);
+      break;
+
+    // Master Transmitter
+    case TW_MT_SLA_ACK:  // slave receiver acked address
+    case TW_MT_DATA_ACK: // slave receiver acked data
+      // if there is data to send, send it, otherwise stop
+      if(twi_masterBufferIndex < twi_masterBufferLength){
+        // copy data to output register and ack
+        TWDR = twi_masterBuffer[twi_masterBufferIndex++];
+        twi_reply(1);
+      }else{
+	if (twi_sendStop)
+          twi_stop();
+	else {
+	  twi_inRepStart = 1;	// we're gonna send the START
+	  // don't enable the interrupt. We'll generate the start, but we
+	  // avoid handling the interrupt until we're in the next transaction,
+	  // at the point where we would normally issue the start.
+	  TWCR = _BV(TWINT) | _BV(TWSTA)| _BV(TWEN) ;
+	  twi_state = TWI_READY;
+	}
+      }
+      break;
+    case TW_MT_SLA_NACK:  // address sent, nack received
+      twi_error = TW_MT_SLA_NACK;
+      twi_stop();
+      break;
+    case TW_MT_DATA_NACK: // data sent, nack received
+      twi_error = TW_MT_DATA_NACK;
+      twi_stop();
+      break;
+    case TW_MT_ARB_LOST: // lost bus arbitration
+      twi_error = TW_MT_ARB_LOST;
+      twi_releaseBus();
+      break;
+
+    // Master Receiver
+    case TW_MR_DATA_ACK: // data received, ack sent
+      // put byte into buffer
+      twi_masterBuffer[twi_masterBufferIndex++] = TWDR;
+      //no break
+    case TW_MR_SLA_ACK:  // address sent, ack received
+      // ack if more bytes are expected, otherwise nack
+      if(twi_masterBufferIndex < twi_masterBufferLength){
+        twi_reply(1);
+      }else{
+        twi_reply(0);
+      }
+      break;
+    case TW_MR_DATA_NACK: // data received, nack sent
+      // put final byte into buffer
+      twi_masterBuffer[twi_masterBufferIndex++] = TWDR;
+	if (twi_sendStop)
+          twi_stop();
+	else {
+	  twi_inRepStart = 1;	// we're gonna send the START
+	  // don't enable the interrupt. We'll generate the start, but we
+	  // avoid handling the interrupt until we're in the next transaction,
+	  // at the point where we would normally issue the start.
+	  TWCR = _BV(TWINT) | _BV(TWSTA)| _BV(TWEN) ;
+	  twi_state = TWI_READY;
+	}
+	break;
+    case TW_MR_SLA_NACK: // address sent, nack received
+      twi_stop();
+      break;
+    // TW_MR_ARB_LOST handled by TW_MT_ARB_LOST case
+
+    // Slave Receiver
+    case TW_SR_SLA_ACK:   // addressed, returned ack
+    case TW_SR_GCALL_ACK: // addressed generally, returned ack
+    case TW_SR_ARB_LOST_SLA_ACK:   // lost arbitration, returned ack
+    case TW_SR_ARB_LOST_GCALL_ACK: // lost arbitration, returned ack
+      // enter slave receiver mode
+      twi_state = TWI_SRX;
+      // indicate that rx buffer can be overwritten and ack
+      twi_rxBufferIndex = 0;
+      twi_reply(1);
+      break;
+    case TW_SR_DATA_ACK:       // data received, returned ack
+    case TW_SR_GCALL_DATA_ACK: // data received generally, returned ack
+      // if there is still room in the rx buffer
+      if(twi_rxBufferIndex < TWI_BUFFER_LENGTH){
+        // put byte in buffer and ack
+        twi_rxBuffer[twi_rxBufferIndex++] = TWDR;
+        twi_reply(1);
+      }else{
+        // otherwise nack
+        twi_reply(0);
+      }
+      break;
+    case TW_SR_STOP: // stop or repeated start condition received
+      // ack future responses and leave slave receiver state
+      twi_releaseBus();
+      // put a null char after data if there's room
+      if(twi_rxBufferIndex < TWI_BUFFER_LENGTH){
+        twi_rxBuffer[twi_rxBufferIndex] = '\0';
+      }
+      // callback to user defined callback
+      twi_onSlaveReceive(twi_rxBuffer, twi_rxBufferIndex);
+      // since we submit rx buffer to "wire" library, we can reset it
+      twi_rxBufferIndex = 0;
+      break;
+    case TW_SR_DATA_NACK:       // data received, returned nack
+    case TW_SR_GCALL_DATA_NACK: // data received generally, returned nack
+      // nack back at master
+      twi_reply(0);
+      break;
+
+    // Slave Transmitter
+    case TW_ST_SLA_ACK:          // addressed, returned ack
+    case TW_ST_ARB_LOST_SLA_ACK: // arbitration lost, returned ack
+      // enter slave transmitter mode
+      twi_state = TWI_STX;
+      // ready the tx buffer index for iteration
+      twi_txBufferIndex = 0;
+      // set tx buffer length to be zero, to verify if user changes it
+      twi_txBufferLength = 0;
+      // request for txBuffer to be filled and length to be set
+      // note: user must call twi_transmit(bytes, length) to do this
+      twi_onSlaveTransmit();
+      // if they didn't change buffer & length, initialize it
+      if(0 == twi_txBufferLength){
+        twi_txBufferLength = 1;
+        twi_txBuffer[0] = 0x00;
+      }
+
+      // transmit first byte from buffer, fall
+      //no break
+    case TW_ST_DATA_ACK: // byte sent, ack returned
+      // copy data to output register
+      TWDR = twi_txBuffer[twi_txBufferIndex++];
+      // if there is more to send, ack, otherwise nack
+      if(twi_txBufferIndex < twi_txBufferLength){
+        twi_reply(1);
+      }else{
+        twi_reply(0);
+      }
+      break;
+    case TW_ST_DATA_NACK: // received nack, we are done
+    case TW_ST_LAST_DATA: // received ack, but we are done already!
+      // ack future responses
+      twi_reply(1);
+      // leave slave receiver state
+      twi_state = TWI_READY;
+      break;
+
+    // All
+    case TW_NO_INFO:   // no state information
+      break;
+    case TW_BUS_ERROR: // bus error, illegal stop/start
+      twi_error = TW_BUS_ERROR;
+      twi_stop();
+      break;
+  }
+}
+*/
+
+
+
+void i2c_set_reg_instance(uint8_t _scl, uint8_t _sda, uint8_t _addr){
+	__scl=_scl;
+	__sda=_sda;
+	__addr=_addr;
+}
+
+// Write an 8-bit register
+void i2c_writeReg(uint8_t reg, uint8_t value) {
+	i2c_Start(0,0,__addr | I2C_WRITE_HAL);
+	i2c_Write(reg);
+	i2c_Write(value);
+	i2c_Stop();
+}
+
+// Write a 16-bit register
+void i2c_writeReg16Bit(uint8_t reg, uint16_t value){
+	i2c_Start(0,0,__addr | I2C_WRITE_HAL);
+	i2c_Write(reg);
+	i2c_Write((value >> 8) & 0xFF);
+	i2c_Write((value     ) & 0xFF);
+	i2c_Stop();
+}
+
+// Write a 32-bit register
+void i2c_writeReg32Bit(uint8_t reg, uint32_t value){
+	i2c_Start(0,0,__addr | I2C_WRITE_HAL);
+	i2c_Write(reg);
+	i2c_Write((value >>24) & 0xFF);
+	i2c_Write((value >>16) & 0xFF);
+	i2c_Write((value >> 8) & 0xFF);
+	i2c_Write((value     ) & 0xFF);
+	i2c_Stop();
+}
+
+// Read an 8-bit register
+uint8_t i2c_readReg(uint8_t reg) {
+  uint8_t value;
+  i2c_Start(0,0,__addr | I2C_WRITE_HAL);
+  i2c_Write(reg);
+  //i2c_Stop();
+  i2c_Start(0,0,__addr | I2C_READ_HAL);
+  value = i2c_Read(I2C_NACK_HAL);
+  i2c_Stop();
+  return value;
+}
+
+// Read a 16-bit register
+uint16_t i2c_readReg16Bit(uint8_t reg) {
+  uint16_t value;
+  i2c_Start(0,0,__addr | I2C_WRITE_HAL);
+  i2c_Write( reg );
+  //i2c_Stop();
+  i2c_Start(0,0,__addr | I2C_READ_HAL);
+  value  = i2c_Read(I2C_ACK_HAL) << 8;
+  value |= i2c_Read(I2C_NACK_HAL);
+  i2c_Stop();
+  return value;
+}
+
+// Read a 32-bit register
+uint32_t i2c_readReg32Bit(uint8_t reg) {
+  uint32_t value;
+  i2c_Start(0,0,__addr | I2C_WRITE_HAL);
+  i2c_Write( reg );
+  //i2c_Stop();
+  i2c_Start(0,0,__addr | I2C_READ_HAL);
+  value  = (uint32_t)i2c_Read(I2C_ACK_HAL) <<24;
+  value |= (uint32_t)i2c_Read(I2C_ACK_HAL) <<16;
+  value |= (uint32_t)i2c_Read(I2C_ACK_HAL) << 8;
+  value |= i2c_Read(I2C_NACK_HAL);
+  i2c_Stop();
+  return value;
+}
+
+// Write an arbitrary number of bytes from the given array to the sensor,
+// starting at the given register
+/*
+void i2c_writeMulti(uint8_t reg, uint8_t const *src, uint16_t count){
+	i2c_Start(0,0,__addr | I2C_WRITE_HAL);
+	i2c_Write( reg );
+	while ( count-- > 0 ) {
+	i2c_Write( *src++ );
+	}
+	i2c_Stop();
+}*/
+
+// Write an arbitrary number of bytes from the given array to the sensor,
+// starting at the given register
+void i2c_writeMulti(uint8_t reg, uint8_t const *src, uint16_t count,uint8_t isrestart){
+	i2c_Start(0,0,__addr | I2C_WRITE_HAL);
+	i2c_Write( reg );
+	if(isrestart) i2c_Write(__addr | I2C_WRITE_HAL);
+	while ( count-- > 0 ) {
+		i2c_Write( *src++ );
+	}
+	i2c_Stop();
+}
+
+
+// Read an arbitrary number of bytes from the sensor, starting at the given
+// register, into the given array
+void i2c_readMulti(uint8_t reg, uint8_t * dst, uint16_t count) {
+	i2c_Start(0,0,__addr | I2C_WRITE_HAL);
+  i2c_Write( reg );
+  //i2c_Stop();
+  i2c_Start(0,0,__addr | I2C_READ_HAL);
+  while ( count > 0 ) {
+    if ( count > 1 ){
+      *dst++ = i2c_Read(I2C_ACK_HAL);
+    } else {
+      *dst++ = i2c_Read(I2C_NACK_HAL);
+    }
+    count--;
+  }
+  i2c_Stop();
+}
+
+
+
+
+/***********************************---HAL_INIT---*********************************/
 
 void init_hal(){
 
@@ -795,101 +1292,39 @@ void init_hal(){
 #endif
 
 
-
+/*
 
   //init i2c 
-   //Wire.begin(); // join i2c bus (address optional for master)
+
     //set SCL to 400kHz
     TWSR = 0x00;
     TWBR = 0x0C;
     //enable TWI
     TWCR = (1<<TWEN);
+*/
 
-  //init milis timer. Now Timer0
-
-
-
-
-}
-
+	TWBR = (uint8_t)TWBR_val;
 
 
 /*
- // Forcing this inline keeps the callers from having to push their own stuff
-// on the stack. It is a good performance win and only takes 1 more byte per
-// user than calling. (It will take more bytes on the 168.)
-//
-// But shouldn't this be moved into pinMode? Seems silly to check and do on
-// each digitalread or write.
-//
-// Mark Sproul:
-// - Removed inline. Save 170 bytes on atmega1280
-// - changed to a switch statment; added 32 bytes but much easier to read and maintain.
-// - Added more #ifdefs, now compiles for atmega645
-//
-//static inline void turnOffPWM(uint8_t timer) __attribute__ ((always_inline));
-//static inline void turnOffPWM(uint8_t timer)
-static void turnOffPWM(uint8_t timer)
-{
-	switch (timer)
-	{
-		#if defined(TCCR1A) && defined(COM1A1)
-		case TIMER1A:   cbi(TCCR1A, COM1A1);    break;
-		#endif
-		#if defined(TCCR1A) && defined(COM1B1)
-		case TIMER1B:   cbi(TCCR1A, COM1B1);    break;
-		#endif
-		#if defined(TCCR1A) && defined(COM1C1)
-		case TIMER1C:   cbi(TCCR1A, COM1C1);    break;
-		#endif
+	  // initialize state
+	  twi_state = TWI_READY;
+	  twi_sendStop = 1;		// default value
+	  twi_inRepStart = 0;
 
-		#if defined(TCCR2) && defined(COM21)
-		case  TIMER2:   cbi(TCCR2, COM21);      break;
-		#endif
+	  // activate internal pullups for twi.
+	  //digitalWrite(SDA, 1);
+	  //digitalWrite(SCL, 1);
 
-		#if defined(TCCR0A) && defined(COM0A1)
-		case  TIMER0A:  cbi(TCCR0A, COM0A1);    break;
-		#endif
+	  // initialize twi prescaler and bit rate
+	  cbi(TWSR, TWPS0);
+	  cbi(TWSR, TWPS1);
+	  TWBR = ((F_CPU / TWI_FREQ) - 16) / 2;
 
-		#if defined(TCCR0A) && defined(COM0B1)
-		case  TIMER0B:  cbi(TCCR0A, COM0B1);    break;
-		#endif
-		#if defined(TCCR2A) && defined(COM2A1)
-		case  TIMER2A:  cbi(TCCR2A, COM2A1);    break;
-		#endif
-		#if defined(TCCR2A) && defined(COM2B1)
-		case  TIMER2B:  cbi(TCCR2A, COM2B1);    break;
-		#endif
 
-		#if defined(TCCR3A) && defined(COM3A1)
-		case  TIMER3A:  cbi(TCCR3A, COM3A1);    break;
-		#endif
-		#if defined(TCCR3A) && defined(COM3B1)
-		case  TIMER3B:  cbi(TCCR3A, COM3B1);    break;
-		#endif
-		#if defined(TCCR3A) && defined(COM3C1)
-		case  TIMER3C:  cbi(TCCR3A, COM3C1);    break;
-		#endif
 
-		#if defined(TCCR4A) && defined(COM4A1)
-		case  TIMER4A:  cbi(TCCR4A, COM4A1);    break;
-		#endif
-		#if defined(TCCR4A) && defined(COM4B1)
-		case  TIMER4B:  cbi(TCCR4A, COM4B1);    break;
-		#endif
-		#if defined(TCCR4A) && defined(COM4C1)
-		case  TIMER4C:  cbi(TCCR4A, COM4C1);    break;
-		#endif
-		#if defined(TCCR4C) && defined(COM4D1)
-		case TIMER4D:	cbi(TCCR4C, COM4D1);	break;
-		#endif
-
-		#if defined(TCCR5A)
-		case  TIMER5A:  cbi(TCCR5A, COM5A1);    break;
-		case  TIMER5B:  cbi(TCCR5A, COM5B1);    break;
-		case  TIMER5C:  cbi(TCCR5A, COM5C1);    break;
-		#endif
-	}
+	  // enable twi module, acks, and twi interrupt
+	  TWCR = _BV(TWEN) | _BV(TWIE) | _BV(TWEA);
+	  */
 }
 
- */

@@ -1,9 +1,8 @@
 #include "MiniOS/miniOS.h"
 #include "hal.h"
 
-
+//displaying values
 #define ROBOT_NAME    "EDU1"
-
 
 //RC5 "SUMO REMOTE" gpio
 #define RC5_PIN            D3     //RC5 gpio -int0 -D3
@@ -23,11 +22,14 @@
 
 /********************************************---DISTANCE SENSOR---************************************/
 
-//VL53l0x sensors gpio
+//VL53l0x sensors gpio0
 #define VL53L0X_L_RST_PIN   A1     //Left TOF sensor Reset pin
 #define VL53L0X_LF_RST_PIN  D12     //Left-Forward TOF sensor Reset pin
 #define VL53L0X_RF_RST_PIN  A3     //Right-Forward TOF sensor Reset pin
 #define VL53L0X_R_RST_PIN   A0     //Right TOF sensor Reset pin
+
+
+#define MAX_RANGE_OF_DISTANCE_SENSOR	400			//400mm -40cm
 
 typedef enum{
   RANGE_SENSOR_L,   //Left range sensor
@@ -37,62 +39,34 @@ typedef enum{
   RANGE_SENSOR_NUM  //number of range sensors
 }distancesensors_t;
 
-static rangesensorinstance_t _sensors[RANGE_SENSOR_NUM];
+sensors_t sensors;
 
 void init_range_sensors(){
 
-  //global config of distance sensor
+  //init range sensor display module
+  init_range_sensor_stack(RANGE_SENSOR_NUM);
+
+  add_range_sensor(RANGE_SENSOR_L, 0x10, -90, 1, 1, VL53L0X_L_RST_PIN ,NO_GPIO, I2C_SCL_PIN, I2C_SDA_PIN);
+  add_range_sensor(RANGE_SENSOR_LF,0x11, -15, 1, 10, VL53L0X_LF_RST_PIN,NO_GPIO, I2C_SCL_PIN, I2C_SDA_PIN);
+  add_range_sensor(RANGE_SENSOR_RF,0x12,  15, 100, 10, VL53L0X_RF_RST_PIN,NO_GPIO, I2C_SCL_PIN, I2C_SDA_PIN);
+  add_range_sensor(RANGE_SENSOR_R, 0x13,  90, 100, 1, VL53L0X_R_RST_PIN ,NO_GPIO, I2C_SCL_PIN, I2C_SDA_PIN);
+
+  //config of distance sensor (hardware config)
   rangesensorconfig_t rangesensorconfig;
-  rangesensorconfig._SignalRateLimit=10;// lower the return signal rate limit (default is 0.25 MCPS) where 10 is equal of 0.1
-  rangesensorconfig._VcselPulsePeriodFinal=14;// increase laser pulse periods (defaults are 14 and 10 PCLKs)
-  rangesensorconfig._VcselPulsePeriodPre=18;
-  rangesensorconfig._timmingbudget=100;   // integrate over 500 ms per measurement
+  rangesensorconfig._SignalRateLimit=25;// lower the return signal rate limit (default is 0.25 MCPS) where 10 is equal of 0.1
+  rangesensorconfig._VcselPulsePeriodFinal=10;// increase laser pulse periods (defaults are 14 and 10 PCLKs) 14
+  rangesensorconfig._VcselPulsePeriodPre=14;//18
+  rangesensorconfig._timmingbudget=5;   // integrate over x ms per measurement
   rangesensorconfig._timmingpetroid=0;    // petroid for continous
 
-  //config sensors gpio and i2c addr
-  _sensors[RANGE_SENSOR_L]._i2caddr=0x50;
-  _sensors[RANGE_SENSOR_L]._gpio0pin=VL53L0X_L_RST_PIN;
-  _sensors[RANGE_SENSOR_L]._gpio1pin=NO_GPIO;
-  _sensors[RANGE_SENSOR_L]._vl53l0xSensor._sclpin=I2C_SCL_PIN;
-  _sensors[RANGE_SENSOR_L]._vl53l0xSensor._sdapin=I2C_SDA_PIN;
+  hal_delay(100);
 
-  _sensors[RANGE_SENSOR_LF]._i2caddr=0x51;
-  _sensors[RANGE_SENSOR_LF]._gpio0pin=VL53L0X_LF_RST_PIN;
-  _sensors[RANGE_SENSOR_LF]._gpio1pin=NO_GPIO;
-  _sensors[RANGE_SENSOR_LF]._vl53l0xSensor._sclpin=I2C_SCL_PIN;
-  _sensors[RANGE_SENSOR_LF]._vl53l0xSensor._sdapin=I2C_SDA_PIN;
+  //setup max range of sensors
+  set_max_sensor_range(MAX_RANGE_OF_DISTANCE_SENSOR);
 
-  _sensors[RANGE_SENSOR_RF]._i2caddr=0x52;
-  _sensors[RANGE_SENSOR_RF]._gpio0pin=VL53L0X_RF_RST_PIN;
-  _sensors[RANGE_SENSOR_RF]._gpio1pin=NO_GPIO;
-  _sensors[RANGE_SENSOR_RF]._vl53l0xSensor._sclpin=I2C_SCL_PIN;
-  _sensors[RANGE_SENSOR_RF]._vl53l0xSensor._sdapin=I2C_SDA_PIN;
-
-  _sensors[RANGE_SENSOR_R]._i2caddr=0x53;
-  _sensors[RANGE_SENSOR_R]._gpio0pin=VL53L0X_R_RST_PIN;
-  _sensors[RANGE_SENSOR_R]._gpio1pin=NO_GPIO;
-  _sensors[RANGE_SENSOR_R]._vl53l0xSensor._sclpin=I2C_SCL_PIN;
-  _sensors[RANGE_SENSOR_R]._vl53l0xSensor._sdapin=I2C_SDA_PIN;
-
-  //pre initialize all of range sensors (init gpio0 and disable sensor)
-  for(uint8_t i=0; i<RANGE_SENSOR_NUM;i++){
-    preinit_range_sensor(&_sensors[i]);
-  }
-
-  //initialize all of range sensors and setup new address
-  for(uint8_t i=0; i<RANGE_SENSOR_NUM;i++){
-    init_range_sensor(&_sensors[i],&rangesensorconfig); //init sensor
-    get_distance(&_sensors[i]); //run continuous conversion
-  }
+  //setup added sensors
+  init_range_sensors_instances(&rangesensorconfig);
 }
-
-void check_range_sensors(){
-  //initialize all of range sensors and setup new address
-  for(uint8_t i=0; i<RANGE_SENSOR_NUM;i++){
-    get_distance(&_sensors[i]); //handle continuous conversion
-  }
-}
-
 
 
 /********************************************---ANALOG SENSOR---************************************/
@@ -102,41 +76,20 @@ void check_range_sensors(){
 #define COLLOR1_PIN         A6     //Pin for Dohyo Color 1 measurment
 #define COLLOR2_PIN         A7     //Pin for Dohyo Color 2 measurment
 
-typedef enum{
-  ANALOG_SENSOR_LF, //Left Front color sensor
-  ANALOG_SENSOR_RF, //Right Front color sensor
-  ANALOG_SENSOR_BATTERY,  //Battery lvl check
-  ANALOG_SENSOR_NUM //number of color sensor
-}analogsensors_t;
+#define ANALOG_DEF_TRESHOLD	500
+
+#define BATTERY_LVL_GAIN	10		//1:10
+#define ADC_MAX_VTG			5000	//mV
+#define ADC_MAX_VALUE		1023	//10b
+#define ADC_COEF	(ADC_MAX_VTG*BATTERY_LVL_GAIN)
+
+
 
 void init_analog_sensors(){
+	set_analog_sensor_treshold(ANALOG_DEF_TRESHOLD);
+	init_analog_sensor(COLLOR1_PIN);
+	init_analog_sensor(COLLOR2_PIN);
 	init_analog_sensor(BATTERY_PIN);
-}
-
-void check_analog_sensors(){
-
-	static uint16_t _oldval=0;
-	uint16_t _aval=get_analog_value(BATTERY_PIN);
-
-	if(_aval!=_oldval){
-		_oldval=_aval;
-		/*
-		   oled_clear();
-		   char data[16];
-
-		   sprintf(data,"AN:%d",_aval);
-		   oled_print((char*)data,1,1,10,10,1);
-		   */
-
-		if(_aval>500){
-			led(1,LED_PIN);
-		}else{
-			led(0,LED_PIN);
-		}
-
-	}
-
-
 }
 
 /********************************************---MOTOR---************************************/
@@ -173,6 +126,7 @@ void motorcfg_init(){
    Motor(MOVE_STOP, 0, 0);
 }
 
+/********************************************---RC5---************************************/
 
 
 /********************************************---MAIN---************************************/
@@ -183,7 +137,7 @@ void my_init(){
   
 
    init_led(LED_PIN);
-   led(1,LED_PIN);
+   led(0,LED_PIN);
 
 
    static miniOSconfig_t _config;
@@ -208,42 +162,118 @@ void my_init(){
    //init vl53l0x sensors
    init_range_sensors();
 
-
    //init analog sensors
    init_analog_sensors();
 
-
-  // NO_GPIO
-  // DEF_GPIO
 }
+
+
+void update_display_main(){
+	  oled_clear(); //clear display
+
+	   char data[16];
+/*
+	   //display ringid
+	   sprintf(data,"Id:23");
+	   oled_print((char*)data,1,1,28,21,0); //update display flag
+
+	   //display battery state
+	   uint16_t bat=get_battery_lvl_mv(BATTERY_PIN,ADC_COEF,ADC_MAX_VALUE);
+	   uint16_t vt=bat/1000;
+	   uint16_t dotvt=(bat/100)-(vt*10);
+
+	   sprintf(data,"%d.%dV", vt,dotvt);
+	   oled_print((char*)data,1,1,62,21,1);
+*/
+
+	   //display opponent ring
+	   oled_print_ring(64,16,sensors._opponentdegree,sensors._opponentdistance,get_max_sensor_range());
+
+
+
+	   //display range sensors
+	   vl53l0x_t *_sensorinstance=malloc(sizeof(vl53l0x_t));
+
+	   for(uint8_t id=0; id<RANGE_SENSOR_NUM; id++){
+
+		   get_range_sensor_instance(_sensorinstance ,id);
+
+		   if(_sensorinstance!=NULL){
+			   if(bitRead(_sensorinstance->_sensorstatebus, VL53L0X_IS_INITED)){
+				   sprintf(data,"%d", _sensorinstance->_lastrange);
+				   oled_print((char*)data,1,(_sensorinstance->_lastrange==get_max_sensor_range()),_sensorinstance->_dpposx,_sensorinstance->_dpposy,0);
+			   }else{
+				   oled_print("ERR",1,1,_sensorinstance->_dpposx,_sensorinstance->_dpposy,0);
+			   }
+		   }
+	   }
+
+	   free(_sensorinstance);
+
+
+	   //display color sensors
+	   uint16_t _temp=get_analog_value(COLLOR1_PIN);	//get_analog_sensor(COLLOR1_PIN);
+	   sprintf(data,"%d", _temp);
+	   oled_print((char*)data,1,(_temp>get_analog_sensor_treshold()),1,21,0);
+
+	   _temp=get_analog_value(COLLOR2_PIN);				//get_analog_sensor(COLLOR2_PIN);
+	   sprintf(data,"%d", _temp);
+	   oled_print((char*)data,1,(_temp>get_analog_sensor_treshold()),100,21,0);
+
+	   oled_print("",1,1,1,1,1); //update display
+}
+
+
+
+
 
 
 void my_loop(){
 
    //handle sensors in idle time
-   check_range_sensors();
-   check_analog_sensors();
+	check_distance(&sensors);
 
-
-
-
-   //core speed meter
-
-
+/*
    static uint32_t _lasttime=0;
    uint32_t _nowtime=hal_millis();
-   static uint32_t _timeafterdisplay=0;
+
    oled_clear();
    char data[16];
 
-   sprintf(data,"T:%lu ms  ",(_nowtime-_lasttime));
-   oled_print((char*)data,1,1,10,10,1);
+   static uint32_t delta=0;
+   static uint32_t lastdelta=0;
 
-   sprintf(data,"D:%lu ms  ",(_nowtime- _timeafterdisplay));
+  if(_rangesensorinstances[RANGE_SENSOR_R]._isnewrange){
+	  _rangesensorinstances[RANGE_SENSOR_R]._isnewrange=0;
+	  delta=_nowtime-lastdelta;
+	  lastdelta=_nowtime;
+  }
+
+   sprintf(data,"T:%lu ms  ",(_nowtime-_lasttime));
+   oled_print((char*)data,1,1,10,1,1);
+
+   if(_rangesensorinstances[RANGE_SENSOR_R]._sensorisinited){
+   	   sprintf(data,"R:%d", _rangesensorinstances[RANGE_SENSOR_R]._lastrange);
+   	   oled_print((char*)data,1,1,10,10,1);
+   }else{
+	   oled_print("R:ERR",1,1,10,10,1);
+   }
+
+   sprintf(data,"TM:%lu ",delta);
    oled_print((char*)data,1,1,10,20,1);
 
    _lasttime=_nowtime;
-   _timeafterdisplay=hal_millis();
+
+*/
+
+   if(sensors._isnew){
+	   sensors._isnew=0;
+
+   }
+   update_display_main();
+
+
+
 
    //handle OS in idle time
 }

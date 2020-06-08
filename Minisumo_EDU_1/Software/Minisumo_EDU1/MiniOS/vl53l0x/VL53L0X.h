@@ -10,8 +10,10 @@
 // I use a 8-bit number for the address, LSB must be 0 so that I can
 // OR over the last bit correctly based on reads and writes
 
-#define ADDRESS_DEFAULT 		0b01010010
+#define ADDRESS_DEFAULT 		0b00101001
+#define MAX_VL53L0X_ERR_COUNTS		5	//max counted timeouts and errors to decide about deleting sensor
 
+#define VL53l0X_TOUT_CFG			100
 
 // register addresses from API vl53l0x_device.h (ordered as listed there)
 enum regAddr {
@@ -103,16 +105,49 @@ typedef enum {
 	VcselPeriodFinalRange
 }vcselPeriodType;
 
+typedef enum{
+	VL53L0X_IS_INITED=0x01,
+	VL53L0X_TOUTERR=0x02,
+	VL53L0X_DONE=0x04,
+}vl53l0xstate_t;
+
 typedef struct{
-	uint8_t g_i2cAddr;
-	uint16_t g_ioTimeout;  // no timeout
-	uint8_t g_isTimeout;
-	uint16_t g_timeoutStartMs;
-	uint8_t g_stopVariable; // read by init and used when starting measurement; is StopVariable field of VL53L0X_DevData_t structure in API
-	uint32_t g_measTimBudUs;
+	//gpio config
+	uint8_t _gpio0pin;
+	uint8_t _gpio1pin;
 	uint8_t _sclpin;
 	uint8_t _sdapin;
+
+	//config of displaying place
+	uint8_t _dpposx;
+	uint8_t _dpposy;
+
+	//state of sensor
+	uint8_t _sensorstatebus;
+	uint16_t _lastrange;
+
+	//sensor config
+	uint8_t g_i2cAddr;
+	int16_t _positionangle;
+
+	//private data for sensor working
+	uint32_t g_timeoutStartMs;
+	uint8_t g_stopVariable; // read by init and used when starting measurement; is StopVariable field of VL53L0X_DevData_t structure in API
+	uint32_t g_measTimBudUs;
+	uint8_t _errcount;
+
 }vl53l0x_t;
+
+typedef struct{
+	//all range sensor module config
+	uint16_t _timmingbudget;
+	uint16_t _timmingpetroid;
+	uint32_t _SignalRateLimit;
+	uint8_t _VcselPulsePeriodFinal;
+	uint8_t _VcselPulsePeriodPre;
+}rangesensorconfig_t;
+
+
 
 
 // Additional info for one measurement
@@ -193,26 +228,23 @@ uint16_t readRangeSingleMillimeters( statInfo_t *extraStats );
 
 // Sets a timeout period in milliseconds after which read operations will abort 
 // if the sensor is not ready. A value of 0 disables the timeout.
-void setTimeout(uint16_t timeout);
+void setTimeout(uint32_t timeout);
 
-// Returns the current timeout period setting.
-uint16_t getTimeout(void);
-
-// Indicates whether a read timeout has occurred since the last call to timeoutOccurred().
-uint8_t timeoutOccurred(void);
 
 //set up current sensor instance
 
 void setvl53l0xinstance(vl53l0x_t * _vl53l0xsensor);
 
-//get sensor status 1- sensor measure done 0-sensor is not ready
-
-uint8_t checkRangeContinousSensor();
+//get sensor status
+uint8_t  checkRangeContinousSensor();
 
 //read range sensor value and clear system int
 
 uint16_t readRangeContinousSensor();
 
+void initVL53L0X_to_continous(rangesensorconfig_t *_cfg);
+
+void preinitVL53L0X();
 
 // TCC: Target CentreCheck
 // MSRC: Minimum Signal Rate Check
